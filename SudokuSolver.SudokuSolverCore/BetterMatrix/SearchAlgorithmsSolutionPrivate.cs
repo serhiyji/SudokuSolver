@@ -2,6 +2,7 @@
 using SudokuSolver.SudokuSolverCore.Coordinates;
 using SudokuSolver.SudokuSolverCore.Matrix;
 using SudokuSolver.SudokuSolverCore.Points;
+using SudokuSolver.SudokuSolverCore.Solution;
 using System;
 using System.Linq;
 
@@ -10,7 +11,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
     public partial class BetterMatrix : Matrix<Point>
     {
         // Locked / Naked
-        private Intersections GetLockedPairInRange(PosPoint pos1, PosPoint pos2)
+        private SolutionMethod GetLockedPairInRange(PosPoint pos1, PosPoint pos2)
         {
             Arrange<PosPoint> pos = this.GetPosPointsInRange(pos1, pos2);
             for (int i = 0; i < pos.Count(); i++)
@@ -20,10 +21,9 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                     if ((pos[i] != pos[j]) && (this.matrix[pos[i].i, pos[i].j].set == this.matrix[pos[j].i, pos[j].j].set) 
                         && (this.matrix[pos[i].i, pos[i].j].set.Count() == 2))
                     {
-                        Intersections intersection = new Intersections()
+                        SolutionMethod intersection = new SolutionMethod()
                         {
                             algorithm = AlgorithmSudokuSlover.Locked_Pair,
-                            NameMethodSlover = $"Locked Pair {new Arrange<PosPoint>(pos[i], pos[j])} : {this.GetPossValueInPosPoint(pos[i])}",
                             IsSingleValue = false,
                             PosPoints = new Arrange<PosPoint>(pos[i], pos[j]),
                             values = this.GetPossValueInPosPoint(pos[i])
@@ -37,7 +37,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
             }
             return null;
         }
-        private Intersections GetLockedTripleInRange(PosPoint pos1, PosPoint pos2)
+        private SolutionMethod GetLockedTripleInRange(PosPoint pos1, PosPoint pos2)
         {
             Arrange<PosPoint> pos = this.GetPosPointsInRange(pos1, pos2);
             for (int i1 = 0; i1 < pos.Count(); i1++)
@@ -54,10 +54,9 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                             Set<byte> all = set1 + set2 + set3;
                             if ((set1.Count() >= 2 && set1.Count() <= 3) && (set2.Count() >= 2 && set2.Count() <= 3) && (set3.Count() >= 2 && set3.Count() <= 3) && all.Count() == 3)
                             {
-                                Intersections intersection = new Intersections()
+                                SolutionMethod intersection = new SolutionMethod()
                                 {
                                     algorithm = AlgorithmSudokuSlover.Locked_Triple,
-                                    NameMethodSlover = "Locked Triple",
                                     IsSingleValue = false,
                                     PosPoints = new Arrange<PosPoint>(pos[i1], pos[i2], pos[i3]),
                                     values = all
@@ -74,7 +73,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
             return null;
         }
         // Naked
-        private Intersections GetNakedQuadrupleInRange(PosPoint pos1, PosPoint pos2)
+        private SolutionMethod GetNakedQuadrupleInRange(PosPoint pos1, PosPoint pos2)
         {
             Arrange<PosPoint> pos = this.GetPosPointsInRange(pos1, pos2);
             for (int i1 = 0; i1 < pos.Count(); i1++)
@@ -96,10 +95,9 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                                 if ((set1.Count() >= 2 && set1.Count() <= 4) && (set2.Count() >= 2 && set2.Count() <= 4)
                                  && (set3.Count() >= 2 && set3.Count() <= 4) && (set4.Count() >= 2 && set4.Count() <= 4) && all.Count() == 4)
                                 {
-                                    Intersections intersection = new Intersections()
+                                    SolutionMethod intersection = new SolutionMethod()
                                     {
                                         algorithm = AlgorithmSudokuSlover.Naked_Quadruple,
-                                        NameMethodSlover = "Naked Quadruple",
                                         IsSingleValue = false,
                                         PosPoints = new Arrange<PosPoint>(pos[i1], pos[i2], pos[i3], pos[i4]),
                                         values = all
@@ -117,7 +115,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
             return null;
         }
         // Hidden
-        private Intersections GetHiddenPairInRange(PosPoint pos1, PosPoint pos2)
+        private SolutionMethod GetHiddenPairInRange(PosPoint pos1, PosPoint pos2)
         {
             for (byte num1 = 0; num1 < 10; num1++)
             {
@@ -131,10 +129,9 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                             Arrange<PosPoint> arr1 = this.GetPossPosPointsInRange(pos1, pos2, num1), arr2 = this.GetPossPosPointsInRange(pos1, pos2, num2);
                             if (arr1 == arr2)
                             {
-                                Intersections intersection = new Intersections()
+                                SolutionMethod intersection = new SolutionMethod()
                                 {
                                     algorithm = AlgorithmSudokuSlover.Hidden_Pair,
-                                    NameMethodSlover = "Hidden Pair",
                                     IsSingleValue = false,
                                     PosPoints = new Arrange<PosPoint>(arr1[0], arr1[1]),
                                     values = new Set<byte>(num1, num2)
@@ -151,7 +148,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
             }
             return null;
         }
-        private Intersections GetHiddenTripleInRange(PosPoint pos1, PosPoint pos2)
+        private SolutionMethod GetHiddenTripleInRange(PosPoint pos1, PosPoint pos2)
         {
             for (byte num1 = 0; num1 < 10; num1++)
             {
@@ -187,10 +184,9 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                                 values = values - set_other;
                                 if (values.Count() == 3)
                                 {
-                                    Intersections intersection = new Intersections()
+                                    SolutionMethod intersection = new SolutionMethod()
                                     {
                                         algorithm = AlgorithmSudokuSlover.Hidden_Triple,
-                                        NameMethodSlover = "Hidden Triple",
                                         IsSingleValue = false,
                                         PosPoints = poss_num, 
                                         values = values
@@ -207,7 +203,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
             }
             return null;
         }
-        private Intersections GetHiddenQuadrupleInRange(PosPoint pos1, PosPoint pos2)
+        private SolutionMethod GetHiddenQuadrupleInRange(PosPoint pos1, PosPoint pos2)
         {
             for (byte num1 = 1; num1 < 10; num1++)
             {
@@ -251,10 +247,9 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                                     values = values - set_other;
                                     if (values.Count() == 4)
                                     {
-                                        Intersections intersection = new Intersections()
+                                        SolutionMethod intersection = new SolutionMethod()
                                         {
                                             algorithm = AlgorithmSudokuSlover.Hidden_Quadruple,
-                                            NameMethodSlover = "Hidden Quadruple",
                                             IsSingleValue = false,
                                             PosPoints = poss_num, 
                                             values = values

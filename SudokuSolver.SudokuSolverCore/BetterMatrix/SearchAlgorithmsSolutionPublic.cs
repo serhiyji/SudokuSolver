@@ -1,52 +1,53 @@
 ﻿using SudokuSolver.SudokuSolverCore.Coordinates;
 using SudokuSolver.SudokuSolverCore.Matrix;
 using SudokuSolver.SudokuSolverCore.Points;
+using SudokuSolver.SudokuSolverCore.Solution;
 using System;
 
 namespace SudokuSolver.SudokuSolverCore.BetterMatrix
 {
     public partial class BetterMatrix : Matrix<Point>
     {
-        public Intersections GetLockedPairInHorizontalLine(int index)
+        public SolutionMethod GetLockedPairInHorizontalLine(int index)
         { return this.GetLockedPairInRange(new PosPoint(index, 0), new PosPoint(index, size - 1)); }
-        public Intersections GetLockedPairInVerticalLine(int index)
+        public SolutionMethod GetLockedPairInVerticalLine(int index)
         { return this.GetLockedPairInRange(new PosPoint(0, index), new PosPoint(size - 1, index)); }
-        public Intersections GetLockedPairInSquare(PosSquare pos_s)
+        public SolutionMethod GetLockedPairInSquare(PosSquare pos_s)
         { return this.GetLockedPairInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2)); }
         // Locked Triple
-        public Intersections GetLockedTripleInHorizontalLine(int index)
+        public SolutionMethod GetLockedTripleInHorizontalLine(int index)
         { return this.GetLockedTripleInRange(new PosPoint(index, 0), new PosPoint(index, size - 1)); }
-        public Intersections GetLockedTripleInVerticalLine(int index)
+        public SolutionMethod GetLockedTripleInVerticalLine(int index)
         { return this.GetLockedTripleInRange(new PosPoint(0, index), new PosPoint(size - 1, index)); }
-        public Intersections GetLockedTripleInSquare(PosSquare pos_s)
+        public SolutionMethod GetLockedTripleInSquare(PosSquare pos_s)
         { return this.GetLockedTripleInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2)); }
         // Hiden pair
-        public Intersections GetHiddenPairInHorizontalLine(int index)
+        public SolutionMethod GetHiddenPairInHorizontalLine(int index)
         { return this.GetHiddenPairInRange(new PosPoint(index, 0), new PosPoint(index, size - 1)); }
-        public Intersections GetHiddenPairInVerticalLine(int index)
+        public SolutionMethod GetHiddenPairInVerticalLine(int index)
         { return this.GetHiddenPairInRange(new PosPoint(0, index), new PosPoint(size - 1, index)); }
-        public Intersections GetHiddenPairInSquare(PosSquare pos_s)
+        public SolutionMethod GetHiddenPairInSquare(PosSquare pos_s)
         { return this.GetHiddenPairInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2)); }
         // Hiden Truple
-        public Intersections GetHiddenTripleInHorizontalLine(int index)
+        public SolutionMethod GetHiddenTripleInHorizontalLine(int index)
         { return this.GetHiddenTripleInRange(new PosPoint(index, 0), new PosPoint(index, size - 1)); }
-        public Intersections GetHiddenTripleInVerticalLine(int index)
+        public SolutionMethod GetHiddenTripleInVerticalLine(int index)
         { return this.GetHiddenTripleInRange(new PosPoint(0, index), new PosPoint(size - 1, index)); }
-        public Intersections GetHiddenTripleInSquare(PosSquare pos_s)
+        public SolutionMethod GetHiddenTripleInSquare(PosSquare pos_s)
         { return this.GetHiddenTripleInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2)); }
         // Naked Quadruple
-        public Intersections GetNakedQuadrupleInHorizontalLine(int index)
+        public SolutionMethod GetNakedQuadrupleInHorizontalLine(int index)
         { return this.GetNakedQuadrupleInRange(new PosPoint(index, 0), new PosPoint(index, size - 1)); }
-        public Intersections GetNakedQuadrupleInVerticalLine(int index)
+        public SolutionMethod GetNakedQuadrupleInVerticalLine(int index)
         { return this.GetNakedQuadrupleInRange(new PosPoint(0, index), new PosPoint(size - 1, index)); }
-        public Intersections GetNakedQuadrupleInSquare(PosSquare pos_s)
+        public SolutionMethod GetNakedQuadrupleInSquare(PosSquare pos_s)
         { return this.GetNakedQuadrupleInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2)); }
         // Hiden Quadruple
-        public Intersections GetHiddenQuadrupleInHorizontalLine(int index)
+        public SolutionMethod GetHiddenQuadrupleInHorizontalLine(int index)
         { return this.GetHiddenQuadrupleInRange(new PosPoint(index, 0), new PosPoint(index, size - 1)); }
-        public Intersections GetHiddenQuadrupleInVerticalLine(int index)
+        public SolutionMethod GetHiddenQuadrupleInVerticalLine(int index)
         { return this.GetHiddenQuadrupleInRange(new PosPoint(0, index), new PosPoint(size - 1, index)); }
-        public Intersections GetHiddenQuadrupleInSquare(PosSquare pos_s)
+        public SolutionMethod GetHiddenQuadrupleInSquare(PosSquare pos_s)
         { return this.GetHiddenQuadrupleInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2)); }
     }
 }

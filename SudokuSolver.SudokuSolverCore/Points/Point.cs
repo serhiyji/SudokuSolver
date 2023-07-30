@@ -11,20 +11,12 @@ namespace SudokuSolver.SudokuSolverCore.Points
     {
         public byte value { get; set; }
         public Set<byte> set { get; set; }
-        private PosPoint pos;
-        public Point(byte v, PosPoint p)
+        public Point(byte v)
         {
             this.value = v;
             this.set = new Set<byte>();
-            this.pos = p;
-            this.SetViewProp();
         }
-        public Point(byte value) : this(value, new PosPoint()) { }
-        public Point() : this(0, new PosPoint()) { }
-        public string SavePoint()
-        {
-            return $"{this.value}+{this.set.ToString()}";
-        }
+        public Point() : this(0) { }
         public static bool operator ==(Point p1, byte value)
         {
             return p1.Equals(new Point(value));

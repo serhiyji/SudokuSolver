@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SudokuSolver.SudokuSolverCore
+namespace SudokuSolver.SudokuSolverCore.Solution
 {
     public enum AlgorithmSudokuSlover
     {
@@ -16,10 +16,9 @@ namespace SudokuSolver.SudokuSolverCore
         Naked_Pair, Naked_Triple, Naked_Quadruple,
         Hidden_Pair, Hidden_Triple, Hidden_Quadruple
     }
-    public partial class Intersections
+    public partial class SolutionMethod
     {
         public AlgorithmSudokuSlover algorithm { get; set; }
-        public string NameMethodSlover { get; set; }
         public bool IsSingleValue { get; set; }
         // 
         public byte NewValue { get; set; }
@@ -36,86 +35,77 @@ namespace SudokuSolver.SudokuSolverCore
         // 
         private List<PosPoint> ChangedPosPoints;
 
-        public Intersections()
+        public SolutionMethod()
         {
             SetDefoltValues();
         }
-        public Intersections(string nameMethodSlover = "", bool isSingleValue = false,
+        public SolutionMethod(bool isSingleValue = false,
             byte newValue = 0, PosPoint posPointNewValue = null,
             Arrange<PosPoint> posPoints = null, Set<byte> values = null) : this()
         {
-            NameMethodSlover = nameMethodSlover;
             IsSingleValue = isSingleValue;
             NewValue = newValue;
             PosPointNewValue = posPointNewValue;
             PosPoints = posPoints;
             this.values = values;
-            this.algorithm = AlgorithmSudokuSlover.None;
+            algorithm = AlgorithmSudokuSlover.None;
             IS = (true, true, true, true);
-            this.ChangedPosPoints = new List<PosPoint>();
-        }
-
-        public Intersections(Arrange<PosPoint> ArrPos, Set<byte> SetValues) : this()
-        {
-            this.PosPoints = ArrPos;
-            this.values = SetValues;
+            ChangedPosPoints = new List<PosPoint>();
         }
 
         public void SetDefoltValues()
         {
-            NameMethodSlover = "";
             IsSingleValue = false;
             NewValue = 0;
             PosPointNewValue = new PosPoint();
             PosPoints = new Arrange<PosPoint>();
             values = new Set<byte>();
             IS = (true, true, true, true);
-            this.algorithm = AlgorithmSudokuSlover.None;
-            this.ChangedPosPoints = new List<PosPoint>();
+            algorithm = AlgorithmSudokuSlover.None;
+            ChangedPosPoints = new List<PosPoint>();
         }
-        public void SetValues(Intersections intersection)
+        public void SetValues(SolutionMethod intersection)
         {
-            this.NameMethodSlover = intersection.NameMethodSlover;
-            this.IsSingleValue = intersection.IsSingleValue;
-            this.NewValue = intersection.NewValue;
-            this.PosPointNewValue.i = intersection.PosPointNewValue.i;
-            this.PosPointNewValue.j = intersection.PosPointNewValue.j;
-            this.PosPoints = intersection.PosPoints;
-            this.values = intersection.values;
-            this.IS = intersection.IS;
-            this.algorithm = intersection.algorithm;
+            IsSingleValue = intersection.IsSingleValue;
+            NewValue = intersection.NewValue;
+            PosPointNewValue.i = intersection.PosPointNewValue.i;
+            PosPointNewValue.j = intersection.PosPointNewValue.j;
+            PosPoints = intersection.PosPoints;
+            values = intersection.values;
+            IS = intersection.IS;
+            algorithm = intersection.algorithm;
         }
         public void SelectSolution(ref BetterMatrix.BetterMatrix matrix)
         {
-            this.ChangedPosPoints.Clear();
+            ChangedPosPoints.Clear();
             if (IsSingleValue)
             {
                 //matrix[this.PosPointNewValue].PossibleValues[this.NewValue - 1] = Point.GreenColor;
-                this.ChangedPosPoints.Add(this.PosPointNewValue);
+                ChangedPosPoints.Add(PosPointNewValue);
             }
             else
             {
-                this.GreenPointsSet(matrix);
-                this.RedPointsSet(matrix);
+                GreenPointsSet(matrix);
+                RedPointsSet(matrix);
             }
         }
         public void DeSelectSolution(ref BetterMatrix.BetterMatrix matrix)
         {
-            foreach (var item in this.ChangedPosPoints)
+            foreach (var item in ChangedPosPoints)
             {
                 //matrix.matrix[item.i, item.j].SetToDefoltStatusItem();
             }
         }
         public bool IsValid(BetterMatrix.BetterMatrix matrix)
         {
-            if (!this.IsSingleValue)
+            if (!IsSingleValue)
             {
-                if(this.PosPoints.Count == 0) { return false; }
-                byte count = (byte)this.PosPoints.Count;
-                bool hl = SudokuSlover.IsPosPointsInHorizontalLine(this.PosPoints), 
-                    vl = SudokuSlover.IsPosPointsInVerticalLine(this.PosPoints), 
-                    sq = SudokuSlover.IsOneSquareInArrPospoint(this.PosPoints);
-                foreach (byte item in this.values)
+                if (PosPoints.Count == 0) { return false; }
+                byte count = (byte)PosPoints.Count;
+                bool hl = SolutionMethodHandler.IsPosPointsInHorizontalLine(PosPoints),
+                    vl = SolutionMethodHandler.IsPosPointsInVerticalLine(PosPoints),
+                    sq = SolutionMethodHandler.IsOneSquareInArrPospoint(PosPoints);
+                foreach (byte item in values)
                 {
                     if (hl && matrix.GetCountPossiblePosPointInHorizontalLine(PosPoints[0].i, item) > count && IS.hl)
                     {
@@ -125,7 +115,7 @@ namespace SudokuSolver.SudokuSolverCore
                     {
                         return true;
                     }
-                    else if (sq && matrix.GetCountPossiblePosPointInSquare(new PosSquare(this.PosPoints[0]), item) > count && IS.sq)
+                    else if (sq && matrix.GetCountPossiblePosPointInSquare(new PosSquare(PosPoints[0]), item) > count && IS.sq)
                     {
                         return true;
                     }
@@ -135,64 +125,59 @@ namespace SudokuSolver.SudokuSolverCore
         }
         private void GreenPointsSet(BetterMatrix.BetterMatrix matrix)
         {
-            foreach (var item in this.PosPoints)
+            foreach (var item in PosPoints)
             {
-                foreach (var val in this.values)
+                foreach (var val in values)
                 {
                     if (matrix.matrix[item.i, item.j].set.Contains(val))
                     {
                         //matrix.matrix[item.i, item.j].PossibleValues[val - 1] = Point.GreenColor;
                     }
                 }
-                if (!this.ChangedPosPoints.Contains(item))
+                if (!ChangedPosPoints.Contains(item))
                 {
-                    this.ChangedPosPoints.Add(item);
+                    ChangedPosPoints.Add(item);
                 }
             }
         }
         private void RedPointsSet(BetterMatrix.BetterMatrix matrix)
         {
             if (IsSingleValue) return;
-            bool hl = SudokuSlover.IsPosPointsInHorizontalLine(this.PosPoints),
-                vl = SudokuSlover.IsPosPointsInVerticalLine(this.PosPoints),
-                sq = SudokuSlover.IsOneSquareInArrPospoint(this.PosPoints);
-            Set<PosPoint> pospoint = new Set<PosPoint>(this.PosPoints);
+            bool hl = SolutionMethodHandler.IsPosPointsInHorizontalLine(PosPoints),
+                vl = SolutionMethodHandler.IsPosPointsInVerticalLine(PosPoints),
+                sq = SolutionMethodHandler.IsOneSquareInArrPospoint(PosPoints);
+            Set<PosPoint> pospoint = new Set<PosPoint>(PosPoints);
             Func<byte, Set<PosPoint>, bool> func = (value, RedPoints) =>
             {
                 foreach (PosPoint item in RedPoints.Where(item => matrix[item].set.Contains(value)))
                 {
                     //matrix.matrix[item.i, item.j].PossibleValues[value - 1] = Point.RedColor;
-                    if (!this.ChangedPosPoints.Contains(item))
+                    if (!ChangedPosPoints.Contains(item))
                     {
-                        this.ChangedPosPoints.Add(item);
+                        ChangedPosPoints.Add(item);
                     }
                 }
                 return false;
             };
 
-            foreach (byte value in this.values)
+            foreach (byte value in values)
             {
                 if (hl)
                 {
-                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInHorizontalLine(this.PosPoints[0].i, value)) - pospoint;
+                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInHorizontalLine(PosPoints[0].i, value)) - pospoint;
                     func?.Invoke(value, RedPoints);
                 }
                 if (vl)
                 {
-                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInVerticalLine(this.PosPoints[0].j, value)) - pospoint;
+                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInVerticalLine(PosPoints[0].j, value)) - pospoint;
                     func?.Invoke(value, RedPoints);
                 }
                 if (sq)
                 {
-                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInSquare(new PosSquare(this.PosPoints[0]), value)) - pospoint;
+                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInSquare(new PosSquare(PosPoints[0]), value)) - pospoint;
                     func?.Invoke(value, RedPoints);
                 }
             }
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }
