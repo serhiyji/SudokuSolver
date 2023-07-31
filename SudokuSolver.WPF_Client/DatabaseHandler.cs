@@ -28,7 +28,7 @@ namespace SudokuSolver.WPF_Client
             this.NameUser = "";
         }
         
-        public int SaveSudoku(string nameSudoku, ref BetterMatrix<PointMatrix> matrix)
+        public int SaveSudoku<TPointMatrix>(string nameSudoku, ref BetterMatrix<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
         {
             if (!IsLogined) { return -1; }
             try
@@ -49,7 +49,7 @@ namespace SudokuSolver.WPF_Client
             return -1;
 
         }
-        public bool SaveSudoku(int IdSudoku, ref BetterMatrix<PointMatrix> matrix)
+        public bool SaveSudoku<TPointMatrix>(int IdSudoku, ref BetterMatrix<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
         {
             if (!IsLogined) { return false; }
             try
@@ -70,7 +70,7 @@ namespace SudokuSolver.WPF_Client
             }
             return false;
         }
-        public int LoadSudoku(int IdSudoku, ref BetterMatrix<PointMatrix> matrix)
+        public int LoadSudoku<TPointMatrix>(int IdSudoku, ref BetterMatrix<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
         {
             try
             {

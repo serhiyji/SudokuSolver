@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace SudokuSolver.SudokuSolverCore
 {
-    public class SudokuSloverHandler
+    public class SudokuSloverHandler<TPointMatrix> where TPointMatrix : IPointMatrix, new()
     {
-        public BetterMatrix.BetterMatrix<PointMatrix> matrix { get; set; }
+        public BetterMatrix.BetterMatrix<TPointMatrix> matrix { get; set; }
         private List<Func<SolutionMethod>> solution_methods;
-        public SudokuSloverHandler(ref BetterMatrix.BetterMatrix<PointMatrix> matrix)
+        public SudokuSloverHandler(ref BetterMatrix.BetterMatrix<TPointMatrix> matrix)
         {
             this.matrix = matrix;
             this.matrix.SetPossibleValues();
@@ -220,7 +220,7 @@ namespace SudokuSolver.SudokuSolverCore
                                 values = new Set<byte>(value),
                                 IS = (false, false, true, true)
                             };
-                            if (intersection.IsValid(this.matrix))
+                            if (this.matrix.IsValid(intersection))
                             {
                                 return intersection;
                             }
@@ -247,7 +247,7 @@ namespace SudokuSolver.SudokuSolverCore
                             values = new Set<byte>(value),
                             IS = (false, true, false, false)
                         };
-                        if (intersection.IsValid(this.matrix))
+                        if (this.matrix.IsValid(intersection))
                         {
                             return intersection;
                         }
@@ -263,7 +263,7 @@ namespace SudokuSolver.SudokuSolverCore
                             values = new Set<byte>(value),
                             IS = (false, true, false, false)
                         };
-                        if (intersection.IsValid(this.matrix))
+                        if (this.matrix.IsValid(intersection))
                         {
                             return intersection;
                         }

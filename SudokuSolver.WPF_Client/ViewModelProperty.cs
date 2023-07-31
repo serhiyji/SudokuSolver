@@ -22,12 +22,12 @@ namespace SudokuSolver.WPF_Client
     {
         // Matrix
         private CursorPosition cursorPosition;
-        private BetterMatrix<PointMatrix> matrix;
-        private SudokuSloverHandler slover;
+        private BetterMatrix<WPFPointMatrix> matrix;
+        private SudokuSloverHandler<WPFPointMatrix> slover;
         public SolutionMethod Intersection => Solution.Instance.Intersection;
         public bool IsExecute => Solution.Instance.IsExecute;
-        private ObservableCollection<SudokuSolver.SudokuSolverCore.Points.PointMatrix> points { get; set; }
-        public IEnumerable<SudokuSolver.SudokuSolverCore.Points.PointMatrix> Points => points;
+        private ObservableCollection<WPFPointMatrix> points { get; set; }
+        public IEnumerable<WPFPointMatrix> Points => points;
 
         // Window control
         public event EventHandler CloseWindow;

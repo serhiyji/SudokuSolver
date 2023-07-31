@@ -41,7 +41,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             }
             return total;
         }
-        public static bool Intersections_Handler(ref BetterMatrix.BetterMatrix<PointMatrix> matrix, SolutionMethod inter)
+        public static bool Intersections_Handler<TPointMatrix>(ref BetterMatrix.BetterMatrix<TPointMatrix> matrix, SolutionMethod inter) where TPointMatrix : IPointMatrix, new()
         {
             if (inter.IsSingleValue)
             {

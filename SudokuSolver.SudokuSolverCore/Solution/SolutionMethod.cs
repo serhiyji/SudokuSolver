@@ -78,7 +78,8 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             IS = intersection.IS;
             algorithm = intersection.algorithm;
         }
-        public void SelectSolution(ref BetterMatrix.BetterMatrix<PointMatrix> matrix)
+        
+        /*public void SelectSolution<TPointMatrix>(ref BetterMatrix<TPointMatrix> matrix) where TPointMatrix : PointMatrix, new()
         {
             ChangedPosPoints.Clear();
             if (IsSingleValue)
@@ -92,41 +93,15 @@ namespace SudokuSolver.SudokuSolverCore.Solution
                 RedPointsSet(matrix);
             }
         }
-        public void DeSelectSolution(ref BetterMatrix.BetterMatrix<PointMatrix> matrix)
+        public void DeSelectSolution<TPointMatrix>(ref BetterMatrix<TPointMatrix> matrix) where TPointMatrix : PointMatrix, new()
         {
             foreach (var item in ChangedPosPoints)
             {
                 matrix.matrix[item.i, item.j].SetToDefoltStatusItem();
             }
         }
-        public bool IsValid<TPointMatrix>(BetterMatrix<TPointMatrix> matrix) where TPointMatrix : PointMatrix, new()
-        {
-            if (!IsSingleValue)
-            {
-                if (PosPoints.Count == 0) { return false; }
-                byte count = (byte)PosPoints.Count;
-                bool hl = SolutionMethodHandler.IsPosPointsInHorizontalLine(PosPoints),
-                    vl = SolutionMethodHandler.IsPosPointsInVerticalLine(PosPoints),
-                    sq = SolutionMethodHandler.IsOneSquareInArrPospoint(PosPoints);
-                foreach (byte item in values)
-                {
-                    if (hl && matrix.GetCountPossiblePosPointInHorizontalLine(PosPoints[0].i, item) > count && IS.hl)
-                    {
-                        return true;
-                    }
-                    else if (vl && matrix.GetCountPossiblePosPointInVerticalLine(PosPoints[0].j, item) > count && IS.vl)
-                    {
-                        return true;
-                    }
-                    else if (sq && matrix.GetCountPossiblePosPointInSquare(new PosSquare(PosPoints[0]), item) > count && IS.sq)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-        private void GreenPointsSet(BetterMatrix.BetterMatrix<PointMatrix> matrix)
+        
+        private void GreenPointsSet<TPointMatrix>(BetterMatrix<TPointMatrix> matrix) where TPointMatrix : PointMatrix, new()
         {
             foreach (var item in PosPoints)
             {
@@ -143,7 +118,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
                 }
             }
         }
-        private void RedPointsSet(BetterMatrix.BetterMatrix<PointMatrix> matrix)
+        private void RedPointsSet<TPointMatrix>(BetterMatrix<TPointMatrix> matrix) where TPointMatrix : PointMatrix, new()
         {
             if (IsSingleValue) return;
             bool hl = SolutionMethodHandler.IsPosPointsInHorizontalLine(PosPoints),
@@ -181,6 +156,6 @@ namespace SudokuSolver.SudokuSolverCore.Solution
                     func?.Invoke(value, RedPoints);
                 }
             }
-        }
+        }*/
     }
 }
