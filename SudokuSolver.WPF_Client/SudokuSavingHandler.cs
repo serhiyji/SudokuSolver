@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using SudokuSolver.SudokuSolverCore.BetterMatrix;
+using SudokuSolver.SudokuSolverCore.Points;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,7 +25,7 @@ namespace SudokuSolver.WPF_Client
             this.IsSudokuFromDatabase = false;
             this.IdSudokuInDatabase = -1;
         }
-        public void SaveAsSudokuInFile(ref BetterMatrix matrix)
+        public void SaveAsSudokuInFile(ref BetterMatrix<PointMatrix> matrix)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Text Files (*.txt)|*.txt";
@@ -36,11 +37,11 @@ namespace SudokuSolver.WPF_Client
                 this.SwapPropAccess(File: true, Database: false);
             }
         }
-        public void SaveSudokuInFile(ref BetterMatrix matrix)
+        public void SaveSudokuInFile(ref BetterMatrix<PointMatrix> matrix)
         {
             this.SaveToFile(this.FullPath, matrix.SaveSudoku());
         }
-        public void LoadSudokuFromFile(ref BetterMatrix matrix)
+        public void LoadSudokuFromFile(ref BetterMatrix<PointMatrix> matrix)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Text Files (*.txt)|*.txt";
@@ -59,7 +60,7 @@ namespace SudokuSolver.WPF_Client
                 }
             }
         }
-        public void SaveAsSudokuInDataBase(string nameSudoku, ref BetterMatrix matrix)
+        public void SaveAsSudokuInDataBase(string nameSudoku, ref BetterMatrix<PointMatrix> matrix)
         {
             try
             {
@@ -75,7 +76,7 @@ namespace SudokuSolver.WPF_Client
                 MessageBox.Show(ex.Message);
             }
         }
-        public void SaveSudokuInDataBase(ref BetterMatrix matrix)
+        public void SaveSudokuInDataBase(ref BetterMatrix<PointMatrix> matrix)
         {
             try
             {
@@ -86,7 +87,7 @@ namespace SudokuSolver.WPF_Client
                 MessageBox.Show(ex.Message);
             }
         }
-        public void LoadSudokuFromDataBase(int idsudoku, ref BetterMatrix matrix)
+        public void LoadSudokuFromDataBase(int idsudoku, ref BetterMatrix<PointMatrix> matrix)
         {
             int newid = DatabaseHandler.Instance.LoadSudoku(idsudoku, ref matrix);
             if (newid >= 0)

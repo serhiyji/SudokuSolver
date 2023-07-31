@@ -1,4 +1,5 @@
 ﻿using PropertyChanged;
+using SudokuSolver.SudokuSolverCore.BetterMatrix;
 using SudokuSolver.SudokuSolverCore.Collections;
 using SudokuSolver.SudokuSolverCore.Coordinates;
 using SudokuSolver.SudokuSolverCore.Points;
@@ -77,7 +78,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             IS = intersection.IS;
             algorithm = intersection.algorithm;
         }
-        public void SelectSolution(ref BetterMatrix.BetterMatrix matrix)
+        public void SelectSolution(ref BetterMatrix.BetterMatrix<PointMatrix> matrix)
         {
             ChangedPosPoints.Clear();
             if (IsSingleValue)
@@ -91,14 +92,14 @@ namespace SudokuSolver.SudokuSolverCore.Solution
                 RedPointsSet(matrix);
             }
         }
-        public void DeSelectSolution(ref BetterMatrix.BetterMatrix matrix)
+        public void DeSelectSolution(ref BetterMatrix.BetterMatrix<PointMatrix> matrix)
         {
             foreach (var item in ChangedPosPoints)
             {
                 matrix.matrix[item.i, item.j].SetToDefoltStatusItem();
             }
         }
-        public bool IsValid(BetterMatrix.BetterMatrix matrix)
+        public bool IsValid<TPointMatrix>(BetterMatrix<TPointMatrix> matrix) where TPointMatrix : PointMatrix, new()
         {
             if (!IsSingleValue)
             {
@@ -125,7 +126,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             }
             return false;
         }
-        private void GreenPointsSet(BetterMatrix.BetterMatrix matrix)
+        private void GreenPointsSet(BetterMatrix.BetterMatrix<PointMatrix> matrix)
         {
             foreach (var item in PosPoints)
             {
@@ -142,7 +143,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
                 }
             }
         }
-        private void RedPointsSet(BetterMatrix.BetterMatrix matrix)
+        private void RedPointsSet(BetterMatrix.BetterMatrix<PointMatrix> matrix)
         {
             if (IsSingleValue) return;
             bool hl = SolutionMethodHandler.IsPosPointsInHorizontalLine(PosPoints),

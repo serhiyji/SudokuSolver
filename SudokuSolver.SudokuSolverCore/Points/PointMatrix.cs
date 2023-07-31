@@ -1,36 +1,38 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using PropertyChanged;
 using SudokuSolver.SudokuSolverCore.Collections;
 using SudokuSolver.SudokuSolverCore.Coordinates;
-//using System.Windows.Media;
 using System.Security.Principal;
 
 namespace SudokuSolver.SudokuSolverCore.Points
 {
-    [AddINotifyPropertyChangedInterface]
-    public partial class Point
+    internal interface IPointMatrix
+    {
+        public byte value { get; set; }
+        public Set<byte> set { get; set; }
+    }
+    public partial class PointMatrix : IPointMatrix
     {
         public byte value { get; set; }
         public Set<byte> set { get; set; }
 
-        public Point(byte v)
+        public PointMatrix(byte v)
         {
             this.value = v;
             this.set = new Set<byte>();
         }
-        public Point() : this(0) { }
-        public static bool operator ==(Point p1, byte value)
+        public PointMatrix() : this(0) { }
+        public static bool operator ==(PointMatrix p1, byte value)
         {
-            return p1.Equals(new Point(value));
+            return p1.Equals(new PointMatrix(value));
         }
-        public static bool operator !=(Point p1, byte value)
+        public static bool operator !=(PointMatrix p1, byte value)
         {
-            return !p1.Equals(new Point(value));
+            return !p1.Equals(new PointMatrix(value));
         }
         public override string ToString()
         {
@@ -40,8 +42,8 @@ namespace SudokuSolver.SudokuSolverCore.Points
         public override bool Equals(object obj)
         {
             if (obj == null) { return false; }
-            if (!(obj is Point)) { return false; }
-            Point other = (Point)obj;
+            if (!(obj is PointMatrix)) { return false; }
+            PointMatrix other = (PointMatrix)obj;
             return value == other.value;
         }
         public override int GetHashCode()

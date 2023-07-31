@@ -13,6 +13,7 @@ using SudokuSolver.SudokuSolverCore.Coordinates;
 using SudokuSolver.SudokuSolverCore.BetterMatrix;
 using SudokuSolver.SudokuSolverCore;
 using SudokuSolver.SudokuSolverCore.Solution;
+using SudokuSolver.SudokuSolverCore.Points;
 
 namespace SudokuSolver.WPF_Client
 {
@@ -21,12 +22,12 @@ namespace SudokuSolver.WPF_Client
     {
         // Matrix
         private CursorPosition cursorPosition;
-        private BetterMatrix matrix;
+        private BetterMatrix<PointMatrix> matrix;
         private SudokuSloverHandler slover;
         public SolutionMethod Intersection => Solution.Instance.Intersection;
         public bool IsExecute => Solution.Instance.IsExecute;
-        private ObservableCollection<SudokuSolver.SudokuSolverCore.Points.Point> points { get; set; }
-        public IEnumerable<SudokuSolver.SudokuSolverCore.Points.Point> Points => points;
+        private ObservableCollection<SudokuSolver.SudokuSolverCore.Points.PointMatrix> points { get; set; }
+        public IEnumerable<SudokuSolver.SudokuSolverCore.Points.PointMatrix> Points => points;
 
         // Window control
         public event EventHandler CloseWindow;

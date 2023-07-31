@@ -3,6 +3,7 @@ using PropertyChanged;
 using SudokuSolver.SudokuSolverCore;
 using SudokuSolver.SudokuSolverCore.BetterMatrix;
 using SudokuSolver.SudokuSolverCore.Coordinates;
+using SudokuSolver.SudokuSolverCore.Points;
 using SudokuSolver.SudokuSolverCore.Solution;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,10 @@ namespace SudokuSolver.WPF_Client
     {
         public ViewModel()
         {
-            this.matrix = new BetterMatrix();
+            this.matrix = new BetterMatrix<PointMatrix>();
             this.slover = new SudokuSloverHandler(ref this.matrix);
             this.cursorPosition = new CursorPosition(ref matrix, 4, 4);
-            this.points = new ObservableCollection<SudokuSolver.SudokuSolverCore.Points.Point>();
+            this.points = new ObservableCollection<SudokuSolverCore.Points.PointMatrix>();
             this.sudokus = new ObservableCollection<Database.Entities.SavingSudoku>();
             this.VisibilityListSudokus = Visibility.Hidden;
             this.nameSudokuInput = "";

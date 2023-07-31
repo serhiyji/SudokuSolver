@@ -1,5 +1,6 @@
 ﻿using SudokuSolver.SudokuSolverCore.Collections;
 using SudokuSolver.SudokuSolverCore.Coordinates;
+using SudokuSolver.SudokuSolverCore.Points;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             }
             return total;
         }
-        public static bool Intersections_Handler(ref BetterMatrix.BetterMatrix matrix, SolutionMethod inter)
+        public static bool Intersections_Handler(ref BetterMatrix.BetterMatrix<PointMatrix> matrix, SolutionMethod inter)
         {
             if (inter.IsSingleValue)
             {

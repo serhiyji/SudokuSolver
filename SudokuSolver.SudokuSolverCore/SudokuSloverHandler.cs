@@ -1,5 +1,6 @@
 ﻿using SudokuSolver.SudokuSolverCore.Collections;
 using SudokuSolver.SudokuSolverCore.Coordinates;
+using SudokuSolver.SudokuSolverCore.Points;
 using SudokuSolver.SudokuSolverCore.Solution;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace SudokuSolver.SudokuSolverCore
 {
     public class SudokuSloverHandler
     {
-        public BetterMatrix.BetterMatrix matrix { get; set; }
+        public BetterMatrix.BetterMatrix<PointMatrix> matrix { get; set; }
         private List<Func<SolutionMethod>> solution_methods;
-        public SudokuSloverHandler(ref BetterMatrix.BetterMatrix matrix)
+        public SudokuSloverHandler(ref BetterMatrix.BetterMatrix<PointMatrix> matrix)
         {
             this.matrix = matrix;
             this.matrix.SetPossibleValues();

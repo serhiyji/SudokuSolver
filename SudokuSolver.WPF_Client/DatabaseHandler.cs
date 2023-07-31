@@ -1,6 +1,7 @@
 ﻿using PropertyChanged;
 using SudokuSolver.Database.Context;
 using SudokuSolver.SudokuSolverCore.BetterMatrix;
+using SudokuSolver.SudokuSolverCore.Points;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace SudokuSolver.WPF_Client
             this.NameUser = "";
         }
         
-        public int SaveSudoku(string nameSudoku, ref BetterMatrix matrix)
+        public int SaveSudoku(string nameSudoku, ref BetterMatrix<PointMatrix> matrix)
         {
             if (!IsLogined) { return -1; }
             try
@@ -48,7 +49,7 @@ namespace SudokuSolver.WPF_Client
             return -1;
 
         }
-        public bool SaveSudoku(int IdSudoku, ref BetterMatrix matrix)
+        public bool SaveSudoku(int IdSudoku, ref BetterMatrix<PointMatrix> matrix)
         {
             if (!IsLogined) { return false; }
             try
@@ -69,7 +70,7 @@ namespace SudokuSolver.WPF_Client
             }
             return false;
         }
-        public int LoadSudoku(int IdSudoku, ref BetterMatrix matrix)
+        public int LoadSudoku(int IdSudoku, ref BetterMatrix<PointMatrix> matrix)
         {
             try
             {

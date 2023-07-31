@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SudokuSolver.SudokuSolverCore.Points;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,8 +22,8 @@ namespace SudokuSolver.SudokuSolverCore.Coordinates
 			get { return j; }
 			set { j = value; }
 		}
-		private BetterMatrix.BetterMatrix matrix;
-		public CursorPosition(ref BetterMatrix.BetterMatrix matrix, int _i = 4, int _j = 4)
+		private BetterMatrix.BetterMatrix<PointMatrix> matrix;
+		public CursorPosition(ref BetterMatrix.BetterMatrix<PointMatrix> matrix, int _i = 4, int _j = 4)
 		{
 			this.matrix = matrix;
 			I = _i;
