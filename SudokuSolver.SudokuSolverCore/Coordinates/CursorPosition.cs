@@ -52,11 +52,7 @@ namespace SudokuSolver.SudokuSolverCore.Coordinates
 						break;
 				}
 			}
-			catch (Exception)
-			{
-
-				throw;
-			}
+			catch (Exception) { }
 			matrix.matrix[I, J].IsSelected = true;
 		}
 	}

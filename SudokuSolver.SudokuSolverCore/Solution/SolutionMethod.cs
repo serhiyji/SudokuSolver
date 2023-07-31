@@ -1,4 +1,5 @@
-﻿using SudokuSolver.SudokuSolverCore.Collections;
+﻿using PropertyChanged;
+using SudokuSolver.SudokuSolverCore.Collections;
 using SudokuSolver.SudokuSolverCore.Coordinates;
 using SudokuSolver.SudokuSolverCore.Points;
 using System;
@@ -16,6 +17,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
         Naked_Pair, Naked_Triple, Naked_Quadruple,
         Hidden_Pair, Hidden_Triple, Hidden_Quadruple
     }
+    [AddINotifyPropertyChangedInterface]
     public partial class SolutionMethod
     {
         public AlgorithmSolutionMethod algorithm { get; set; }
@@ -93,7 +95,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
         {
             foreach (var item in ChangedPosPoints)
             {
-                //matrix.matrix[item.i, item.j].SetToDefoltStatusItem();
+                matrix.matrix[item.i, item.j].SetToDefoltStatusItem();
             }
         }
         public bool IsValid(BetterMatrix.BetterMatrix matrix)

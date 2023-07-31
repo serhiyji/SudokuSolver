@@ -11,7 +11,7 @@ using System.Windows;
 namespace SudokuSolver.WPF_Client
 {
     [AddINotifyPropertyChangedInterface]
-    public class DatabaseHandler : SudokuSolver.Extensions.Singleton<DatabaseHandler>
+    public class DatabaseHandler : Extensions.Singleton<DatabaseHandler>
     {
         private DataBaseContext db;
         public int IdUser { get;private set; }
