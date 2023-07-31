@@ -17,7 +17,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    this.matrix[i, j] = new Point(0, new PosPoint(i, j));
+                    this.matrix[i, j] = new Point(0);
                 }
             }
             __example.matrix = new byte[,]

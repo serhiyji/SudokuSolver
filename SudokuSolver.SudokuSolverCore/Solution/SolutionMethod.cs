@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace SudokuSolver.SudokuSolverCore.Solution
 {
-    public enum AlgorithmSudokuSlover
+    public enum AlgorithmSolutionMethod
     {
         None,
         Full_House, Naked_Single, Hidden_Single,
@@ -18,7 +18,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
     }
     public partial class SolutionMethod
     {
-        public AlgorithmSudokuSlover algorithm { get; set; }
+        public AlgorithmSolutionMethod algorithm { get; set; }
         public bool IsSingleValue { get; set; }
         // 
         public byte NewValue { get; set; }
@@ -48,7 +48,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             PosPointNewValue = posPointNewValue;
             PosPoints = posPoints;
             this.values = values;
-            algorithm = AlgorithmSudokuSlover.None;
+            algorithm = AlgorithmSolutionMethod.None;
             IS = (true, true, true, true);
             ChangedPosPoints = new List<PosPoint>();
         }
@@ -61,7 +61,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             PosPoints = new Arrange<PosPoint>();
             values = new Set<byte>();
             IS = (true, true, true, true);
-            algorithm = AlgorithmSudokuSlover.None;
+            algorithm = AlgorithmSolutionMethod.None;
             ChangedPosPoints = new List<PosPoint>();
         }
         public void SetValues(SolutionMethod intersection)

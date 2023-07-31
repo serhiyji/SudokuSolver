@@ -23,7 +23,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                     {
                         SolutionMethod intersection = new SolutionMethod()
                         {
-                            algorithm = AlgorithmSudokuSlover.Locked_Pair,
+                            algorithm = AlgorithmSolutionMethod.Locked_Pair,
                             IsSingleValue = false,
                             PosPoints = new Arrange<PosPoint>(pos[i], pos[j]),
                             values = this.GetPossValueInPosPoint(pos[i])
@@ -56,7 +56,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                             {
                                 SolutionMethod intersection = new SolutionMethod()
                                 {
-                                    algorithm = AlgorithmSudokuSlover.Locked_Triple,
+                                    algorithm = AlgorithmSolutionMethod.Locked_Triple,
                                     IsSingleValue = false,
                                     PosPoints = new Arrange<PosPoint>(pos[i1], pos[i2], pos[i3]),
                                     values = all
@@ -97,7 +97,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                                 {
                                     SolutionMethod intersection = new SolutionMethod()
                                     {
-                                        algorithm = AlgorithmSudokuSlover.Naked_Quadruple,
+                                        algorithm = AlgorithmSolutionMethod.Naked_Quadruple,
                                         IsSingleValue = false,
                                         PosPoints = new Arrange<PosPoint>(pos[i1], pos[i2], pos[i3], pos[i4]),
                                         values = all
@@ -131,7 +131,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                             {
                                 SolutionMethod intersection = new SolutionMethod()
                                 {
-                                    algorithm = AlgorithmSudokuSlover.Hidden_Pair,
+                                    algorithm = AlgorithmSolutionMethod.Hidden_Pair,
                                     IsSingleValue = false,
                                     PosPoints = new Arrange<PosPoint>(arr1[0], arr1[1]),
                                     values = new Set<byte>(num1, num2)
@@ -186,7 +186,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                                 {
                                     SolutionMethod intersection = new SolutionMethod()
                                     {
-                                        algorithm = AlgorithmSudokuSlover.Hidden_Triple,
+                                        algorithm = AlgorithmSolutionMethod.Hidden_Triple,
                                         IsSingleValue = false,
                                         PosPoints = poss_num, 
                                         values = values
@@ -249,7 +249,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                                     {
                                         SolutionMethod intersection = new SolutionMethod()
                                         {
-                                            algorithm = AlgorithmSudokuSlover.Hidden_Quadruple,
+                                            algorithm = AlgorithmSolutionMethod.Hidden_Quadruple,
                                             IsSingleValue = false,
                                             PosPoints = poss_num, 
                                             values = values

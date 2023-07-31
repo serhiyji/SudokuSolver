@@ -10,6 +10,8 @@ namespace SudokuSolver.SudokuSolverCore.Matrix
     {
         public T[,] matrix { get; set; }
         public const int size = 9;
+
+        //private const int 
         public Matrix(bool IsSetDefaultValues = true)
         {
             this.matrix = new T[size, size];

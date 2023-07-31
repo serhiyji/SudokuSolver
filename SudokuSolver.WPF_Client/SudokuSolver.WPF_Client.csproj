@@ -7,4 +7,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SudokuSolver.Database\SudokuSolver.Database.csproj" />
+    <ProjectReference Include="..\SudokuSolver.Extensions\SudokuSolver.Extensions.csproj" />
+    <ProjectReference Include="..\SudokuSolver.SudokuSolverCore\SudokuSolver.SudokuSolverCore.csproj" />
+  </ItemGroup>
+
 </Project>

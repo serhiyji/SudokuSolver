@@ -11,6 +11,8 @@ namespace SudokuSolver.SudokuSolverCore.Points
     {
         public byte value { get; set; }
         public Set<byte> set { get; set; }
+        public bool IsSelected { get; internal set; }
+
         public Point(byte v)
         {
             this.value = v;

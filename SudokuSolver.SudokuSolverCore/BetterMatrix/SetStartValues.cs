@@ -27,7 +27,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
             {
                 for (int j = 0; j < size; j++)
                 {
-                    this.matrix[i, j].SetToDefoltStatusItem();
+                    //this.matrix[i, j].SetToDefoltStatusItem();
                     this.SetValue(new PosPoint(i, j), 0);
                 }
             }

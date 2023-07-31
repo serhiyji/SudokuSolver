@@ -51,7 +51,7 @@ namespace SudokuSolver.SudokuSolverCore
                     if (NewValue_ == 0) continue;
                     return new SolutionMethod()
                     {
-                        algorithm = AlgorithmSudokuSlover.Full_House,
+                        algorithm = AlgorithmSolutionMethod.Full_House,
                         IsSingleValue = true,
                         NewValue = NewValue_,
                         PosPointNewValue = pos_p
@@ -68,7 +68,7 @@ namespace SudokuSolver.SudokuSolverCore
                     if (NewValue_ == 0) continue;
                     return new SolutionMethod()
                     {
-                        algorithm = AlgorithmSudokuSlover.Full_House,
+                        algorithm = AlgorithmSolutionMethod.Full_House,
                         IsSingleValue = true,
                         NewValue = NewValue_,
                         PosPointNewValue = pos_p
@@ -88,7 +88,7 @@ namespace SudokuSolver.SudokuSolverCore
                         if (NewValue_ == 0) continue;
                         return new SolutionMethod()
                         {
-                            algorithm = AlgorithmSudokuSlover.Full_House,
+                            algorithm = AlgorithmSolutionMethod.Full_House,
                             IsSingleValue = true,
                             NewValue = NewValue_,
                             PosPointNewValue = pos_p
@@ -111,7 +111,7 @@ namespace SudokuSolver.SudokuSolverCore
                         if (NewValue_ == 0) continue;
                         return new SolutionMethod()
                         {
-                            algorithm = AlgorithmSudokuSlover.Naked_Single,
+                            algorithm = AlgorithmSolutionMethod.Naked_Single,
                             IsSingleValue = true,
                             NewValue = NewValue_,
                             PosPointNewValue = pos_p
@@ -131,7 +131,7 @@ namespace SudokuSolver.SudokuSolverCore
                     {
                         return new SolutionMethod()
                         {
-                            algorithm = AlgorithmSudokuSlover.Hidden_Single,
+                            algorithm = AlgorithmSolutionMethod.Hidden_Single,
                             IsSingleValue = true,
                             NewValue = value,
                             PosPointNewValue = this.matrix.GetFirstPossiblePosPointInHorizontalLine(i, value)
@@ -144,7 +144,7 @@ namespace SudokuSolver.SudokuSolverCore
                     {
                         return new SolutionMethod()
                         {
-                            algorithm = AlgorithmSudokuSlover.Hidden_Single,
+                            algorithm = AlgorithmSolutionMethod.Hidden_Single,
                             IsSingleValue = true,
                             NewValue = value,
                             PosPointNewValue = this.matrix.GetFirstPossiblePosPointInVerticalLine(i, value)
@@ -159,7 +159,7 @@ namespace SudokuSolver.SudokuSolverCore
                         {
                             return new SolutionMethod()
                             {
-                                algorithm = AlgorithmSudokuSlover.Hidden_Single,
+                                algorithm = AlgorithmSolutionMethod.Hidden_Single,
                                 IsSingleValue = true,
                                 NewValue = value,
                                 PosPointNewValue = this.matrix.GetFirstPossiblePosPointInSquare(new PosSquare(i, j), value)
@@ -213,7 +213,7 @@ namespace SudokuSolver.SudokuSolverCore
                         {
                             SolutionMethod intersection = new SolutionMethod()
                             {
-                                algorithm = AlgorithmSudokuSlover.Locked_Candidates_Type_Pointing,
+                                algorithm = AlgorithmSolutionMethod.Locked_Candidates_Type_Pointing,
                                 IsSingleValue = false,
                                 PosPoints = this.matrix.GetPossPosPointsInSquare(pos_s, value),
                                 values = new Set<byte>(value),
@@ -240,7 +240,7 @@ namespace SudokuSolver.SudokuSolverCore
                     {
                         SolutionMethod intersection = new SolutionMethod()
                         {
-                            algorithm = AlgorithmSudokuSlover.Locked_Candidates_Type_Claiming,
+                            algorithm = AlgorithmSolutionMethod.Locked_Candidates_Type_Claiming,
                             IsSingleValue = false,
                             PosPoints = this.matrix.GetPossPosPointsInHorizontalLine(i, value),
                             values = new Set<byte>(value),
