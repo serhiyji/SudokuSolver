@@ -1,5 +1,5 @@
 ﻿using Microsoft.Win32;
-using SudokuSloverHendler.BetterMatrix;
+using SudokuSolver.SudokuSolverCore.BetterMatrix;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Sudoku_Slover
+namespace SudokuSolver.WPF_Client
 {
-    public class SudokuSavingHandler : Expansion.SingletonClass<SudokuSavingHandler>
+    public class SudokuSavingHandler : SudokuSolver.Extensions.Singleton<SudokuSavingHandler>
     {
         public bool IsSudokuFromFile { get; private set; }
         public string FullPath { get; private set; }

@@ -1,4 +1,9 @@
-﻿using PropertyChanged;
+﻿using Microsoft.VisualBasic;
+using PropertyChanged;
+using SudokuSolver.SudokuSolverCore;
+using SudokuSolver.SudokuSolverCore.BetterMatrix;
+using SudokuSolver.SudokuSolverCore.Coordinates;
+using SudokuSolver.SudokuSolverCore.Solution;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,21 +18,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-using SudokuSloverHendler;
-using SudokuSloverHendler.BetterMatrix;
-using SudokuSloverHendler.Coordinates;
-using Sudoku_Slover.Expansion;
 
-namespace Sudoku_Slover
+namespace SudokuSolver.WPF_Client
 {
     public partial class ViewModel
     {
         public ViewModel()
         {
             this.matrix = new BetterMatrix();
-            this.slover = new SudokuSlover(ref this.matrix);
+            this.slover = new SudokuSloverHandler(ref this.matrix);
             this.cursorPosition = new CursorPosition(ref matrix, 4, 4);
-            this.points = new ObservableCollection<SudokuSloverHendler.Points.Point>();
+            this.points = new ObservableCollection<SudokuSolver.SudokuSolverCore.Points.Point>();
             this.sudokus = new ObservableCollection<Database.Entities.SavingSudoku>();
             this.VisibilityListSudokus = Visibility.Hidden;
             this.nameSudokuInput = "";
@@ -110,8 +111,8 @@ namespace Sudoku_Slover
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    Sudoku_Slover.LoginRegistration.LoginRegistration loginWindow = new Sudoku_Slover.LoginRegistration.LoginRegistration();
-                    loginWindow.ShowDialog();
+                    //Sudoku_Slover.LoginRegistration.LoginRegistration loginWindow = new Sudoku_Slover.LoginRegistration.LoginRegistration();
+                    //loginWindow.ShowDialog();
                 });
             });
         }
@@ -137,7 +138,7 @@ namespace Sudoku_Slover
         #region Solution
         private void NextHintBtnClick()
         {
-            Intersections intersection = this.slover.NextSlover();
+            SolutionMethod intersection = this.slover.NextSlover();
             if (!(intersection is null))
             {
                 Solution.Instance.IsExecute = true;
@@ -152,7 +153,7 @@ namespace Sudoku_Slover
         private void ExecuteBtnClick()
         {
             Solution.Instance.IsExecute = false;
-            bool res = this.slover.Intersections_Handler(Solution.Instance.Intersection);
+            bool res = SolutionMethodHandler.Intersections_Handler(ref this.matrix, Solution.Instance.Intersection);
             Solution.Instance.Intersection.DeSelectSolution(ref this.matrix);
             Solution.Instance.Intersection.SetDefoltValues();
         }
@@ -160,10 +161,10 @@ namespace Sudoku_Slover
         {
             while(true)
             {
-                Intersections intersection = this.slover.NextSlover();
+                SolutionMethod intersection = this.slover.NextSlover();
                 if (!(intersection is null))
                 {
-                    this.slover.Intersections_Handler(intersection);
+                    SolutionMethodHandler.Intersections_Handler(ref this.matrix, intersection);
                 }
                 else
                 {

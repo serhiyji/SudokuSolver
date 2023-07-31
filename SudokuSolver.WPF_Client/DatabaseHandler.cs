@@ -1,17 +1,17 @@
 ﻿using PropertyChanged;
-using SudokuSloverHendler.BetterMatrix;
+using SudokuSolver.Database.Context;
+using SudokuSolver.SudokuSolverCore.BetterMatrix;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Database;
 
-namespace Sudoku_Slover
+namespace SudokuSolver.WPF_Client
 {
     [AddINotifyPropertyChangedInterface]
-    public class DatabaseHandler : Expansion.SingletonClass<DatabaseHandler>
+    public class DatabaseHandler : SudokuSolver.Extensions.Singleton<DatabaseHandler>
     {
         private DataBaseContext db;
         public int IdUser { get;private set; }

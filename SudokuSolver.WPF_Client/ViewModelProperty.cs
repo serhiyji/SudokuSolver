@@ -7,14 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-using SudokuSloverHendler;
-using SudokuSloverHendler.BetterMatrix;
-using SudokuSloverHendler.Coordinates;
-using Sudoku_Slover.Expansion;
 using System.Windows.Controls;
 using System.Windows;
+using SudokuSolver.SudokuSolverCore.Coordinates;
+using SudokuSolver.SudokuSolverCore.BetterMatrix;
+using SudokuSolver.SudokuSolverCore;
+using SudokuSolver.SudokuSolverCore.Solution;
 
-namespace Sudoku_Slover
+namespace SudokuSolver.WPF_Client
 {
     [AddINotifyPropertyChangedInterface]
     public partial class ViewModel
@@ -22,11 +22,11 @@ namespace Sudoku_Slover
         // Matrix
         private CursorPosition cursorPosition;
         private BetterMatrix matrix;
-        private SudokuSlover slover;
-        public Intersections Intersection => Solution.Instance.Intersection;
+        private SudokuSloverHandler slover;
+        public SolutionMethod Intersection => Solution.Instance.Intersection;
         public bool IsExecute => Solution.Instance.IsExecute;
-        private ObservableCollection<SudokuSloverHendler.Points.Point> points { get; set; }
-        public IEnumerable<SudokuSloverHendler.Points.Point> Points => points;
+        private ObservableCollection<SudokuSolver.SudokuSolverCore.Points.Point> points { get; set; }
+        public IEnumerable<SudokuSolver.SudokuSolverCore.Points.Point> Points => points;
 
         // Window control
         public event EventHandler CloseWindow;

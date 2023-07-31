@@ -15,14 +15,15 @@ using System.Windows.Shapes;
 
 namespace SudokuSolver.WPF_Client
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        private ViewModel model;
         public MainWindow()
         {
             InitializeComponent();
+            this.model = new ViewModel();
+            this.model.CloseWindow += (s, e) => { this.Close(); };
+            this.DataContext = this.model;
         }
     }
 }

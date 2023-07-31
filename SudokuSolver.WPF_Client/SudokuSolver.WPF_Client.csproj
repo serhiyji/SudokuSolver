@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SudokuSolver.Database\SudokuSolver.Database.csproj" />
     <ProjectReference Include="..\SudokuSolver.Extensions\SudokuSolver.Extensions.csproj" />
     <ProjectReference Include="..\SudokuSolver.SudokuSolverCore\SudokuSolver.SudokuSolverCore.csproj" />

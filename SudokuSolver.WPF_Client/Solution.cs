@@ -5,19 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using SudokuSloverHendler;
-using Sudoku_Slover.Expansion;
+using SudokuSolver.SudokuSolverCore.Solution;
 
-namespace Sudoku_Slover
+namespace SudokuSolver.WPF_Client
 {
     [AddINotifyPropertyChangedInterface]
-    public class Solution : SingletonClass<Solution>
+    public class Solution : SudokuSolver.Extensions.Singleton<Solution>
     {
-        public Intersections Intersection { get; set; }
+        public SolutionMethod Intersection { get; set; }
         public bool IsExecute { get; set; }
         public Solution()
         {
-            Intersection = new Intersections();
+            Intersection = new SolutionMethod();
             IsExecute = false;
         }
     }
