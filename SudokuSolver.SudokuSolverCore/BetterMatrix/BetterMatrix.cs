@@ -12,7 +12,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
     public partial class BetterMatrix<TPointMatrix> : Matrix<TPointMatrix> where TPointMatrix : IPointMatrix, new()
     {
         #region BetterMatrix
-        private Matrix<byte> __example = new Matrix<byte>();
+        private readonly Matrix<byte> __example = new Matrix<byte>();
         public BetterMatrix() : base(false)
         {
             for (int i = 0; i < matrix.GetLength(0); i++)
@@ -137,8 +137,21 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
         #endregion
 
         #region AuxiliaryAlgorithms
+        public List<TPointMatrix> GetPointMatrixInRange(PosPoint pos1, PosPoint pos2)
+        {
+            List<TPointMatrix> Points = new List<TPointMatrix>();
+            for (int i = pos1.i; i <= pos2.i; i++)
+            {
+                for (int j = pos1.j; j <= pos2.j; j++)
+                {
+                    Points.Add(matrix[i, j]);
+                }
+            }
+            return Points;
+        }
         public int GetCountValues()
         {
+            //return this.GetPointMatrixInRange(new PosPoint(0, 0), new PosPoint(9, 9)).Where(p => p.value != 0).Count();
             int total = 0;
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
@@ -170,25 +183,24 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
             return this.GetNullValues(pos1, pos2) == 1;
         }
         public bool IsOneNullInHorizontalLine(int index)
-        { return this.IsOneNullInRange(new PosPoint(index, 0), new PosPoint(index, size - 1)); }
+        => this.IsOneNullInRange(new PosPoint(index, 0), new PosPoint(index, size - 1));
         public bool IsOneNullInVerticallLine(int index)
-        { return this.IsOneNullInRange(new PosPoint(0, index), new PosPoint(size - 1, index)); }
+        => this.IsOneNullInRange(new PosPoint(0, index), new PosPoint(size - 1, index));
         public bool IsOneNullInSquare(PosSquare pos_s)
-        { return this.IsOneNullInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2)); }
+        => this.IsOneNullInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
 
         public Set<byte> GetPossValueInPosPoint(PosPoint pos_p)
-        { return new Set<byte>(this.matrix[pos_p.i, pos_p.j].set); }
+        => new Set<byte>(this.matrix[pos_p.i, pos_p.j].set);
         public bool IsNullInPosPoint(PosPoint pos_p)
-        { return this.matrix[pos_p.i, pos_p.j].value == 0; }
-        public bool IsPossibleValueInPos(PosPoint pos_p, byte value)
-        { return this.matrix[pos_p.i, pos_p.j].set.Contains(value); }
+        => this.matrix[pos_p.i, pos_p.j].value == 0;
         public bool IsOnePossibleValueInPosPoint(PosPoint pos_p)
-        { return this.matrix[pos_p.i, pos_p.j].set.Count() == 1; }
+        => this.matrix[pos_p.i, pos_p.j].set.Count() == 1;
         public byte GetFirstValueSetInPosPoint(PosPoint pos_p)
-        { return this.matrix[pos_p.i, pos_p.j].set.Count > 0 ? this.matrix[pos_p.i, pos_p.j].set[0] : (byte)0; }
+        => this.matrix[pos_p.i, pos_p.j].set.Count > 0 ? this.matrix[pos_p.i, pos_p.j].set[0] : (byte)0;
 
         private Arrange<PosPoint> GetPossPosPointsInRange(PosPoint pos1, PosPoint pos2, byte value)
         {
+            //IEnumerable<PosPoint> arr1 = this.GetPointMatrixInRange(pos1, pos2).Where(p => p.value == 0 && p.set.Contains(value)).Select(p => p.Position);
             Arrange<PosPoint> arr = new Arrange<PosPoint>();
             for (int i = pos1.i; i <= pos2.i; i++)
             {
@@ -207,14 +219,15 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
         }
 
         public Arrange<PosPoint> GetPossPosPointsInHorizontalLine(int index, byte value)
-        { return this.GetPossPosPointsInRange(new PosPoint(index, 0), new PosPoint(index, size - 1), value); }
+        => this.GetPossPosPointsInRange(new PosPoint(index, 0), new PosPoint(index, size - 1), value);
         public Arrange<PosPoint> GetPossPosPointsInVerticalLine(int index, byte value)
-        { return this.GetPossPosPointsInRange(new PosPoint(0, index), new PosPoint(size - 1, index), value); }
+        => this.GetPossPosPointsInRange(new PosPoint(0, index), new PosPoint(size - 1, index), value);
         public Arrange<PosPoint> GetPossPosPointsInSquare(PosSquare pos_s, byte value)
-        { return this.GetPossPosPointsInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2), value); }
+        => this.GetPossPosPointsInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2), value);
 
         private byte GetCountPossiblePosPointInRange(PosPoint pos1, PosPoint pos2, byte value)
         {
+            //return (byte)this.GetPointMatrixInRange(pos1, pos2).Where(p => p.set.Contains(value)).Count();
             byte count = 0;
             for (int i = pos1.i; i <= pos2.i; i++)
             {
@@ -230,11 +243,11 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
         }
 
         public byte GetCountPossiblePosPointInHorizontalLine(int index, byte value)
-        { return this.GetCountPossiblePosPointInRange(new PosPoint(index, 0), new PosPoint(index, size - 1), value); }
+        => this.GetCountPossiblePosPointInRange(new PosPoint(index, 0), new PosPoint(index, size - 1), value);
         public byte GetCountPossiblePosPointInVerticalLine(int index, byte value)
-        { return this.GetCountPossiblePosPointInRange(new PosPoint(0, index), new PosPoint(size - 1, index), value); }
+        => this.GetCountPossiblePosPointInRange(new PosPoint(0, index), new PosPoint(size - 1, index), value);
         public byte GetCountPossiblePosPointInSquare(PosSquare pos_s, byte value)
-        { return this.GetCountPossiblePosPointInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2), value); }
+        => this.GetCountPossiblePosPointInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2), value);
 
         private PosPoint GetOneNullPosPointInRange(PosPoint pos1, PosPoint pos2)
         {
@@ -252,11 +265,11 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
         }
 
         public PosPoint GetPosPointNullHorizontalLine(int index)
-        { return this.GetOneNullPosPointInRange(new PosPoint(index, 0), new PosPoint(index, size - 1)); }
+        => this.GetOneNullPosPointInRange(new PosPoint(index, 0), new PosPoint(index, size - 1));
         public PosPoint GetPosPointNullVerticalLine(int index)
-        { return this.GetOneNullPosPointInRange(new PosPoint(0, index), new PosPoint(size - 1, index)); }
+        => this.GetOneNullPosPointInRange(new PosPoint(0, index), new PosPoint(size - 1, index));
         public PosPoint GetPosPointNullSquare(PosSquare pos_s)
-        { return this.GetOneNullPosPointInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2)); }
+        => this.GetOneNullPosPointInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
 
         private PosPoint GetFirstPossiblePosPointInRange(PosPoint pos1, PosPoint pos2, byte value)
         {
@@ -277,14 +290,15 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
         }
 
         public PosPoint GetFirstPossiblePosPointInHorizontalLine(int index, byte value)
-        { return this.GetFirstPossiblePosPointInRange(new PosPoint(index, 0), new PosPoint(index, size - 1), value); }
+        => this.GetFirstPossiblePosPointInRange(new PosPoint(index, 0), new PosPoint(index, size - 1), value);
         public PosPoint GetFirstPossiblePosPointInVerticalLine(int index, byte value)
-        { return this.GetFirstPossiblePosPointInRange(new PosPoint(0, index), new PosPoint(size - 1, index), value); }
+        => this.GetFirstPossiblePosPointInRange(new PosPoint(0, index), new PosPoint(size - 1, index), value);
         public PosPoint GetFirstPossiblePosPointInSquare(PosSquare pos_s, byte value)
-        { return this.GetFirstPossiblePosPointInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2), value); }
+        => this.GetFirstPossiblePosPointInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2), value);
 
         private Arrange<PosPoint> GetPosPointsInRange(PosPoint pos1, PosPoint pos2)
         {
+            //return this.GetPointMatrixInRange(pos1, pos2).Where(p => p.value == 0).Select(p => p.Position);
             Arrange<PosPoint> arr = new Arrange<PosPoint>();
             for (int i = pos1.i; i <= pos2.i; i++)
             {
@@ -767,6 +781,5 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
             return false;
         }
         #endregion
-
     }
 }

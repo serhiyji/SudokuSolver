@@ -41,8 +41,9 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             SetDefoltValues();
         }
         public SolutionMethod(bool isSingleValue = false,
-            byte newValue = 0, PosPoint posPointNewValue = null,
-            Arrange<PosPoint> posPoints = null, Set<byte> values = null) : this()
+            byte newValue = 0, PosPoint posPointNewValue = default(PosPoint),
+            Arrange<PosPoint> posPoints = default(Arrange<PosPoint>), 
+            Set<byte> values = default(Set<byte>)) : this()
         {
             IsSingleValue = isSingleValue;
             NewValue = newValue;
