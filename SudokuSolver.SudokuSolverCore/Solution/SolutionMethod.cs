@@ -1,5 +1,4 @@
-﻿using PropertyChanged;
-using SudokuSolver.SudokuSolverCore.BetterMatrix;
+﻿using SudokuSolver.SudokuSolverCore.BetterMatrix;
 using SudokuSolver.SudokuSolverCore.Collections;
 using SudokuSolver.SudokuSolverCore.Coordinates;
 using SudokuSolver.SudokuSolverCore.Points;
@@ -18,7 +17,6 @@ namespace SudokuSolver.SudokuSolverCore.Solution
         Naked_Pair, Naked_Triple, Naked_Quadruple,
         Hidden_Pair, Hidden_Triple, Hidden_Quadruple
     }
-    [AddINotifyPropertyChangedInterface]
     public partial class SolutionMethod
     {
         public AlgorithmSolutionMethod algorithm { get; set; }
@@ -36,7 +34,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
 
 
         // 
-        private List<PosPoint> ChangedPosPoints;
+        
 
         public SolutionMethod()
         {
@@ -53,7 +51,6 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             this.values = values;
             algorithm = AlgorithmSolutionMethod.None;
             IS = (true, true, true, true);
-            ChangedPosPoints = new List<PosPoint>();
         }
 
         public void SetDefoltValues()
@@ -65,7 +62,6 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             values = new Set<byte>();
             IS = (true, true, true, true);
             algorithm = AlgorithmSolutionMethod.None;
-            ChangedPosPoints = new List<PosPoint>();
         }
         public void SetValues(SolutionMethod intersection)
         {
@@ -78,84 +74,5 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             IS = intersection.IS;
             algorithm = intersection.algorithm;
         }
-        
-        /*public void SelectSolution<TPointMatrix>(ref BetterMatrix<TPointMatrix> matrix) where TPointMatrix : PointMatrix, new()
-        {
-            ChangedPosPoints.Clear();
-            if (IsSingleValue)
-            {
-                //matrix[this.PosPointNewValue].PossibleValues[this.NewValue - 1] = Point.GreenColor;
-                ChangedPosPoints.Add(PosPointNewValue);
-            }
-            else
-            {
-                GreenPointsSet(matrix);
-                RedPointsSet(matrix);
-            }
-        }
-        public void DeSelectSolution<TPointMatrix>(ref BetterMatrix<TPointMatrix> matrix) where TPointMatrix : PointMatrix, new()
-        {
-            foreach (var item in ChangedPosPoints)
-            {
-                matrix.matrix[item.i, item.j].SetToDefoltStatusItem();
-            }
-        }
-        
-        private void GreenPointsSet<TPointMatrix>(BetterMatrix<TPointMatrix> matrix) where TPointMatrix : PointMatrix, new()
-        {
-            foreach (var item in PosPoints)
-            {
-                foreach (var val in values)
-                {
-                    if (matrix.matrix[item.i, item.j].set.Contains(val))
-                    {
-                        //matrix.matrix[item.i, item.j].PossibleValues[val - 1] = Point.GreenColor;
-                    }
-                }
-                if (!ChangedPosPoints.Contains(item))
-                {
-                    ChangedPosPoints.Add(item);
-                }
-            }
-        }
-        private void RedPointsSet<TPointMatrix>(BetterMatrix<TPointMatrix> matrix) where TPointMatrix : PointMatrix, new()
-        {
-            if (IsSingleValue) return;
-            bool hl = SolutionMethodHandler.IsPosPointsInHorizontalLine(PosPoints),
-                vl = SolutionMethodHandler.IsPosPointsInVerticalLine(PosPoints),
-                sq = SolutionMethodHandler.IsOneSquareInArrPospoint(PosPoints);
-            Set<PosPoint> pospoint = new Set<PosPoint>(PosPoints);
-            Func<byte, Set<PosPoint>, bool> func = (value, RedPoints) =>
-            {
-                foreach (PosPoint item in RedPoints.Where(item => matrix[item].set.Contains(value)))
-                {
-                    //matrix.matrix[item.i, item.j].PossibleValues[value - 1] = Point.RedColor;
-                    if (!ChangedPosPoints.Contains(item))
-                    {
-                        ChangedPosPoints.Add(item);
-                    }
-                }
-                return false;
-            };
-
-            foreach (byte value in values)
-            {
-                if (hl)
-                {
-                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInHorizontalLine(PosPoints[0].i, value)) - pospoint;
-                    func?.Invoke(value, RedPoints);
-                }
-                if (vl)
-                {
-                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInVerticalLine(PosPoints[0].j, value)) - pospoint;
-                    func?.Invoke(value, RedPoints);
-                }
-                if (sq)
-                {
-                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInSquare(new PosSquare(PosPoints[0]), value)) - pospoint;
-                    func?.Invoke(value, RedPoints);
-                }
-            }
-        }*/
     }
 }

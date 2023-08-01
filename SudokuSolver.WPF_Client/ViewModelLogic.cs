@@ -144,7 +144,7 @@ namespace SudokuSolver.WPF_Client
             {
                 Solution.Instance.IsExecute = true;
                 Solution.Instance.Intersection.SetValues(intersection);
-                //Solution.Instance.Intersection.SelectSolution(ref this.matrix);
+                Solution.Instance.SelectSolution(ref this.matrix);
             }
             else
             {
@@ -155,7 +155,7 @@ namespace SudokuSolver.WPF_Client
         {
             Solution.Instance.IsExecute = false;
             bool res = SolutionMethodHandler.Intersections_Handler(ref this.matrix, Solution.Instance.Intersection);
-            //Solution.Instance.Intersection.DeSelectSolution(ref this.matrix);
+            Solution.Instance.DeSelectSolution(ref this.matrix);
             Solution.Instance.Intersection.SetDefoltValues();
         }
         private void SloveUpToBtnClick()
@@ -176,7 +176,7 @@ namespace SudokuSolver.WPF_Client
         private void CancelBtnClick()
         {
             Solution.Instance.IsExecute = false;
-            //Solution.Instance.Intersection.DeSelectSolution(ref this.matrix);
+            Solution.Instance.DeSelectSolution(ref this.matrix);
             Solution.Instance.Intersection.SetDefoltValues();
         }
         #endregion

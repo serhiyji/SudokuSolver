@@ -25,7 +25,7 @@ namespace SudokuSolver.WPF_Client
         public static SolidColorBrush RedColor = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
         public static SolidColorBrush BlueColor = new SolidColorBrush(Color.FromArgb(255, 0, 0, 255));
 
-        public bool IsSelected { get; set; }
+        public bool IsSelected { get; set; } = false;
         public string Value => (value == 0) ? "" : value.ToString();
         public SolidColorBrush Selected => IsSelected ? SelectedColor : EmptyColor;
         public string Val1 => (this.set.Contains(1)) ? "1" : "";
@@ -38,17 +38,8 @@ namespace SudokuSolver.WPF_Client
         public string Val8 => (this.set.Contains(8)) ? "8" : "";
         public string Val9 => (this.set.Contains(9)) ? "9" : "";
 
-        public ObservableCollection<SolidColorBrush> PossibleValues { get; set; }
+        public ObservableCollection<SolidColorBrush> PossibleValues { get; set; } = new ObservableCollection<SolidColorBrush>(Enumerable.Repeat(EmptyColor, 9));
 
-        private void SetViewProp()
-        {
-            this.IsSelected = false;
-            this.PossibleValues = new ObservableCollection<SolidColorBrush>();
-            for (int i = 0; i < 9; i++)
-            {
-                this.PossibleValues.Add(EmptyColor);
-            }
-        }
         public void SetToDefoltStatusItem()
         {
             for (int i = 0; i < this.PossibleValues.Count; i++)

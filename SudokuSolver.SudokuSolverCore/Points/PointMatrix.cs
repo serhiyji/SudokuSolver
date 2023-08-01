@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using PropertyChanged;
 using SudokuSolver.SudokuSolverCore.Collections;
 using SudokuSolver.SudokuSolverCore.Coordinates;
 using System.Security.Principal;
