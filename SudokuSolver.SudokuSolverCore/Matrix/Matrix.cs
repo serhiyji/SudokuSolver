@@ -9,7 +9,7 @@ namespace SudokuSolver.SudokuSolverCore.Matrix
     public class Matrix<T> where T : new()
     {
         public T[,] matrix { get; set; }
-        public const int size = 9;
+        public int size { get; set; } = 9;
 
         //private const int 
         public Matrix(bool IsSetDefaultValues = true)

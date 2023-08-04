@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace SudokuSolver.SudokuSolverCore.BetterMatrix
 {
-    public partial class BetterMatrix<TPointMatrix> : Matrix<TPointMatrix> where TPointMatrix : IPointMatrix, new()
+    public class BetterMatrix<TPointMatrix> : Matrix<TPointMatrix> where TPointMatrix : IPointMatrix, new()
     {
         #region BetterMatrix
         private readonly Matrix<byte> __example = new Matrix<byte>();
@@ -174,7 +174,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
         public byte GetFirstValueSetInPosPoint(PosPoint pos_p)
         => this.matrix[pos_p.i, pos_p.j].set.Count > 0 ? this.matrix[pos_p.i, pos_p.j].set[0] : (byte)0;
 
-        private Arrange<PosPoint> GetPossPosPointsInRange(PosPoint pos1, PosPoint pos2, byte value)
+        public Arrange<PosPoint> GetPossPosPointsInRange(PosPoint pos1, PosPoint pos2, byte value)
         => new Arrange<PosPoint>(this.GetPointMatrixInRange(pos1, pos2).Where(p => p.value == 0 && p.set.Contains(value)).Select(p => p.Position).ToArray());
         
         public Arrange<PosPoint> GetPossPosPointsInHorizontalLine(int index, byte value)
@@ -184,7 +184,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
         public Arrange<PosPoint> GetPossPosPointsInSquare(PosSquare pos_s, byte value)
         => this.GetPossPosPointsInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2), value);
 
-        private byte GetCountPossiblePosPointInRange(PosPoint pos1, PosPoint pos2, byte value)
+        public byte GetCountPossiblePosPointInRange(PosPoint pos1, PosPoint pos2, byte value)
         => (byte)this.GetPointMatrixInRange(pos1, pos2).Where(p => p.set.Contains(value)).Count();
 
         public byte GetCountPossiblePosPointInHorizontalLine(int index, byte value)
@@ -241,7 +241,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
         public PosPoint GetFirstPossiblePosPointInSquare(PosSquare pos_s, byte value)
         => this.GetFirstPossiblePosPointInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2), value);
 
-        private Arrange<PosPoint> GetPosPointsInRange(PosPoint pos1, PosPoint pos2)
+        public Arrange<PosPoint> GetPosPointsInRange(PosPoint pos1, PosPoint pos2)
         => new Arrange<PosPoint>(this.GetPointMatrixInRange(pos1, pos2).Where(p => p.value == 0).Select(p => p.Position).ToArray());
         
         #endregion
@@ -322,310 +322,6 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
         { this.SettingPosibleValue(new PosPoint(0, index), new PosPoint(size - 1, index), value); }
         private void SettingPosibleValueInSquare(PosSquare pos_s, byte value)
         { this.SettingPosibleValue(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2), value); }
-        #endregion
-
-        #region SearchAlgorithmsSolutionPrivate
-        // Locked / Naked
-        private SolutionMethod GetLockedPairInRange(PosPoint pos1, PosPoint pos2)
-        {
-            Arrange<PosPoint> pos = this.GetPosPointsInRange(pos1, pos2);
-            for (int i = 0; i < pos.Count(); i++)
-            {
-                for (int j = 0; j < pos.Count(); j++)
-                {
-                    if ((pos[i] != pos[j]) && (this.matrix[pos[i].i, pos[i].j].set == this.matrix[pos[j].i, pos[j].j].set)
-                        && (this.matrix[pos[i].i, pos[i].j].set.Count() == 2))
-                    {
-                        SolutionMethod intersection = new SolutionMethod()
-                        {
-                            algorithm = AlgorithmSolutionMethod.Locked_Pair,
-                            IsSingleValue = false,
-                            PosPoints = new Arrange<PosPoint>(pos[i], pos[j]),
-                            values = this.GetPossValueInPosPoint(pos[i])
-                        };
-                        if (SolutionMethodHandler.IsValid(this, intersection))
-                        {
-                            return intersection;
-                        }
-                    }
-                }
-            }
-            return null;
-        }
-        private SolutionMethod GetLockedTripleInRange(PosPoint pos1, PosPoint pos2)
-        {
-            Arrange<PosPoint> pos = this.GetPosPointsInRange(pos1, pos2);
-            for (int i1 = 0; i1 < pos.Count(); i1++)
-            {
-                for (int i2 = 0; i2 < pos.Count(); i2++)
-                {
-                    for (int i3 = 0; i3 < pos.Count(); i3++)
-                    {
-                        if (pos[i1] != pos[i2] && pos[i2] != pos[i3] && pos[i1] != pos[i3])
-                        {
-                            Set<byte> set1 = this.matrix[pos[i1].i, pos[i1].j].set;
-                            Set<byte> set2 = this.matrix[pos[i2].i, pos[i2].j].set;
-                            Set<byte> set3 = this.matrix[pos[i3].i, pos[i3].j].set;
-                            Set<byte> all = set1 + set2 + set3;
-                            if ((set1.Count() >= 2 && set1.Count() <= 3) && (set2.Count() >= 2 && set2.Count() <= 3) && (set3.Count() >= 2 && set3.Count() <= 3) && all.Count() == 3)
-                            {
-                                SolutionMethod intersection = new SolutionMethod()
-                                {
-                                    algorithm = AlgorithmSolutionMethod.Locked_Triple,
-                                    IsSingleValue = false,
-                                    PosPoints = new Arrange<PosPoint>(pos[i1], pos[i2], pos[i3]),
-                                    values = all
-                                };
-                                if (SolutionMethodHandler.IsValid(this, intersection))
-                                {
-                                    return intersection;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return null;
-        }
-        // Naked
-        private SolutionMethod GetNakedQuadrupleInRange(PosPoint pos1, PosPoint pos2)
-        {
-            Arrange<PosPoint> pos = this.GetPosPointsInRange(pos1, pos2);
-            for (int i1 = 0; i1 < pos.Count(); i1++)
-            {
-                for (int i2 = 0; i2 < pos.Count(); i2++)
-                {
-                    for (int i3 = 0; i3 < pos.Count(); i3++)
-                    {
-                        for (int i4 = 0; i4 < pos.Count(); i4++)
-                        {
-                            if (pos[i1] != pos[i2] && pos[i2] != pos[i3] && pos[i1] != pos[i3]
-                             && pos[i3] != pos[i4] && pos[i1] != pos[i4] && pos[i2] != pos[i4])
-                            {
-                                Set<byte> set1 = this.matrix[pos[i1].i, pos[i1].j].set;
-                                Set<byte> set2 = this.matrix[pos[i2].i, pos[i2].j].set;
-                                Set<byte> set3 = this.matrix[pos[i3].i, pos[i3].j].set;
-                                Set<byte> set4 = this.matrix[pos[i4].i, pos[i4].j].set;
-                                Set<byte> all = set1 + set2 + set3 + set4;
-                                if ((set1.Count() >= 2 && set1.Count() <= 4) && (set2.Count() >= 2 && set2.Count() <= 4)
-                                 && (set3.Count() >= 2 && set3.Count() <= 4) && (set4.Count() >= 2 && set4.Count() <= 4) && all.Count() == 4)
-                                {
-                                    SolutionMethod intersection = new SolutionMethod()
-                                    {
-                                        algorithm = AlgorithmSolutionMethod.Naked_Quadruple,
-                                        IsSingleValue = false,
-                                        PosPoints = new Arrange<PosPoint>(pos[i1], pos[i2], pos[i3], pos[i4]),
-                                        values = all
-                                    };
-                                    if (SolutionMethodHandler.IsValid(this, intersection))
-                                    {
-                                        return intersection;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return null;
-        }
-        // Hidden
-        private SolutionMethod GetHiddenPairInRange(PosPoint pos1, PosPoint pos2)
-        {
-            for (byte num1 = 0; num1 < 10; num1++)
-            {
-                for (byte num2 = 1; num2 < 10; num2++)
-                {
-                    if (num1 != num2)
-                    {
-                        int count_num1 = this.GetCountPossiblePosPointInRange(pos1, pos2, num1), count_num2 = this.GetCountPossiblePosPointInRange(pos1, pos2, num2);
-                        if (count_num1 == 2 && count_num2 == 2)
-                        {
-                            Arrange<PosPoint> arr1 = this.GetPossPosPointsInRange(pos1, pos2, num1), arr2 = this.GetPossPosPointsInRange(pos1, pos2, num2);
-                            if (arr1 == arr2)
-                            {
-                                SolutionMethod intersection = new SolutionMethod()
-                                {
-                                    algorithm = AlgorithmSolutionMethod.Hidden_Pair,
-                                    IsSingleValue = false,
-                                    PosPoints = new Arrange<PosPoint>(arr1[0], arr1[1]),
-                                    values = new Set<byte>(num1, num2)
-                                };
-                                if (SolutionMethodHandler.IsValid(this, intersection))
-                                {
-                                    return intersection;
-                                }
-                            }
-                        }
-                    }
-
-                }
-            }
-            return null;
-        }
-        private SolutionMethod GetHiddenTripleInRange(PosPoint pos1, PosPoint pos2)
-        {
-            for (byte num1 = 0; num1 < 10; num1++)
-            {
-                for (byte num2 = 0; num2 < 10; num2++)
-                {
-                    for (byte num3 = 0; num3 < 10; num3++)
-                    {
-                        int count_num1 = this.GetCountPossiblePosPointInRange(pos1, pos2, num1);
-                        int count_num2 = this.GetCountPossiblePosPointInRange(pos1, pos2, num2);
-                        int count_num3 = this.GetCountPossiblePosPointInRange(pos1, pos2, num3);
-                        if (num1 != num2 && num2 != num3 && num1 != num3 && count_num1 <= 3 && count_num1 >= 2 && count_num2 <= 3 && count_num2 >= 2 && count_num3 <= 3 && count_num3 >= 2)
-                        {
-                            Set<PosPoint> poss_num = new Set<PosPoint>(this.GetPossPosPointsInRange(pos1, pos2, num1)) + new Set<PosPoint>(this.GetPossPosPointsInRange(pos1, pos2, num2)) + new Set<PosPoint>(this.GetPossPosPointsInRange(pos1, pos2, num3));
-                            if (poss_num.Count() == 3)
-                            {
-                                Set<byte> set_other = new Set<byte>();
-                                Set<byte> values = new Set<byte>();
-                                for (int i = pos1.i; i <= pos2.i; i++)
-                                {
-                                    for (int j = pos1.j; j <= pos2.j; j++)
-                                    {
-                                        PosPoint pos = new PosPoint(i, j);
-                                        if (this.matrix[i, j].value == 0 && !poss_num.Contains(pos))
-                                        {
-                                            set_other += this.matrix[i, j].set;
-                                        }
-                                        if (poss_num.Contains(pos))
-                                        {
-                                            values += this.matrix[i, j].set;
-                                        }
-                                    }
-                                }
-                                values = values - set_other;
-                                if (values.Count() == 3)
-                                {
-                                    SolutionMethod intersection = new SolutionMethod()
-                                    {
-                                        algorithm = AlgorithmSolutionMethod.Hidden_Triple,
-                                        IsSingleValue = false,
-                                        PosPoints = poss_num,
-                                        values = values
-                                    };
-                                    if (SolutionMethodHandler.IsValid(this, intersection))
-                                    {
-                                        return intersection;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return null;
-        }
-        private SolutionMethod GetHiddenQuadrupleInRange(PosPoint pos1, PosPoint pos2)
-        {
-            for (byte num1 = 1; num1 < 10; num1++)
-            {
-                for (byte num2 = 1; num2 < 10; num2++)
-                {
-                    for (byte num3 = 1; num3 < 10; num3++)
-                    {
-                        for (byte num4 = 1; num4 < 10; num4++)
-                        {
-                            int count_num1 = this.GetCountPossiblePosPointInRange(pos1, pos2, num1);
-                            int count_num2 = this.GetCountPossiblePosPointInRange(pos1, pos2, num2);
-                            int count_num3 = this.GetCountPossiblePosPointInRange(pos1, pos2, num3);
-                            int count_num4 = this.GetCountPossiblePosPointInRange(pos1, pos2, num4);
-                            if (num1 != num2 && num2 != num3 && num1 != num3 && num1 != num4 && num2 != num4 && num3 != num4
-                                && count_num1 <= 4 && count_num1 >= 2 && count_num2 <= 4 && count_num2 >= 2
-                                && count_num3 <= 4 && count_num3 >= 2 && count_num4 <= 4 && count_num4 >= 2)
-                            {
-                                Set<PosPoint> poss_num = new Set<PosPoint>(this.GetPossPosPointsInRange(pos1, pos2, num1))
-                                    + new Set<PosPoint>(this.GetPossPosPointsInRange(pos1, pos2, num2))
-                                    + new Set<PosPoint>(this.GetPossPosPointsInRange(pos1, pos2, num3))
-                                    + new Set<PosPoint>(this.GetPossPosPointsInRange(pos1, pos2, num4));
-                                if (poss_num.Count() == 4)
-                                {
-                                    Set<byte> set_other = new Set<byte>();
-                                    Set<byte> values = new Set<byte>();
-                                    for (int i = pos1.i; i <= pos2.i; i++)
-                                    {
-                                        for (int j = pos1.j; j <= pos2.j; j++)
-                                        {
-                                            PosPoint pos = new PosPoint(i, j);
-                                            if (this.matrix[i, j].value == 0 && !poss_num.Contains(pos))
-                                            {
-                                                set_other += this.matrix[i, j].set;
-                                            }
-                                            if (poss_num.Contains(pos))
-                                            {
-                                                values += this.matrix[i, j].set;
-                                            }
-                                        }
-                                    }
-                                    values = values - set_other;
-                                    if (values.Count() == 4)
-                                    {
-                                        SolutionMethod intersection = new SolutionMethod()
-                                        {
-                                            algorithm = AlgorithmSolutionMethod.Hidden_Quadruple,
-                                            IsSingleValue = false,
-                                            PosPoints = poss_num,
-                                            values = values
-                                        };
-                                        if (SolutionMethodHandler.IsValid(this, intersection))
-                                        {
-                                            return intersection;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return null;
-        }
-        #endregion
-
-        #region SearchAlgorithmsSolutionPublic
-        public SolutionMethod GetLockedPairInHorizontalLine(int index)
-        => this.GetLockedPairInRange(new PosPoint(index, 0), new PosPoint(index, size - 1));
-        public SolutionMethod GetLockedPairInVerticalLine(int index)
-        => this.GetLockedPairInRange(new PosPoint(0, index), new PosPoint(size - 1, index));
-        public SolutionMethod GetLockedPairInSquare(PosSquare pos_s)
-        => this.GetLockedPairInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
-        // Locked Triple
-        public SolutionMethod GetLockedTripleInHorizontalLine(int index)
-        => this.GetLockedTripleInRange(new PosPoint(index, 0), new PosPoint(index, size - 1));
-        public SolutionMethod GetLockedTripleInVerticalLine(int index)
-        => this.GetLockedTripleInRange(new PosPoint(0, index), new PosPoint(size - 1, index));
-        public SolutionMethod GetLockedTripleInSquare(PosSquare pos_s)
-        => this.GetLockedTripleInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
-        // Hiden pair
-        public SolutionMethod GetHiddenPairInHorizontalLine(int index)
-        => this.GetHiddenPairInRange(new PosPoint(index, 0), new PosPoint(index, size - 1));
-        public SolutionMethod GetHiddenPairInVerticalLine(int index)
-        => this.GetHiddenPairInRange(new PosPoint(0, index), new PosPoint(size - 1, index));
-        public SolutionMethod GetHiddenPairInSquare(PosSquare pos_s)
-        => this.GetHiddenPairInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
-        // Hiden Truple
-        public SolutionMethod GetHiddenTripleInHorizontalLine(int index)
-        => this.GetHiddenTripleInRange(new PosPoint(index, 0), new PosPoint(index, size - 1));
-        public SolutionMethod GetHiddenTripleInVerticalLine(int index)
-        => this.GetHiddenTripleInRange(new PosPoint(0, index), new PosPoint(size - 1, index));
-        public SolutionMethod GetHiddenTripleInSquare(PosSquare pos_s)
-        => this.GetHiddenTripleInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
-        // Naked Quadruple
-        public SolutionMethod GetNakedQuadrupleInHorizontalLine(int index)
-        => this.GetNakedQuadrupleInRange(new PosPoint(index, 0), new PosPoint(index, size - 1));
-        public SolutionMethod GetNakedQuadrupleInVerticalLine(int index)
-        => this.GetNakedQuadrupleInRange(new PosPoint(0, index), new PosPoint(size - 1, index));
-        public SolutionMethod GetNakedQuadrupleInSquare(PosSquare pos_s)
-        => this.GetNakedQuadrupleInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
-        // Hiden Quadruple
-        public SolutionMethod GetHiddenQuadrupleInHorizontalLine(int index)
-        => this.GetHiddenQuadrupleInRange(new PosPoint(index, 0), new PosPoint(index, size - 1));
-        public SolutionMethod GetHiddenQuadrupleInVerticalLine(int index)
-        => this.GetHiddenQuadrupleInRange(new PosPoint(0, index), new PosPoint(size - 1, index));
-        public SolutionMethod GetHiddenQuadrupleInSquare(PosSquare pos_s)
-        => this.GetHiddenQuadrupleInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
         #endregion
 
         #region SetStartValues
