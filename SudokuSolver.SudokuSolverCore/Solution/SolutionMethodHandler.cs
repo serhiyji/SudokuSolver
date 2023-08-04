@@ -72,5 +72,32 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             }
             return false;
         }
+        public static bool IsValid<TPointMatrix>(BetterMatrix.BetterMatrix<TPointMatrix> matrix, SolutionMethod solution) where TPointMatrix : IPointMatrix, new()
+        {
+            if (!solution.IsSingleValue)
+            {
+                if (solution.PosPoints.Count == 0) { return false; }
+                byte count = (byte)solution.PosPoints.Count;
+                bool hl = SolutionMethodHandler.IsPosPointsInHorizontalLine(solution.PosPoints),
+                    vl = SolutionMethodHandler.IsPosPointsInVerticalLine(solution.PosPoints),
+                    sq = SolutionMethodHandler.IsOneSquareInArrPospoint(solution.PosPoints);
+                foreach (byte item in solution.values)
+                {
+                    if (hl && matrix.GetCountPossiblePosPointInHorizontalLine(solution.PosPoints[0].i, item) > count && solution.IS.hl)
+                    {
+                        return true;
+                    }
+                    else if (vl && matrix.GetCountPossiblePosPointInVerticalLine(solution.PosPoints[0].j, item) > count && solution.IS.vl)
+                    {
+                        return true;
+                    }
+                    else if (sq && matrix.GetCountPossiblePosPointInSquare(new PosSquare(solution.PosPoints[0]), item) > count && solution.IS.sq)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 }

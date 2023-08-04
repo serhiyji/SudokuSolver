@@ -220,7 +220,7 @@ namespace SudokuSolver.SudokuSolverCore
                                 values = new Set<byte>(value),
                                 IS = (false, false, true, true)
                             };
-                            if (this.matrix.IsValid(intersection))
+                            if (SolutionMethodHandler.IsValid(this.matrix, intersection))
                             {
                                 return intersection;
                             }
@@ -247,7 +247,7 @@ namespace SudokuSolver.SudokuSolverCore
                             values = new Set<byte>(value),
                             IS = (false, true, false, false)
                         };
-                        if (this.matrix.IsValid(intersection))
+                        if (SolutionMethodHandler.IsValid(this.matrix, intersection))
                         {
                             return intersection;
                         }
@@ -263,7 +263,7 @@ namespace SudokuSolver.SudokuSolverCore
                             values = new Set<byte>(value),
                             IS = (false, true, false, false)
                         };
-                        if (this.matrix.IsValid(intersection))
+                        if (SolutionMethodHandler.IsValid(this.matrix, intersection))
                         {
                             return intersection;
                         }

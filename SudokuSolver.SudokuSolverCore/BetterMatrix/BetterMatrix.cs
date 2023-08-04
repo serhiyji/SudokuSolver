@@ -411,7 +411,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                             PosPoints = new Arrange<PosPoint>(pos[i], pos[j]),
                             values = this.GetPossValueInPosPoint(pos[i])
                         };
-                        if (this.IsValid(intersection))
+                        if (SolutionMethodHandler.IsValid(this, intersection))
                         {
                             return intersection;
                         }
@@ -444,7 +444,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                                     PosPoints = new Arrange<PosPoint>(pos[i1], pos[i2], pos[i3]),
                                     values = all
                                 };
-                                if (this.IsValid(intersection))
+                                if (SolutionMethodHandler.IsValid(this, intersection))
                                 {
                                     return intersection;
                                 }
@@ -485,7 +485,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                                         PosPoints = new Arrange<PosPoint>(pos[i1], pos[i2], pos[i3], pos[i4]),
                                         values = all
                                     };
-                                    if (this.IsValid(intersection))
+                                    if (SolutionMethodHandler.IsValid(this, intersection))
                                     {
                                         return intersection;
                                     }
@@ -519,7 +519,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                                     PosPoints = new Arrange<PosPoint>(arr1[0], arr1[1]),
                                     values = new Set<byte>(num1, num2)
                                 };
-                                if (this.IsValid(intersection))
+                                if (SolutionMethodHandler.IsValid(this, intersection))
                                 {
                                     return intersection;
                                 }
@@ -574,7 +574,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                                         PosPoints = poss_num,
                                         values = values
                                     };
-                                    if (this.IsValid(intersection))
+                                    if (SolutionMethodHandler.IsValid(this, intersection))
                                     {
                                         return intersection;
                                     }
@@ -637,7 +637,7 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
                                             PosPoints = poss_num,
                                             values = values
                                         };
-                                        if (this.IsValid(intersection))
+                                        if (SolutionMethodHandler.IsValid(this, intersection))
                                         {
                                             return intersection;
                                         }
@@ -752,34 +752,5 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
         { return this.GetSetInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2)); }
         #endregion
 
-        #region Handler IsValid Solution Method
-        public bool IsValid(SolutionMethod solution)
-        {
-            if (!solution.IsSingleValue)
-            {
-                if (solution.PosPoints.Count == 0) { return false; }
-                byte count = (byte)solution.PosPoints.Count;
-                bool hl = SolutionMethodHandler.IsPosPointsInHorizontalLine(solution.PosPoints),
-                    vl = SolutionMethodHandler.IsPosPointsInVerticalLine(solution.PosPoints),
-                    sq = SolutionMethodHandler.IsOneSquareInArrPospoint(solution.PosPoints);
-                foreach (byte item in solution.values)
-                {
-                    if (hl && this.GetCountPossiblePosPointInHorizontalLine(solution.PosPoints[0].i, item) > count && solution.IS.hl)
-                    {
-                        return true;
-                    }
-                    else if (vl && this.GetCountPossiblePosPointInVerticalLine(solution.PosPoints[0].j, item) > count && solution.IS.vl)
-                    {
-                        return true;
-                    }
-                    else if (sq && this.GetCountPossiblePosPointInSquare(new PosSquare(solution.PosPoints[0]), item) > count && solution.IS.sq)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-        #endregion
     }
 }
