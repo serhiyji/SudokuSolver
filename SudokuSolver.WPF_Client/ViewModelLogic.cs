@@ -28,6 +28,7 @@ namespace SudokuSolver.WPF_Client
         {
             this.matrix = new GridSudoku<WPFPointMatrix>();
             this.slover = new SudokuSloverHandler<WPFPointMatrix>(ref this.matrix);
+            this.GenarateSudoku = new GenarateSudokuGrid<WPFPointMatrix>(ref this.matrix);
             this.cursorPosition = new CursorPosition(ref matrix, 4, 4);
             this.points = new ObservableCollection<WPFPointMatrix>();
             this.sudokus = new ObservableCollection<Database.Entities.SavingSudoku>();
@@ -186,7 +187,7 @@ namespace SudokuSolver.WPF_Client
         {
             SudokuSavingHandler.Instance.ToFalse();
             this.VisibilityListSudokus = Visibility.Hidden;
-            this.matrix.GenerateNewSudoku(40);
+            this.GenarateSudoku.GenerateNewSudoku(40);
         }
         private void OpenSudokuFromFileBtnClick()
         {

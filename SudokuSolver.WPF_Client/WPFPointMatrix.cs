@@ -1,6 +1,7 @@
 ﻿using PropertyChanged;
 using SudokuSolver.SudokuSolverCore.Collections;
 using SudokuSolver.SudokuSolverCore.Coordinates;
+using SudokuSolver.SudokuSolverCore.Points;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -46,6 +47,12 @@ namespace SudokuSolver.WPF_Client
             {
                 this.PossibleValues[i] = EmptyColor;
             }
+        }
+        public void SwapFromOtherPointMatrix<TPointMatrix>(ref TPointMatrix other_point) where TPointMatrix : IPointMatrix, new()
+        {
+            (this.value, other_point.value) = (this.value, other_point.value);
+            (this.set, other_point.set) = (this.set, other_point.set);
+            (this.Position, other_point.Position) = (this.Position, other_point.Position);
         }
     }
 }

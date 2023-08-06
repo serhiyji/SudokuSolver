@@ -11,8 +11,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
 {
     public class GridSudoku<TPointMatrix> : Matrix<TPointMatrix> where TPointMatrix : IPointMatrix, new()
     {
-        #region BetterMatrix
-        private readonly Matrix<byte> __example = new Matrix<byte>();
+        #region BetterMatrix        
         public GridSudoku() : base(false)
         {
             for (int i = 0; i < matrix.GetLength(0); i++)
@@ -24,20 +23,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
                     this.matrix[i, j].Position = new PosPoint(i, j);
                 }
             }
-            __example.matrix = new byte[,]
-            {
-                { 1, 2, 3, 7, 8, 9, 4, 5, 6 },
-                { 4, 5, 6, 1, 2, 3, 7, 8, 9 },
-                { 7, 8, 9, 4, 5, 6, 1, 2, 3 },
-
-                { 2, 3, 1, 8, 9, 7, 5, 6, 4 },
-                { 5, 6, 4, 2, 3, 1, 8, 9, 7 },
-                { 8, 9, 7, 5, 6, 4, 2, 3, 1 },
-
-                { 3, 1, 2, 6, 4, 5, 9, 7, 8 },
-                { 6, 4, 5, 9, 7, 8, 3, 1, 2 },
-                { 9, 7, 8, 3, 1, 2, 6, 4, 5 }
-            };
+            
         }
         public void SetValue(PosPoint pos_p, byte value)
         {
@@ -79,26 +65,6 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
                     this.matrix[i, j].value = (byte)mat.matrix[i, j];
                 }
             }
-        }
-        public void GenerateNewSudoku(int count = 0)
-        {
-            Random rand = new Random();
-            this.ClearMatrix();
-            Matrix<byte> mat = __example;
-            mat.ToMixMatrix();
-            for (int c = 0; c < count; c++)
-            {
-                int i = rand.Next(0, 9), j = rand.Next(0, 9);
-                if (this.matrix[i, j].value == 0)
-                {
-                    this.SetValue(new PosPoint(i, j), mat.matrix[i, j]);
-                }
-                else
-                {
-                    c--;
-                }
-            }
-            this.SetPossibleValues();
         }
         public bool LoadSudoku(string data)
         {
