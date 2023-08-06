@@ -21,8 +21,8 @@ namespace SudokuSolver.WPF_Client
 			get { return j; }
 			set { j = value; }
 		}
-		private SudokuSolver.SudokuSolverCore.BetterMatrix.BetterMatrix<WPFPointMatrix> matrix;
-		public CursorPosition(ref SudokuSolver.SudokuSolverCore.BetterMatrix.BetterMatrix<WPFPointMatrix> matrix, int _i = 4, int _j = 4)
+		private SudokuSolver.SudokuSolverCore.SudokuGridHandlers.GridSudoku<WPFPointMatrix> matrix;
+		public CursorPosition(ref SudokuSolver.SudokuSolverCore.SudokuGridHandlers.GridSudoku<WPFPointMatrix> matrix, int _i = 4, int _j = 4)
 		{
 			this.matrix = matrix;
 			I = _i;

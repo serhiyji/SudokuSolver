@@ -2,6 +2,7 @@
 using SudokuSolver.SudokuSolverCore.Coordinates;
 using SudokuSolver.SudokuSolverCore.Points;
 using SudokuSolver.SudokuSolverCore.Solution;
+using SudokuSolver.SudokuSolverCore.SudokuGridHandlers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,9 +14,9 @@ namespace SudokuSolver.SudokuSolverCore
 {
     public class SudokuSloverHandler<TPointMatrix> where TPointMatrix : IPointMatrix, new()
     {
-        public BetterMatrix.BetterMatrix<TPointMatrix> matrix { get; set; }
+        public GridSudoku<TPointMatrix> matrix { get; set; }
         private List<Func<SolutionMethod>> solution_methods;
-        public SudokuSloverHandler(ref BetterMatrix.BetterMatrix<TPointMatrix> matrix)
+        public SudokuSloverHandler(ref GridSudoku<TPointMatrix> matrix)
         {
             this.matrix = matrix;
             this.matrix.SetPossibleValues();

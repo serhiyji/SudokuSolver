@@ -1,6 +1,7 @@
 ﻿using SudokuSolver.SudokuSolverCore.Collections;
 using SudokuSolver.SudokuSolverCore.Coordinates;
 using SudokuSolver.SudokuSolverCore.Points;
+using SudokuSolver.SudokuSolverCore.SudokuGridHandlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             }
             return total;
         }
-        public static bool Intersections_Handler<TPointMatrix>(ref BetterMatrix.BetterMatrix<TPointMatrix> matrix, SolutionMethod inter) where TPointMatrix : IPointMatrix, new()
+        public static bool Intersections_Handler<TPointMatrix>(ref GridSudoku<TPointMatrix> matrix, SolutionMethod inter) where TPointMatrix : IPointMatrix, new()
         {
             if (inter.IsSingleValue)
             {
@@ -72,7 +73,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             }
             return false;
         }
-        public static bool IsValid<TPointMatrix>(BetterMatrix.BetterMatrix<TPointMatrix> matrix, SolutionMethod solution) where TPointMatrix : IPointMatrix, new()
+        public static bool IsValid<TPointMatrix>(GridSudoku<TPointMatrix> matrix, SolutionMethod solution) where TPointMatrix : IPointMatrix, new()
         {
             if (!solution.IsSingleValue)
             {

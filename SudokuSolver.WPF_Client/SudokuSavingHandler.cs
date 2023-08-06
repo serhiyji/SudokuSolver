@@ -1,5 +1,5 @@
 ﻿using Microsoft.Win32;
-using SudokuSolver.SudokuSolverCore.BetterMatrix;
+using SudokuSolver.SudokuSolverCore.SudokuGridHandlers;
 using SudokuSolver.SudokuSolverCore.Points;
 using System;
 using System.Collections.Generic;
@@ -25,7 +25,7 @@ namespace SudokuSolver.WPF_Client
             this.IsSudokuFromDatabase = false;
             this.IdSudokuInDatabase = -1;
         }
-        public void SaveAsSudokuInFile<TPointMatrix>(ref BetterMatrix<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
+        public void SaveAsSudokuInFile<TPointMatrix>(ref GridSudoku<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Text Files (*.txt)|*.txt";
@@ -37,11 +37,11 @@ namespace SudokuSolver.WPF_Client
                 this.SwapPropAccess(File: true, Database: false);
             }
         }
-        public void SaveSudokuInFile<TPointMatrix>(ref BetterMatrix<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
+        public void SaveSudokuInFile<TPointMatrix>(ref GridSudoku<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
         {
             this.SaveToFile(this.FullPath, matrix.SaveSudoku());
         }
-        public void LoadSudokuFromFile<TPointMatrix>(ref BetterMatrix<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
+        public void LoadSudokuFromFile<TPointMatrix>(ref GridSudoku<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Text Files (*.txt)|*.txt";
@@ -60,7 +60,7 @@ namespace SudokuSolver.WPF_Client
                 }
             }
         }
-        public void SaveAsSudokuInDataBase<TPointMatrix>(string nameSudoku, ref BetterMatrix<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
+        public void SaveAsSudokuInDataBase<TPointMatrix>(string nameSudoku, ref GridSudoku<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
         {
             try
             {
@@ -76,7 +76,7 @@ namespace SudokuSolver.WPF_Client
                 MessageBox.Show(ex.Message);
             }
         }
-        public void SaveSudokuInDataBase<TPointMatrix>(ref BetterMatrix<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
+        public void SaveSudokuInDataBase<TPointMatrix>(ref GridSudoku<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
         {
             try
             {
@@ -87,7 +87,7 @@ namespace SudokuSolver.WPF_Client
                 MessageBox.Show(ex.Message);
             }
         }
-        public void LoadSudokuFromDataBase<TPointMatrix>(int idsudoku, ref BetterMatrix<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
+        public void LoadSudokuFromDataBase<TPointMatrix>(int idsudoku, ref GridSudoku<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
         {
             int newid = DatabaseHandler.Instance.LoadSudoku(idsudoku, ref matrix);
             if (newid >= 0)

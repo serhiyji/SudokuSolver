@@ -1,4 +1,4 @@
-﻿using SudokuSolver.SudokuSolverCore.BetterMatrix;
+﻿using SudokuSolver.SudokuSolverCore.SudokuGridHandlers;
 using SudokuSolver.SudokuSolverCore.Collections;
 using SudokuSolver.SudokuSolverCore.Coordinates;
 using SudokuSolver.SudokuSolverCore.Points;

@@ -7,13 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SudokuSolver.SudokuSolverCore.BetterMatrix
+namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
 {
-    public class BetterMatrix<TPointMatrix> : Matrix<TPointMatrix> where TPointMatrix : IPointMatrix, new()
+    public class GridSudoku<TPointMatrix> : Matrix<TPointMatrix> where TPointMatrix : IPointMatrix, new()
     {
         #region BetterMatrix
         private readonly Matrix<byte> __example = new Matrix<byte>();
-        public BetterMatrix() : base(false)
+        public GridSudoku() : base(false)
         {
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
@@ -344,7 +344,6 @@ namespace SudokuSolver.SudokuSolverCore.BetterMatrix
             {
                 for (int j = 0; j < size; j++)
                 {
-                    //this.matrix[i, j].SetToDefoltStatusItem();
                     this.SetValue(new PosPoint(i, j), 0);
                 }
             }

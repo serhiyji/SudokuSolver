@@ -1,6 +1,6 @@
 ﻿using PropertyChanged;
 using SudokuSolver.Database.Context;
-using SudokuSolver.SudokuSolverCore.BetterMatrix;
+using SudokuSolver.SudokuSolverCore.SudokuGridHandlers;
 using SudokuSolver.SudokuSolverCore.Points;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace SudokuSolver.WPF_Client
             this.NameUser = "";
         }
         
-        public int SaveSudoku<TPointMatrix>(string nameSudoku, ref BetterMatrix<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
+        public int SaveSudoku<TPointMatrix>(string nameSudoku, ref GridSudoku<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
         {
             if (!IsLogined) { return -1; }
             try
@@ -49,7 +49,7 @@ namespace SudokuSolver.WPF_Client
             return -1;
 
         }
-        public bool SaveSudoku<TPointMatrix>(int IdSudoku, ref BetterMatrix<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
+        public bool SaveSudoku<TPointMatrix>(int IdSudoku, ref GridSudoku<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
         {
             if (!IsLogined) { return false; }
             try
@@ -70,7 +70,7 @@ namespace SudokuSolver.WPF_Client
             }
             return false;
         }
-        public int LoadSudoku<TPointMatrix>(int IdSudoku, ref BetterMatrix<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
+        public int LoadSudoku<TPointMatrix>(int IdSudoku, ref GridSudoku<TPointMatrix> matrix) where TPointMatrix : IPointMatrix, new()
         {
             try
             {

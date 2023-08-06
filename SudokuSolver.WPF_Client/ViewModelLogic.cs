@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 using PropertyChanged;
 using SudokuSolver.SudokuSolverCore;
-using SudokuSolver.SudokuSolverCore.BetterMatrix;
+using SudokuSolver.SudokuSolverCore.SudokuGridHandlers;
 using SudokuSolver.SudokuSolverCore.Coordinates;
 using SudokuSolver.SudokuSolverCore.Points;
 using SudokuSolver.SudokuSolverCore.Solution;
@@ -26,7 +26,7 @@ namespace SudokuSolver.WPF_Client
     {
         public ViewModel()
         {
-            this.matrix = new BetterMatrix<WPFPointMatrix>();
+            this.matrix = new GridSudoku<WPFPointMatrix>();
             this.slover = new SudokuSloverHandler<WPFPointMatrix>(ref this.matrix);
             this.cursorPosition = new CursorPosition(ref matrix, 4, 4);
             this.points = new ObservableCollection<WPFPointMatrix>();

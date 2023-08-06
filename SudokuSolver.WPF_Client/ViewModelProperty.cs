@@ -10,7 +10,7 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows;
 using SudokuSolver.SudokuSolverCore.Coordinates;
-using SudokuSolver.SudokuSolverCore.BetterMatrix;
+using SudokuSolver.SudokuSolverCore.SudokuGridHandlers;
 using SudokuSolver.SudokuSolverCore;
 using SudokuSolver.SudokuSolverCore.Solution;
 using SudokuSolver.SudokuSolverCore.Points;
@@ -22,7 +22,7 @@ namespace SudokuSolver.WPF_Client
     {
         // Matrix
         private CursorPosition cursorPosition;
-        private BetterMatrix<WPFPointMatrix> matrix;
+        private GridSudoku<WPFPointMatrix> matrix;
         private SudokuSloverHandler<WPFPointMatrix> slover;
         public SolutionMethod Intersection => Solution.Instance.Intersection;
         public bool IsExecute => Solution.Instance.IsExecute;

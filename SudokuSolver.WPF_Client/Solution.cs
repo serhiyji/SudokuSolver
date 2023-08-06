@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using SudokuSolver.SudokuSolverCore.Solution;
 using SudokuSolver.SudokuSolverCore.Coordinates;
 using SudokuSolver.SudokuSolverCore.Collections;
-using SudokuSolver.SudokuSolverCore.BetterMatrix;
+using SudokuSolver.SudokuSolverCore.SudokuGridHandlers;
 
 namespace SudokuSolver.WPF_Client
 {
@@ -24,7 +24,7 @@ namespace SudokuSolver.WPF_Client
             IsExecute = false;
             this.ChangedPosPoints = new List<PosPoint>();
         }
-        public void SelectSolution(ref BetterMatrix<WPFPointMatrix> matrix)
+        public void SelectSolution(ref GridSudoku<WPFPointMatrix> matrix)
         {
             ChangedPosPoints.Clear();
             if (Intersection.IsSingleValue)
@@ -38,7 +38,7 @@ namespace SudokuSolver.WPF_Client
                 RedPointsSet(matrix);
             }
         }
-        public void DeSelectSolution(ref BetterMatrix<WPFPointMatrix> matrix)
+        public void DeSelectSolution(ref GridSudoku<WPFPointMatrix> matrix)
         {
             foreach (var item in ChangedPosPoints)
             {
@@ -46,7 +46,7 @@ namespace SudokuSolver.WPF_Client
             }
         }
 
-        private void GreenPointsSet(ref BetterMatrix<WPFPointMatrix> matrix)
+        private void GreenPointsSet(ref GridSudoku<WPFPointMatrix> matrix)
         {
             foreach (var item in Intersection.PosPoints)
             {
@@ -63,7 +63,7 @@ namespace SudokuSolver.WPF_Client
                 }
             }
         }
-        private void RedPointsSet(BetterMatrix<WPFPointMatrix> matrix)
+        private void RedPointsSet(GridSudoku<WPFPointMatrix> matrix)
         {
             if (Intersection.IsSingleValue) return;
             bool hl = SolutionMethodHandler.IsPosPointsInHorizontalLine(Intersection.PosPoints),
