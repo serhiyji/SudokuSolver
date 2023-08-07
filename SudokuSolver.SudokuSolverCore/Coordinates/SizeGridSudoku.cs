@@ -27,6 +27,16 @@ namespace SudokuSolver.SudokuSolverCore.Coordinates
             CountSqareHorizontal = 2;
             CountSqareVertical = 3;
             AllStandardPosibleValues = new Set<byte>(1, 2, 3, 4, 5, 6);
+        }
+        public static void SetTo9x9Grid()
+        {
+            SizeMatrixHorizontal = 9;
+            SizeMatrixVertical = 9;
+            SizeSquareHorizontal = 3;
+            SizeSquareVertical = 3;
+            CountSqareHorizontal = 3;
+            CountSqareVertical = 3;
+            AllStandardPosibleValues = new Set<byte>(1, 2, 3, 4, 5, 6, 7, 8, 9);
             ExampleSudoku = new Matrix<byte>();
             ExampleSudoku.matrix = new byte[,]
             {
@@ -40,16 +50,6 @@ namespace SudokuSolver.SudokuSolverCore.Coordinates
                 { 6, 4, 5, 9, 7, 8, 3, 1, 2 },
                 { 9, 7, 8, 3, 1, 2, 6, 4, 5 }
             };
-        }
-        public static void SetTo9x9Grid()
-        {
-            SizeMatrixHorizontal = 9;
-            SizeMatrixVertical = 9;
-            SizeSquareHorizontal = 3;
-            SizeSquareVertical = 3;
-            CountSqareHorizontal = 3;
-            CountSqareVertical = 3;
-            AllStandardPosibleValues = new Set<byte>(1, 2, 3, 4, 5, 6, 7, 8, 9);
         }
     }
 }

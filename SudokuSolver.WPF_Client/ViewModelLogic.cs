@@ -37,6 +37,7 @@ namespace SudokuSolver.WPF_Client
 
             this.BindingButtons();
             this.BindGridToBetterMatrix();
+            SudokuSolverCore.Coordinates.SizeGridSudoku.SetTo9x9Grid();
         }
 
         private void BindingButtons()
