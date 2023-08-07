@@ -12,24 +12,9 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
     public class GenarateSudokuGrid<TPointMatrix> where TPointMatrix : IPointMatrix, new()
     {
         private GridSudoku<TPointMatrix> matrix {  get; set; }
-        private readonly Matrix<byte> __example = new Matrix<byte>();
         public GenarateSudokuGrid(ref GridSudoku<TPointMatrix> matrix)
         {
             this.matrix = matrix;
-            __example.matrix = new byte[,]
-            {
-                { 1, 2, 3, 7, 8, 9, 4, 5, 6 },
-                { 4, 5, 6, 1, 2, 3, 7, 8, 9 },
-                { 7, 8, 9, 4, 5, 6, 1, 2, 3 },
-
-                { 2, 3, 1, 8, 9, 7, 5, 6, 4 },
-                { 5, 6, 4, 2, 3, 1, 8, 9, 7 },
-                { 8, 9, 7, 5, 6, 4, 2, 3, 1 },
-
-                { 3, 1, 2, 6, 4, 5, 9, 7, 8 },
-                { 6, 4, 5, 9, 7, 8, 3, 1, 2 },
-                { 9, 7, 8, 3, 1, 2, 6, 4, 5 }
-            };
         }
 
         private void SwapCollomsInMatrix(int col1, int col2)
@@ -111,7 +96,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
                 int i = rand.Next(0, 9), j = rand.Next(0, 9);
                 if (this.matrix[i, j].value == 0)
                 {
-                    this.matrix.SetValue(new PosPoint(i, j), __example.matrix[i, j]);
+                    this.matrix.SetValue(new PosPoint(i, j), SizeGridSudoku.ExampleSudoku.matrix[i, j]);
                 }
                 else
                 {
