@@ -9,16 +9,19 @@ namespace SudokuSolver.SudokuSolverCore.Matrix
     public class Matrix<T> where T : new()
     {
         public T[,] matrix { get; set; }
-        public int size { get; set; } = 9;
 
         //private const int 
         public Matrix(bool IsSetDefaultValues = true)
         {
-            this.matrix = new T[size, size];
+            this.matrix = new T[SizeGridSudoku.SizeMatrixVertical, SizeGridSudoku.SizeMatrixHorizontal];
             if (IsSetDefaultValues)
             {
                 SetDelfaultValues();
             }
+        }
+        public Matrix(T[,] data)
+        {
+            
         }
         public void SetDelfaultValues()
         {

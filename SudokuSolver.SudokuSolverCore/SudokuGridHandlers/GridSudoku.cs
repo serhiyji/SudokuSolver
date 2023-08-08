@@ -71,7 +71,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
             try
             {
                 var dat = data.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-                if (dat.Count() != size * size) return false;
+                if (dat.Count() != SizeGridSudoku.CountCellsMatrix) return false;
                 int k = 0;
                 for (int i = 0; i < matrix.GetLength(0); i++)
                 {
@@ -125,9 +125,9 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
         => this.GetNullValues(pos1, pos2) == 1;
         
         public bool IsOneNullInHorizontalLine(int index)
-        => this.IsOneNullInRange(new PosPoint(index, 0), new PosPoint(index, size - 1));
+        => this.IsOneNullInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1));
         public bool IsOneNullInVerticallLine(int index)
-        => this.IsOneNullInRange(new PosPoint(0, index), new PosPoint(size - 1, index));
+        => this.IsOneNullInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index));
         public bool IsOneNullInSquare(PosSquare pos_s)
         => this.IsOneNullInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
 
@@ -144,9 +144,9 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
         => new Arrange<PosPoint>(this.GetPointMatrixInRange(pos1, pos2).Where(p => p.value == 0 && p.set.Contains(value)).Select(p => p.Position).ToArray());
         
         public Arrange<PosPoint> GetPossPosPointsInHorizontalLine(int index, byte value)
-        => this.GetPossPosPointsInRange(new PosPoint(index, 0), new PosPoint(index, size - 1), value);
+        => this.GetPossPosPointsInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1), value);
         public Arrange<PosPoint> GetPossPosPointsInVerticalLine(int index, byte value)
-        => this.GetPossPosPointsInRange(new PosPoint(0, index), new PosPoint(size - 1, index), value);
+        => this.GetPossPosPointsInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index), value);
         public Arrange<PosPoint> GetPossPosPointsInSquare(PosSquare pos_s, byte value)
         => this.GetPossPosPointsInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2), value);
 
@@ -154,9 +154,9 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
         => (byte)this.GetPointMatrixInRange(pos1, pos2).Where(p => p.set.Contains(value)).Count();
 
         public byte GetCountPossiblePosPointInHorizontalLine(int index, byte value)
-        => this.GetCountPossiblePosPointInRange(new PosPoint(index, 0), new PosPoint(index, size - 1), value);
+        => this.GetCountPossiblePosPointInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1), value);
         public byte GetCountPossiblePosPointInVerticalLine(int index, byte value)
-        => this.GetCountPossiblePosPointInRange(new PosPoint(0, index), new PosPoint(size - 1, index), value);
+        => this.GetCountPossiblePosPointInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index), value);
         public byte GetCountPossiblePosPointInSquare(PosSquare pos_s, byte value)
         => this.GetCountPossiblePosPointInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2), value);
 
@@ -176,9 +176,9 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
         }
 
         public PosPoint GetPosPointNullHorizontalLine(int index)
-        => this.GetOneNullPosPointInRange(new PosPoint(index, 0), new PosPoint(index, size - 1));
+        => this.GetOneNullPosPointInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1));
         public PosPoint GetPosPointNullVerticalLine(int index)
-        => this.GetOneNullPosPointInRange(new PosPoint(0, index), new PosPoint(size - 1, index));
+        => this.GetOneNullPosPointInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index));
         public PosPoint GetPosPointNullSquare(PosSquare pos_s)
         => this.GetOneNullPosPointInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
 
@@ -201,9 +201,9 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
         }
 
         public PosPoint GetFirstPossiblePosPointInHorizontalLine(int index, byte value)
-        => this.GetFirstPossiblePosPointInRange(new PosPoint(index, 0), new PosPoint(index, size - 1), value);
+        => this.GetFirstPossiblePosPointInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1), value);
         public PosPoint GetFirstPossiblePosPointInVerticalLine(int index, byte value)
-        => this.GetFirstPossiblePosPointInRange(new PosPoint(0, index), new PosPoint(size - 1, index), value);
+        => this.GetFirstPossiblePosPointInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index), value);
         public PosPoint GetFirstPossiblePosPointInSquare(PosSquare pos_s, byte value)
         => this.GetFirstPossiblePosPointInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2), value);
 
@@ -245,18 +245,18 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
         }
 
         public bool ClearValueInSetInHorizontalLine(int index, byte value, Arrange<PosPoint> arr = default(Arrange<PosPoint>))
-        => this.ClearValueInSetInRange(new PosPoint(index, 0), new PosPoint(index, size - 1), value, arr);
+        => this.ClearValueInSetInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1), value, arr);
         public bool ClearValueInSetInVerticalLine(int index, byte value, Arrange<PosPoint> arr = default(Arrange<PosPoint>))
-        => this.ClearValueInSetInRange(new PosPoint(0, index), new PosPoint(size - 1, index), value, arr);
+        => this.ClearValueInSetInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index), value, arr);
         public bool ClearValueInSetInSquare(PosSquare pos_s, byte value, Arrange<PosPoint> arr = default(Arrange<PosPoint>))
         => this.ClearValueInSetInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2), value, arr);
         public bool ClearValueInPosPoint(PosPoint pos_p, byte value)
         => this.ClearValueInSetInRange(pos_p, pos_p, value);
 
         public bool ClearValuesInSetInHorizontalLine(int index, Set<byte> values, Arrange<PosPoint> arr = default(Arrange<PosPoint>))
-        => this.ClearValuesInSetInRange(new PosPoint(index, 0), new PosPoint(index, size - 1), values, arr);
+        => this.ClearValuesInSetInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1), values, arr);
         public bool ClearValuesInSetInVerticalLine(int index, Set<byte> values, Arrange<PosPoint> arr = default(Arrange<PosPoint>))
-        => this.ClearValuesInSetInRange(new PosPoint(0, index), new PosPoint(size - 1, index), values, arr);
+        => this.ClearValuesInSetInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index), values, arr);
         public bool ClearValuesInSetInSquare(PosSquare pos_s, Set<byte> values, Arrange<PosPoint> arr = default(Arrange<PosPoint>))
         => this.ClearValuesInSetInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2), values, arr);
         public bool ClearValuesInSetInPosPoint(PosPoint pos_p, Set<byte> values)
@@ -283,9 +283,9 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
             }
         }
         private void SettingPosibleValueInHorizontalLine(int index, byte value)
-        { this.SettingPosibleValue(new PosPoint(index, 0), new PosPoint(index, size - 1), value); }
+        { this.SettingPosibleValue(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1), value); }
         private void SettingPosibleValueInVerticalLine(int index, byte value)
-        { this.SettingPosibleValue(new PosPoint(0, index), new PosPoint(size - 1, index), value); }
+        { this.SettingPosibleValue(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index), value); }
         private void SettingPosibleValueInSquare(PosSquare pos_s, byte value)
         { this.SettingPosibleValue(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2), value); }
         #endregion
@@ -293,9 +293,9 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
         #region SetStartValues
         public void SetPossibleValues()
         {
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < SizeGridSudoku.SizeMatrixVertical; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < SizeGridSudoku.SizeMatrixHorizontal; j++)
                 {
                     if (this.matrix[i, j].value == 0)
                     {
@@ -306,9 +306,9 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
         }
         public void ClearMatrix()
         {
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < SizeGridSudoku.SizeMatrixVertical; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < SizeGridSudoku.SizeMatrixHorizontal; j++)
                 {
                     this.SetValue(new PosPoint(i, j), 0);
                 }
@@ -324,11 +324,11 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
         }
         private Set<byte> GetSetInRange(PosPoint pos1, PosPoint pos2)
         => new Set<byte>(this.GetPointMatrixInRange(pos1, pos2).Where(p => p.value != 0).Select(p => p.value).ToArray());
-     
+        
         private Set<byte> GetSetHorizontalLine(int index)
-        => this.GetSetInRange(new PosPoint(index, 0), new PosPoint(index, size - 1));
+        => this.GetSetInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1));
         private Set<byte> GetSetVerticalLine(int index)
-        => this.GetSetInRange(new PosPoint(0, index), new PosPoint(size - 1, index));
+        => this.GetSetInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index));
         private Set<byte> GetSetSquare(PosSquare pos_s)
         => this.GetSetInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
         #endregion

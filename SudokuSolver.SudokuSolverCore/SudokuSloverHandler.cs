@@ -304,44 +304,44 @@ namespace SudokuSolver.SudokuSolverCore
 
         #region SearchAlgorithmsSolutionPublic
         public SolutionMethod GetLockedPairInHorizontalLine(int index)
-        => this.GetLockedPairInRange(new PosPoint(index, 0), new PosPoint(index, this.matrix.size - 1));
+        => this.GetLockedPairInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1));
         public SolutionMethod GetLockedPairInVerticalLine(int index)
-        => this.GetLockedPairInRange(new PosPoint(0, index), new PosPoint(this.matrix.size - 1, index));
+        => this.GetLockedPairInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index));
         public SolutionMethod GetLockedPairInSquare(PosSquare pos_s)
         => this.GetLockedPairInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
         // Locked Triple
         public SolutionMethod GetLockedTripleInHorizontalLine(int index)
-        => this.GetLockedTripleInRange(new PosPoint(index, 0), new PosPoint(index, this.matrix.size - 1));
+        => this.GetLockedTripleInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1));
         public SolutionMethod GetLockedTripleInVerticalLine(int index)
-        => this.GetLockedTripleInRange(new PosPoint(0, index), new PosPoint(this.matrix.size - 1, index));
+        => this.GetLockedTripleInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index));
         public SolutionMethod GetLockedTripleInSquare(PosSquare pos_s)
         => this.GetLockedTripleInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
         // Hiden pair
         public SolutionMethod GetHiddenPairInHorizontalLine(int index)
-        => this.GetHiddenPairInRange(new PosPoint(index, 0), new PosPoint(index, this.matrix.size - 1));
+        => this.GetHiddenPairInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1));
         public SolutionMethod GetHiddenPairInVerticalLine(int index)
-        => this.GetHiddenPairInRange(new PosPoint(0, index), new PosPoint(this.matrix.size - 1, index));
+        => this.GetHiddenPairInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index));
         public SolutionMethod GetHiddenPairInSquare(PosSquare pos_s)
         => this.GetHiddenPairInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
         // Hiden Truple
         public SolutionMethod GetHiddenTripleInHorizontalLine(int index)
-        => this.GetHiddenTripleInRange(new PosPoint(index, 0), new PosPoint(index, this.matrix.size - 1));
+        => this.GetHiddenTripleInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1));
         public SolutionMethod GetHiddenTripleInVerticalLine(int index)
-        => this.GetHiddenTripleInRange(new PosPoint(0, index), new PosPoint(this.matrix.size - 1, index));
+        => this.GetHiddenTripleInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index));
         public SolutionMethod GetHiddenTripleInSquare(PosSquare pos_s)
         => this.GetHiddenTripleInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
         // Naked Quadruple
         public SolutionMethod GetNakedQuadrupleInHorizontalLine(int index)
-        => this.GetNakedQuadrupleInRange(new PosPoint(index, 0), new PosPoint(index, this.matrix.size - 1));
+        => this.GetNakedQuadrupleInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1));
         public SolutionMethod GetNakedQuadrupleInVerticalLine(int index)
-        => this.GetNakedQuadrupleInRange(new PosPoint(0, index), new PosPoint(this.matrix.size - 1, index));
+        => this.GetNakedQuadrupleInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index));
         public SolutionMethod GetNakedQuadrupleInSquare(PosSquare pos_s)
         => this.GetNakedQuadrupleInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
         // Hiden Quadruple
         public SolutionMethod GetHiddenQuadrupleInHorizontalLine(int index)
-        => this.GetHiddenQuadrupleInRange(new PosPoint(index, 0), new PosPoint(index, this.matrix.size - 1));
+        => this.GetHiddenQuadrupleInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1));
         public SolutionMethod GetHiddenQuadrupleInVerticalLine(int index)
-        => this.GetHiddenQuadrupleInRange(new PosPoint(0, index), new PosPoint(this.matrix.size - 1, index));
+        => this.GetHiddenQuadrupleInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index));
         public SolutionMethod GetHiddenQuadrupleInSquare(PosSquare pos_s)
         => this.GetHiddenQuadrupleInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
         #endregion
