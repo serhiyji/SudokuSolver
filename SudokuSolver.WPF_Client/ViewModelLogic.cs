@@ -141,11 +141,11 @@ namespace SudokuSolver.WPF_Client
         #region Solution
         private void NextHintBtnClick()
         {
-            SolutionMethod intersection = this.slover.NextSlover();
-            if (!(intersection is null))
+            SolutionMethod Solution_method = this.slover.NextSlover();
+            if (!(Solution_method is null))
             {
                 Solution.Instance.IsExecute = true;
-                Solution.Instance.Intersection.SetValues(intersection);
+                Solution.Instance.Solution_method.SetValues(Solution_method);
                 Solution.Instance.SelectSolution(ref this.matrix);
             }
             else
@@ -156,21 +156,22 @@ namespace SudokuSolver.WPF_Client
         private void ExecuteBtnClick()
         {
             Solution.Instance.IsExecute = false;
-            bool res = SolutionMethodHandler.Intersections_Handler(ref this.matrix, Solution.Instance.Intersection);
+            bool res = SolutionMethodHandler.Solution_methods_Handler(ref this.matrix, Solution.Instance.Solution_method);
             Solution.Instance.DeSelectSolution(ref this.matrix);
-            Solution.Instance.Intersection.SetDefoltValues();
+            Solution.Instance.Solution_method.SetDefoltValues();
         }
         private void SloveUpToBtnClick()
         {
             while(true)
             {
-                SolutionMethod intersection = this.slover.NextSlover();
-                if (!(intersection is null))
+                SolutionMethod Solution_method = this.slover.NextSlover();
+                if (!(Solution_method is null))
                 {
-                    SolutionMethodHandler.Intersections_Handler(ref this.matrix, intersection);
+                    SolutionMethodHandler.Solution_methods_Handler(ref this.matrix, Solution_method);
                 }
                 else
                 {
+                    MessageBox.Show("Рішення не було знайдено");
                     break;
                 }
             };
@@ -179,7 +180,7 @@ namespace SudokuSolver.WPF_Client
         {
             Solution.Instance.IsExecute = false;
             Solution.Instance.DeSelectSolution(ref this.matrix);
-            Solution.Instance.Intersection.SetDefoltValues();
+            Solution.Instance.Solution_method.SetDefoltValues();
         }
         #endregion
 

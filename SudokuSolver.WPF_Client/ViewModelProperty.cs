@@ -25,7 +25,7 @@ namespace SudokuSolver.WPF_Client
         private GridSudoku<WPFPointMatrix> matrix;
         private SudokuSloverHandler<WPFPointMatrix> slover;
         private GenarateSudokuGrid<WPFPointMatrix> GenarateSudoku;
-        public SolutionMethod Intersection => Solution.Instance.Intersection;
+        public SolutionMethod Solution_method => Solution.Instance.Solution_method;
         public bool IsExecute => Solution.Instance.IsExecute;
         private ObservableCollection<WPFPointMatrix> points { get; set; }
         public IEnumerable<WPFPointMatrix> Points => points;

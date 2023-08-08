@@ -15,22 +15,22 @@ namespace SudokuSolver.WPF_Client
     [AddINotifyPropertyChangedInterface]
     public class Solution : SudokuSolver.Extensions.Singleton<Solution>
     {
-        public SolutionMethod Intersection { get; set; }
+        public SolutionMethod Solution_method { get; set; }
         public bool IsExecute { get; set; }
         private List<PosPoint> ChangedPosPoints;
         public Solution()
         {
-            Intersection = new SolutionMethod();
+            Solution_method = new SolutionMethod();
             IsExecute = false;
             this.ChangedPosPoints = new List<PosPoint>();
         }
         public void SelectSolution(ref GridSudoku<WPFPointMatrix> matrix)
         {
             ChangedPosPoints.Clear();
-            if (Intersection.IsSingleValue)
+            if (Solution_method.IsSingleValue)
             {
-                matrix[Intersection.PosPointNewValue].PossibleValues[Intersection.NewValue - 1] = WPFPointMatrix.GreenColor;
-                ChangedPosPoints.Add(Intersection.PosPointNewValue);
+                matrix[Solution_method.PosPointNewValue].PossibleValues[Solution_method.NewValue - 1] = WPFPointMatrix.GreenColor;
+                ChangedPosPoints.Add(Solution_method.PosPointNewValue);
             }
             else
             {
@@ -48,9 +48,9 @@ namespace SudokuSolver.WPF_Client
 
         private void GreenPointsSet(ref GridSudoku<WPFPointMatrix> matrix)
         {
-            foreach (var item in Intersection.PosPoints)
+            foreach (var item in Solution_method.PosPoints)
             {
-                foreach (var val in Intersection.values)
+                foreach (var val in Solution_method.Values)
                 {
                     if (matrix.matrix[item.i, item.j].set.Contains(val))
                     {
@@ -65,11 +65,11 @@ namespace SudokuSolver.WPF_Client
         }
         private void RedPointsSet(GridSudoku<WPFPointMatrix> matrix)
         {
-            if (Intersection.IsSingleValue) return;
-            bool hl = SolutionMethodHandler.IsPosPointsInHorizontalLine(Intersection.PosPoints),
-                vl = SolutionMethodHandler.IsPosPointsInVerticalLine(Intersection.PosPoints),
-                sq = SolutionMethodHandler.IsOneSquareInArrPospoint(Intersection.PosPoints);
-            Set<PosPoint> pospoint = new Set<PosPoint>(Intersection.PosPoints);
+            if (Solution_method.IsSingleValue) return;
+            bool hl = SolutionMethodHandler.IsPosPointsInHorizontalLine(Solution_method.PosPoints),
+                vl = SolutionMethodHandler.IsPosPointsInVerticalLine(Solution_method.PosPoints),
+                sq = SolutionMethodHandler.IsOneSquareInArrPospoint(Solution_method.PosPoints);
+            Set<PosPoint> pospoint = new Set<PosPoint>(Solution_method.PosPoints);
             Func<byte, Set<PosPoint>, bool> func = (value, RedPoints) =>
             {
                 foreach (PosPoint item in RedPoints.Where(item => matrix.matrix[item.i, item.j].set.Contains(value)))
@@ -83,21 +83,21 @@ namespace SudokuSolver.WPF_Client
                 return false;
             };
 
-            foreach (byte value in Intersection.values)
+            foreach (byte value in Solution_method.Values)
             {
                 if (hl)
                 {
-                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInHorizontalLine(Intersection.PosPoints[0].i, value)) - pospoint;
+                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInHorizontalLine(Solution_method.PosPoints[0].i, value)) - pospoint;
                     func?.Invoke(value, RedPoints);
                 }
                 if (vl)
                 {
-                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInVerticalLine(Intersection.PosPoints[0].j, value)) - pospoint;
+                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInVerticalLine(Solution_method.PosPoints[0].j, value)) - pospoint;
                     func?.Invoke(value, RedPoints);
                 }
                 if (sq)
                 {
-                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInSquare(new PosSquare(Intersection.PosPoints[0]), value)) - pospoint;
+                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInSquare(new PosSquare(Solution_method.PosPoints[0]), value)) - pospoint;
                     func?.Invoke(value, RedPoints);
                 }
             }

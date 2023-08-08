@@ -42,7 +42,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             }
             return total;
         }
-        public static bool Intersections_Handler<TPointMatrix>(ref GridSudoku<TPointMatrix> matrix, SolutionMethod inter) where TPointMatrix : IPointMatrix, new()
+        public static bool Solution_methods_Handler<TPointMatrix>(ref GridSudoku<TPointMatrix> matrix, SolutionMethod inter) where TPointMatrix : IPointMatrix, new()
         {
             if (inter.IsSingleValue)
             {
@@ -56,18 +56,18 @@ namespace SudokuSolver.SudokuSolverCore.Solution
                 {
                     for (int i = 0; i < inter.PosPoints.Count(); i++)
                     {
-                        total = matrix.ClearValuesInSetInPosPoint(inter.PosPoints[i], matrix.GetPossValueInPosPoint(inter.PosPoints[i]) - inter.values) || total;
+                        total = matrix.ClearValuesInSetInPosPoint(inter.PosPoints[i], matrix.GetPossValueInPosPoint(inter.PosPoints[i]) - inter.Values) || total;
                     }
                 }
 
                 total = (inter.IS.sq) ? (IsOneSquareInArrPospoint(inter.PosPoints)) ?
-                    matrix.ClearValuesInSetInSquare(new PosSquare(inter.PosPoints[0]), inter.values, inter.PosPoints) || total : total : total;
+                    matrix.ClearValuesInSetInSquare(new PosSquare(inter.PosPoints[0]), inter.Values, inter.PosPoints) || total : total : total;
 
                 total = (inter.IS.hl) ? (IsPosPointsInHorizontalLine(inter.PosPoints)) ?
-                    matrix.ClearValuesInSetInHorizontalLine(inter.PosPoints[0].i, inter.values, inter.PosPoints) || total : total : total;
+                    matrix.ClearValuesInSetInHorizontalLine(inter.PosPoints[0].i, inter.Values, inter.PosPoints) || total : total : total;
 
                 total = (inter.IS.vl) ? (IsPosPointsInVerticalLine(inter.PosPoints)) ?
-                    matrix.ClearValuesInSetInVerticalLine(inter.PosPoints[0].j, inter.values, inter.PosPoints) || total : total : total;
+                    matrix.ClearValuesInSetInVerticalLine(inter.PosPoints[0].j, inter.Values, inter.PosPoints) || total : total : total;
 
                 return total;
             }
@@ -82,7 +82,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
                 bool hl = SolutionMethodHandler.IsPosPointsInHorizontalLine(solution.PosPoints),
                     vl = SolutionMethodHandler.IsPosPointsInVerticalLine(solution.PosPoints),
                     sq = SolutionMethodHandler.IsOneSquareInArrPospoint(solution.PosPoints);
-                foreach (byte item in solution.values)
+                foreach (byte item in solution.Values)
                 {
                     if (hl && matrix.GetCountPossiblePosPointInHorizontalLine(solution.PosPoints[0].i, item) > count && solution.IS.hl)
                     {

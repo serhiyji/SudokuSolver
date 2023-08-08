@@ -19,7 +19,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
     }
     public partial class SolutionMethod
     {
-        public AlgorithmSolutionMethod algorithm { get; set; }
+        public AlgorithmSolutionMethod Algorithm { get; set; }
         public bool IsSingleValue { get; set; }
         // 
         public byte NewValue { get; set; }
@@ -30,7 +30,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
         //
 
         public Arrange<PosPoint> PosPoints { get; set; }
-        public Set<byte> values { get; set; }
+        public Set<byte> Values { get; set; }
 
 
         // 
@@ -49,8 +49,8 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             NewValue = newValue;
             PosPointNewValue = posPointNewValue;
             PosPoints = posPoints;
-            this.values = values;
-            algorithm = AlgorithmSolutionMethod.None;
+            this.Values = values;
+            Algorithm = AlgorithmSolutionMethod.None;
             IS = (true, true, true, true);
         }
 
@@ -60,20 +60,20 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             NewValue = 0;
             PosPointNewValue = new PosPoint();
             PosPoints = new Arrange<PosPoint>();
-            values = new Set<byte>();
+            Values = new Set<byte>();
             IS = (true, true, true, true);
-            algorithm = AlgorithmSolutionMethod.None;
+            Algorithm = AlgorithmSolutionMethod.None;
         }
-        public void SetValues(SolutionMethod intersection)
+        public void SetValues(SolutionMethod Solution_method)
         {
-            IsSingleValue = intersection.IsSingleValue;
-            NewValue = intersection.NewValue;
-            PosPointNewValue.i = intersection.PosPointNewValue.i;
-            PosPointNewValue.j = intersection.PosPointNewValue.j;
-            PosPoints = intersection.PosPoints;
-            values = intersection.values;
-            IS = intersection.IS;
-            algorithm = intersection.algorithm;
+            IsSingleValue = Solution_method.IsSingleValue;
+            NewValue = Solution_method.NewValue;
+            PosPointNewValue.i = Solution_method.PosPointNewValue.i;
+            PosPointNewValue.j = Solution_method.PosPointNewValue.j;
+            PosPoints = Solution_method.PosPoints;
+            Values = Solution_method.Values;
+            IS = Solution_method.IS;
+            Algorithm = Solution_method.Algorithm;
         }
     }
 }

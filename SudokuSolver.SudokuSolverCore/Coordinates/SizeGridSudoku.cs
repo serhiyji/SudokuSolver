@@ -29,8 +29,7 @@ namespace SudokuSolver.SudokuSolverCore.Coordinates
             CountSqareVertical = 3;
             CountCellsMatrix = 81;
             AllStandardPosibleValues = new Set<byte>(1, 2, 3, 4, 5, 6, 7, 8, 9);
-            ExampleSudoku = new Matrix<byte>();
-            ExampleSudoku.matrix = new byte[,]
+            ExampleSudoku = new Matrix<byte>(new byte[,]
             {
                 { 1, 2, 3, 7, 8, 9, 4, 5, 6 },
                 { 4, 5, 6, 1, 2, 3, 7, 8, 9 },
@@ -41,7 +40,7 @@ namespace SudokuSolver.SudokuSolverCore.Coordinates
                 { 3, 1, 2, 6, 4, 5, 9, 7, 8 },
                 { 6, 4, 5, 9, 7, 8, 3, 1, 2 },
                 { 9, 7, 8, 3, 1, 2, 6, 4, 5 }
-            };
+            });
         }
     }
 }

@@ -54,16 +54,16 @@ namespace SudokuSolver.SudokuSolverCore
                     if ((pos[i] != pos[j]) && (this.matrix[pos[i].i, pos[i].j].set == this.matrix[pos[j].i, pos[j].j].set)
                         && (this.matrix[pos[i].i, pos[i].j].set.Count() == 2))
                     {
-                        SolutionMethod intersection = new SolutionMethod()
+                        SolutionMethod Solution_method = new SolutionMethod()
                         {
-                            algorithm = AlgorithmSolutionMethod.Locked_Pair,
+                            Algorithm = AlgorithmSolutionMethod.Locked_Pair,
                             IsSingleValue = false,
                             PosPoints = new Arrange<PosPoint>(pos[i], pos[j]),
-                            values = this.matrix.GetPossValueInPosPoint(pos[i])
+                            Values = this.matrix.GetPossValueInPosPoint(pos[i])
                         };
-                        if (SolutionMethodHandler.IsValid(this.matrix, intersection))
+                        if (SolutionMethodHandler.IsValid(this.matrix, Solution_method))
                         {
-                            return intersection;
+                            return Solution_method;
                         }
                     }
                 }
@@ -87,16 +87,16 @@ namespace SudokuSolver.SudokuSolverCore
                             Set<byte> all = set1 + set2 + set3;
                             if ((set1.Count() >= 2 && set1.Count() <= 3) && (set2.Count() >= 2 && set2.Count() <= 3) && (set3.Count() >= 2 && set3.Count() <= 3) && all.Count() == 3)
                             {
-                                SolutionMethod intersection = new SolutionMethod()
+                                SolutionMethod Solution_method = new SolutionMethod()
                                 {
-                                    algorithm = AlgorithmSolutionMethod.Locked_Triple,
+                                    Algorithm = AlgorithmSolutionMethod.Locked_Triple,
                                     IsSingleValue = false,
                                     PosPoints = new Arrange<PosPoint>(pos[i1], pos[i2], pos[i3]),
-                                    values = all
+                                    Values = all
                                 };
-                                if (SolutionMethodHandler.IsValid(this.matrix, intersection))
+                                if (SolutionMethodHandler.IsValid(this.matrix, Solution_method))
                                 {
-                                    return intersection;
+                                    return Solution_method;
                                 }
                             }
                         }
@@ -128,16 +128,16 @@ namespace SudokuSolver.SudokuSolverCore
                                 if ((set1.Count() >= 2 && set1.Count() <= 4) && (set2.Count() >= 2 && set2.Count() <= 4)
                                  && (set3.Count() >= 2 && set3.Count() <= 4) && (set4.Count() >= 2 && set4.Count() <= 4) && all.Count() == 4)
                                 {
-                                    SolutionMethod intersection = new SolutionMethod()
+                                    SolutionMethod Solution_method = new SolutionMethod()
                                     {
-                                        algorithm = AlgorithmSolutionMethod.Naked_Quadruple,
+                                        Algorithm = AlgorithmSolutionMethod.Naked_Quadruple,
                                         IsSingleValue = false,
                                         PosPoints = new Arrange<PosPoint>(pos[i1], pos[i2], pos[i3], pos[i4]),
-                                        values = all
+                                        Values = all
                                     };
-                                    if (SolutionMethodHandler.IsValid(this.matrix, intersection))
+                                    if (SolutionMethodHandler.IsValid(this.matrix, Solution_method))
                                     {
-                                        return intersection;
+                                        return Solution_method;
                                     }
                                 }
                             }
@@ -162,16 +162,16 @@ namespace SudokuSolver.SudokuSolverCore
                             Arrange<PosPoint> arr1 = this.matrix.GetPossPosPointsInRange(pos1, pos2, num1), arr2 = this.matrix.GetPossPosPointsInRange(pos1, pos2, num2);
                             if (arr1 == arr2)
                             {
-                                SolutionMethod intersection = new SolutionMethod()
+                                SolutionMethod Solution_method = new SolutionMethod()
                                 {
-                                    algorithm = AlgorithmSolutionMethod.Hidden_Pair,
+                                    Algorithm = AlgorithmSolutionMethod.Hidden_Pair,
                                     IsSingleValue = false,
                                     PosPoints = new Arrange<PosPoint>(arr1[0], arr1[1]),
-                                    values = new Set<byte>(num1, num2)
+                                    Values = new Set<byte>(num1, num2)
                                 };
-                                if (SolutionMethodHandler.IsValid(this.matrix, intersection))
+                                if (SolutionMethodHandler.IsValid(this.matrix, Solution_method))
                                 {
-                                    return intersection;
+                                    return Solution_method;
                                 }
                             }
                         }
@@ -217,16 +217,16 @@ namespace SudokuSolver.SudokuSolverCore
                                 values = values - set_other;
                                 if (values.Count() == 3)
                                 {
-                                    SolutionMethod intersection = new SolutionMethod()
+                                    SolutionMethod Solution_method = new SolutionMethod()
                                     {
-                                        algorithm = AlgorithmSolutionMethod.Hidden_Triple,
+                                        Algorithm = AlgorithmSolutionMethod.Hidden_Triple,
                                         IsSingleValue = false,
                                         PosPoints = poss_num,
-                                        values = values
+                                        Values = values
                                     };
-                                    if (SolutionMethodHandler.IsValid(this.matrix, intersection))
+                                    if (SolutionMethodHandler.IsValid(this.matrix, Solution_method))
                                     {
-                                        return intersection;
+                                        return Solution_method;
                                     }
                                 }
                             }
@@ -280,16 +280,16 @@ namespace SudokuSolver.SudokuSolverCore
                                     values = values - set_other;
                                     if (values.Count() == 4)
                                     {
-                                        SolutionMethod intersection = new SolutionMethod()
+                                        SolutionMethod Solution_method = new SolutionMethod()
                                         {
-                                            algorithm = AlgorithmSolutionMethod.Hidden_Quadruple,
+                                            Algorithm = AlgorithmSolutionMethod.Hidden_Quadruple,
                                             IsSingleValue = false,
                                             PosPoints = poss_num,
-                                            values = values
+                                            Values = values
                                         };
-                                        if (SolutionMethodHandler.IsValid(this.matrix, intersection))
+                                        if (SolutionMethodHandler.IsValid(this.matrix, Solution_method))
                                         {
-                                            return intersection;
+                                            return Solution_method;
                                         }
                                     }
                                 }
@@ -360,7 +360,7 @@ namespace SudokuSolver.SudokuSolverCore
                     if (NewValue_ == 0) continue;
                     return new SolutionMethod()
                     {
-                        algorithm = AlgorithmSolutionMethod.Full_House,
+                        Algorithm = AlgorithmSolutionMethod.Full_House,
                         IsSingleValue = true,
                         NewValue = NewValue_,
                         PosPointNewValue = pos_p
@@ -377,7 +377,7 @@ namespace SudokuSolver.SudokuSolverCore
                     if (NewValue_ == 0) continue;
                     return new SolutionMethod()
                     {
-                        algorithm = AlgorithmSolutionMethod.Full_House,
+                        Algorithm = AlgorithmSolutionMethod.Full_House,
                         IsSingleValue = true,
                         NewValue = NewValue_,
                         PosPointNewValue = pos_p
@@ -397,7 +397,7 @@ namespace SudokuSolver.SudokuSolverCore
                         if (NewValue_ == 0) continue;
                         return new SolutionMethod()
                         {
-                            algorithm = AlgorithmSolutionMethod.Full_House,
+                            Algorithm = AlgorithmSolutionMethod.Full_House,
                             IsSingleValue = true,
                             NewValue = NewValue_,
                             PosPointNewValue = pos_p
@@ -420,7 +420,7 @@ namespace SudokuSolver.SudokuSolverCore
                         if (NewValue_ == 0) continue;
                         return new SolutionMethod()
                         {
-                            algorithm = AlgorithmSolutionMethod.Naked_Single,
+                            Algorithm = AlgorithmSolutionMethod.Naked_Single,
                             IsSingleValue = true,
                             NewValue = NewValue_,
                             PosPointNewValue = pos_p
@@ -440,7 +440,7 @@ namespace SudokuSolver.SudokuSolverCore
                     {
                         return new SolutionMethod()
                         {
-                            algorithm = AlgorithmSolutionMethod.Hidden_Single,
+                            Algorithm = AlgorithmSolutionMethod.Hidden_Single,
                             IsSingleValue = true,
                             NewValue = value,
                             PosPointNewValue = this.matrix.GetFirstPossiblePosPointInHorizontalLine(i, value)
@@ -453,7 +453,7 @@ namespace SudokuSolver.SudokuSolverCore
                     {
                         return new SolutionMethod()
                         {
-                            algorithm = AlgorithmSolutionMethod.Hidden_Single,
+                            Algorithm = AlgorithmSolutionMethod.Hidden_Single,
                             IsSingleValue = true,
                             NewValue = value,
                             PosPointNewValue = this.matrix.GetFirstPossiblePosPointInVerticalLine(i, value)
@@ -468,7 +468,7 @@ namespace SudokuSolver.SudokuSolverCore
                         {
                             return new SolutionMethod()
                             {
-                                algorithm = AlgorithmSolutionMethod.Hidden_Single,
+                                Algorithm = AlgorithmSolutionMethod.Hidden_Single,
                                 IsSingleValue = true,
                                 NewValue = value,
                                 PosPointNewValue = this.matrix.GetFirstPossiblePosPointInSquare(new PosSquare(i, j), value)
@@ -520,17 +520,17 @@ namespace SudokuSolver.SudokuSolverCore
                         int size_ = this.matrix.GetCountPossiblePosPointInSquare(pos_s, value);
                         if (size_ == 3 || size_ == 2)
                         {
-                            SolutionMethod intersection = new SolutionMethod()
+                            SolutionMethod Solution_method = new SolutionMethod()
                             {
-                                algorithm = AlgorithmSolutionMethod.Locked_Candidates_Type_Pointing,
+                                Algorithm = AlgorithmSolutionMethod.Locked_Candidates_Type_Pointing,
                                 IsSingleValue = false,
                                 PosPoints = this.matrix.GetPossPosPointsInSquare(pos_s, value),
-                                values = new Set<byte>(value),
+                                Values = new Set<byte>(value),
                                 IS = (false, false, true, true)
                             };
-                            if (SolutionMethodHandler.IsValid(this.matrix, intersection))
+                            if (SolutionMethodHandler.IsValid(this.matrix, Solution_method))
                             {
-                                return intersection;
+                                return Solution_method;
                             }
                         }
                     }
@@ -547,33 +547,33 @@ namespace SudokuSolver.SudokuSolverCore
                     int count_h = this.matrix.GetCountPossiblePosPointInHorizontalLine(i, value);
                     if (count_h <= 3 && count_h >= 2)
                     {
-                        SolutionMethod intersection = new SolutionMethod()
+                        SolutionMethod Solution_method = new SolutionMethod()
                         {
-                            algorithm = AlgorithmSolutionMethod.Locked_Candidates_Type_Claiming,
+                            Algorithm = AlgorithmSolutionMethod.Locked_Candidates_Type_Claiming,
                             IsSingleValue = false,
                             PosPoints = this.matrix.GetPossPosPointsInHorizontalLine(i, value),
-                            values = new Set<byte>(value),
+                            Values = new Set<byte>(value),
                             IS = (false, true, false, false)
                         };
-                        if (SolutionMethodHandler.IsValid(this.matrix, intersection))
+                        if (SolutionMethodHandler.IsValid(this.matrix, Solution_method))
                         {
-                            return intersection;
+                            return Solution_method;
                         }
                     }
 
                     int count_v = this.matrix.GetCountPossiblePosPointInVerticalLine(i, value);
                     if (count_v <= 3 && count_v >= 2)
                     {
-                        SolutionMethod intersection = new SolutionMethod()
+                        SolutionMethod Solution_method = new SolutionMethod()
                         {
                             IsSingleValue = false,
                             PosPoints = this.matrix.GetPossPosPointsInVerticalLine(i, value),
-                            values = new Set<byte>(value),
+                            Values = new Set<byte>(value),
                             IS = (false, true, false, false)
                         };
-                        if (SolutionMethodHandler.IsValid(this.matrix, intersection))
+                        if (SolutionMethodHandler.IsValid(this.matrix, Solution_method))
                         {
-                            return intersection;
+                            return Solution_method;
                         }
                     }
                 }
@@ -684,10 +684,10 @@ namespace SudokuSolver.SudokuSolverCore
         {
             foreach (Func<SolutionMethod> item in solution_methods)
             {
-                SolutionMethod intersection = item.Invoke();
-                if (!(intersection is null))
+                SolutionMethod Solution_method = item.Invoke();
+                if (!(Solution_method is null))
                 {
-                    return intersection;
+                    return Solution_method;
                 }
             }
             return null;

@@ -8,9 +8,8 @@ namespace SudokuSolver.SudokuSolverCore.Matrix
 {
     public class Matrix<T> where T : new()
     {
-        public T[,] matrix { get; set; }
+        public T[,] matrix { get; protected set; }
 
-        //private const int 
         public Matrix(bool IsSetDefaultValues = true)
         {
             this.matrix = new T[SizeGridSudoku.SizeMatrixVertical, SizeGridSudoku.SizeMatrixHorizontal];
@@ -19,9 +18,9 @@ namespace SudokuSolver.SudokuSolverCore.Matrix
                 SetDelfaultValues();
             }
         }
-        public Matrix(T[,] data)
+        public Matrix(T[,] data, bool IsSetDefaultValues = true) : this(IsSetDefaultValues)
         {
-            
+            this.matrix = data;
         }
         public void SetDelfaultValues()
         {
@@ -45,7 +44,7 @@ namespace SudokuSolver.SudokuSolverCore.Matrix
             {
                 return matrix[i, j];
             }
-            set
+            protected set
             {
                 matrix[i, j] = value;
             }
@@ -56,7 +55,7 @@ namespace SudokuSolver.SudokuSolverCore.Matrix
             {
                 return matrix[pos_p.i, pos_p.j];
             }
-            set
+            protected set
             {
                 matrix[pos_p.i, pos_p.j] = value;
             }

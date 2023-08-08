@@ -320,7 +320,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
             Set<byte> set1 = new Set<byte>(this.GetSetHorizontalLine(pos_p.i));
             Set<byte> set2 = new Set<byte>(this.GetSetVerticalLine(pos_p.j));
             Set<byte> set3 = new Set<byte>(this.GetSetSquare(new PosSquare(pos_p)));
-            return (new Set<byte>(1, 2, 3, 4, 5, 6, 7, 8, 9) - (set1 + set2 + set3));
+            return (SizeGridSudoku.AllStandardPosibleValues - (set1 + set2 + set3));
         }
         private Set<byte> GetSetInRange(PosPoint pos1, PosPoint pos2)
         => new Set<byte>(this.GetPointMatrixInRange(pos1, pos2).Where(p => p.value != 0).Select(p => p.value).ToArray());
