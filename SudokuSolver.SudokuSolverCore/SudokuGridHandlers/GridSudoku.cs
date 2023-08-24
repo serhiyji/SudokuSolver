@@ -11,7 +11,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
 {
     public class GridSudoku<TPointMatrix> : Matrix<TPointMatrix> where TPointMatrix : IPointMatrix, new()
     {
-        #region BetterMatrix        
+        #region GridSudoku        
         public GridSudoku() : base(false)
         {
             for (int i = 0; i < matrix.GetLength(0); i++)
@@ -20,6 +20,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
                 {
                     this.matrix[i, j] = new TPointMatrix();
                     this.matrix[i, j].value = 0;
+                    this.matrix[i, j].set = new Set<byte>();
                     this.matrix[i, j].Position = new PosPoint(i, j);
                 }
             }

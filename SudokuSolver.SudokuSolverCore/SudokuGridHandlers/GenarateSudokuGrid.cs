@@ -23,7 +23,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
             if (col1 < 0 || col2 < 0 || col1 > 8 || col2 > 8) return;
             for (int i = 0; i < 9; i++)
             {
-                this.matrix[i, col1].SwapFromOtherPointMatrix(ref this.matrix.matrix[i, col2]);
+                (this.matrix.matrix[i, col1], this.matrix.matrix[i, col2]) = (this.matrix.matrix[i, col2], this.matrix.matrix[i, col1]);
             }
         }
         private void SwapRowsInMatrix(int row1, int row2)
@@ -32,7 +32,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
             if (row1 < 0 || row2 < 0 || row1 > 8 || row2 > 8) return;
             for (int i = 0; i < 9; i++)
             {
-                this.matrix.matrix[row1, i].SwapFromOtherPointMatrix(ref this.matrix.matrix[row2, i]);
+                (this.matrix.matrix[row1, i], this.matrix.matrix[row2, i]) = (this.matrix.matrix[row2, i], this.matrix.matrix[row1, i]);
             }
         }
         private void SwapColBlocksMatrix(int col1, int col2)

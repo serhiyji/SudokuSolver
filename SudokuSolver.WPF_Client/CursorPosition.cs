@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SudokuSolver.SudokuSolverCore.Coordinates;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,7 @@ namespace SudokuSolver.WPF_Client
 			this.matrix = matrix;
 			I = _i;
 			J = _j;
-			this.SetPosition(null);
+			this.SetPosition(new PosPoint(4, 4));
 		}
 		public void SetPosition(Side? side)
 		{
@@ -55,5 +56,11 @@ namespace SudokuSolver.WPF_Client
 			catch (Exception) { }
 			matrix.matrix[I, J].IsSelected = true;
 		}
-	}
+        public void SetPosition(PosPoint pos)
+        {
+            matrix.matrix[I, J].IsSelected = false;
+			I = pos.i; J = pos.j;
+            matrix.matrix[I, J].IsSelected = true;
+        }
+    }
 }

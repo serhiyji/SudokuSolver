@@ -189,7 +189,10 @@ namespace SudokuSolver.WPF_Client
         {
             SudokuSavingHandler.Instance.ToFalse();
             this.VisibilityListSudokus = Visibility.Hidden;
+            this.matrix.matrix[this.cursorPosition.I, this.cursorPosition.J].IsSelected = false;
             this.GenarateSudoku.GenerateNewSudoku(40);
+            this.BindGridToBetterMatrix();
+            this.cursorPosition.SetPosition(new PosPoint(4, 4));
         }
         private void OpenSudokuFromFileBtnClick()
         {

@@ -15,7 +15,6 @@ namespace SudokuSolver.SudokuSolverCore.Points
         public Set<byte> set { get; set; }
         public PosPoint Position { get; set; }
 
-        void SwapFromOtherPointMatrix<TPointMatrix>(ref TPointMatrix other_point) where TPointMatrix : IPointMatrix, new();
     }
     public partial class PointMatrix : IPointMatrix
     {
@@ -52,13 +51,6 @@ namespace SudokuSolver.SudokuSolverCore.Points
         public override int GetHashCode()
         {
             return base.GetHashCode();
-        }
-
-        public void SwapFromOtherPointMatrix<TPointMatrix>(ref TPointMatrix other_point) where TPointMatrix : IPointMatrix, new()
-        {
-            (this.value, other_point.value) = (this.value, other_point.value);
-            (this.set, other_point.set) = (this.set, other_point.set);
-            (this.Position, other_point.Position) = (this.Position, other_point.Position);
         }
     }
 }
