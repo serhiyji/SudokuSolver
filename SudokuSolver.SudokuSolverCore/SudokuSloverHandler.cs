@@ -44,9 +44,9 @@ namespace SudokuSolver.SudokuSolverCore
 
         #region SearchAlgorithmsSolutionPrivate
         // Locked / Naked
-        private SolutionMethod GetLockedPairInRange(PosPoint pos1, PosPoint pos2)
+        private SolutionMethod GetLockedPairInRange(RangeMatrix range)
         {
-            Arrange<PosPoint> pos = this.matrix.GetPosPointsInRange(pos1, pos2);
+            Arrange<PosPoint> pos = this.matrix.GetPosPointsInRange(range);
             for (int i = 0; i < pos.Count(); i++)
             {
                 for (int j = 0; j < pos.Count(); j++)
@@ -70,9 +70,9 @@ namespace SudokuSolver.SudokuSolverCore
             }
             return null;
         }
-        private SolutionMethod GetLockedTripleInRange(PosPoint pos1, PosPoint pos2)
+        private SolutionMethod GetLockedTripleInRange(RangeMatrix range)
         {
-            Arrange<PosPoint> pos = this.matrix.GetPosPointsInRange(pos1, pos2);
+            Arrange<PosPoint> pos = this.matrix.GetPosPointsInRange(range);
             for (int i1 = 0; i1 < pos.Count(); i1++)
             {
                 for (int i2 = 0; i2 < pos.Count(); i2++)
@@ -106,9 +106,9 @@ namespace SudokuSolver.SudokuSolverCore
             return null;
         }
         // Naked
-        private SolutionMethod GetNakedQuadrupleInRange(PosPoint pos1, PosPoint pos2)
+        private SolutionMethod GetNakedQuadrupleInRange(RangeMatrix range)
         {
-            Arrange<PosPoint> pos = this.matrix.GetPosPointsInRange(pos1, pos2);
+            Arrange<PosPoint> pos = this.matrix.GetPosPointsInRange(range);
             for (int i1 = 0; i1 < pos.Count(); i1++)
             {
                 for (int i2 = 0; i2 < pos.Count(); i2++)
@@ -148,7 +148,7 @@ namespace SudokuSolver.SudokuSolverCore
             return null;
         }
         // Hidden
-        private SolutionMethod GetHiddenPairInRange(PosPoint pos1, PosPoint pos2)
+        private SolutionMethod GetHiddenPairInRange(RangeMatrix range)
         {
             for (byte num1 = 0; num1 < 10; num1++)
             {
@@ -156,10 +156,10 @@ namespace SudokuSolver.SudokuSolverCore
                 {
                     if (num1 != num2)
                     {
-                        int count_num1 = this.matrix.GetCountPossiblePosPointInRange(pos1, pos2, num1), count_num2 = this.matrix.GetCountPossiblePosPointInRange(pos1, pos2, num2);
+                        int count_num1 = this.matrix.GetCountPossiblePosPointInRange(range, num1), count_num2 = this.matrix.GetCountPossiblePosPointInRange(range, num2);
                         if (count_num1 == 2 && count_num2 == 2)
                         {
-                            Arrange<PosPoint> arr1 = this.matrix.GetPossPosPointsInRange(pos1, pos2, num1), arr2 = this.matrix.GetPossPosPointsInRange(pos1, pos2, num2);
+                            Arrange<PosPoint> arr1 = this.matrix.GetPossPosPointsInRange(range, num1), arr2 = this.matrix.GetPossPosPointsInRange(range, num2);
                             if (arr1 == arr2)
                             {
                                 SolutionMethod Solution_method = new SolutionMethod()
@@ -181,7 +181,7 @@ namespace SudokuSolver.SudokuSolverCore
             }
             return null;
         }
-        private SolutionMethod GetHiddenTripleInRange(PosPoint pos1, PosPoint pos2)
+        private SolutionMethod GetHiddenTripleInRange(RangeMatrix range)
         {
             for (byte num1 = 0; num1 < 10; num1++)
             {
@@ -189,19 +189,19 @@ namespace SudokuSolver.SudokuSolverCore
                 {
                     for (byte num3 = 0; num3 < 10; num3++)
                     {
-                        int count_num1 = this.matrix.GetCountPossiblePosPointInRange(pos1, pos2, num1);
-                        int count_num2 = this.matrix.GetCountPossiblePosPointInRange(pos1, pos2, num2);
-                        int count_num3 = this.matrix.GetCountPossiblePosPointInRange(pos1, pos2, num3);
+                        int count_num1 = this.matrix.GetCountPossiblePosPointInRange(range, num1);
+                        int count_num2 = this.matrix.GetCountPossiblePosPointInRange(range, num2);
+                        int count_num3 = this.matrix.GetCountPossiblePosPointInRange(range, num3);
                         if (num1 != num2 && num2 != num3 && num1 != num3 && count_num1 <= 3 && count_num1 >= 2 && count_num2 <= 3 && count_num2 >= 2 && count_num3 <= 3 && count_num3 >= 2)
                         {
-                            Set<PosPoint> poss_num = new Set<PosPoint>(this.matrix.GetPossPosPointsInRange(pos1, pos2, num1)) + new Set<PosPoint>(this.matrix.GetPossPosPointsInRange(pos1, pos2, num2)) + new Set<PosPoint>(this.matrix.GetPossPosPointsInRange(pos1, pos2, num3));
+                            Set<PosPoint> poss_num = new Set<PosPoint>(this.matrix.GetPossPosPointsInRange(range, num1)) + new Set<PosPoint>(this.matrix.GetPossPosPointsInRange(range, num2)) + new Set<PosPoint>(this.matrix.GetPossPosPointsInRange(range, num3));
                             if (poss_num.Count() == 3)
                             {
                                 Set<byte> set_other = new Set<byte>();
                                 Set<byte> values = new Set<byte>();
-                                for (int i = pos1.i; i <= pos2.i; i++)
+                                for (int i = range.Position1.i; i <= range.Position2.i; i++)
                                 {
-                                    for (int j = pos1.j; j <= pos2.j; j++)
+                                    for (int j = range.Position1.j; j <= range.Position2.j; j++)
                                     {
                                         PosPoint pos = new PosPoint(i, j);
                                         if (this.matrix[i, j].value == 0 && !poss_num.Contains(pos))
@@ -236,7 +236,7 @@ namespace SudokuSolver.SudokuSolverCore
             }
             return null;
         }
-        private SolutionMethod GetHiddenQuadrupleInRange(PosPoint pos1, PosPoint pos2)
+        private SolutionMethod GetHiddenQuadrupleInRange(RangeMatrix range)
         {
             for (byte num1 = 1; num1 < 10; num1++)
             {
@@ -246,25 +246,25 @@ namespace SudokuSolver.SudokuSolverCore
                     {
                         for (byte num4 = 1; num4 < 10; num4++)
                         {
-                            int count_num1 = this.matrix.GetCountPossiblePosPointInRange(pos1, pos2, num1);
-                            int count_num2 = this.matrix.GetCountPossiblePosPointInRange(pos1, pos2, num2);
-                            int count_num3 = this.matrix.GetCountPossiblePosPointInRange(pos1, pos2, num3);
-                            int count_num4 = this.matrix.GetCountPossiblePosPointInRange(pos1, pos2, num4);
+                            int count_num1 = this.matrix.GetCountPossiblePosPointInRange(range, num1);
+                            int count_num2 = this.matrix.GetCountPossiblePosPointInRange(range, num2);
+                            int count_num3 = this.matrix.GetCountPossiblePosPointInRange(range, num3);
+                            int count_num4 = this.matrix.GetCountPossiblePosPointInRange(range, num4);
                             if (num1 != num2 && num2 != num3 && num1 != num3 && num1 != num4 && num2 != num4 && num3 != num4
                                 && count_num1 <= 4 && count_num1 >= 2 && count_num2 <= 4 && count_num2 >= 2
                                 && count_num3 <= 4 && count_num3 >= 2 && count_num4 <= 4 && count_num4 >= 2)
                             {
-                                Set<PosPoint> poss_num = new Set<PosPoint>(this.matrix.GetPossPosPointsInRange(pos1, pos2, num1))
-                                    + new Set<PosPoint>(this.matrix.GetPossPosPointsInRange(pos1, pos2, num2))
-                                    + new Set<PosPoint>(this.matrix.GetPossPosPointsInRange(pos1, pos2, num3))
-                                    + new Set<PosPoint>(this.matrix.GetPossPosPointsInRange(pos1, pos2, num4));
+                                Set<PosPoint> poss_num = new Set<PosPoint>(this.matrix.GetPossPosPointsInRange(range, num1))
+                                    + new Set<PosPoint>(this.matrix.GetPossPosPointsInRange(range, num2))
+                                    + new Set<PosPoint>(this.matrix.GetPossPosPointsInRange(range, num3))
+                                    + new Set<PosPoint>(this.matrix.GetPossPosPointsInRange(range, num4));
                                 if (poss_num.Count() == 4)
                                 {
                                     Set<byte> set_other = new Set<byte>();
                                     Set<byte> values = new Set<byte>();
-                                    for (int i = pos1.i; i <= pos2.i; i++)
+                                    for (int i = range.Position1.i; i <= range.Position2.i; i++)
                                     {
-                                        for (int j = pos1.j; j <= pos2.j; j++)
+                                        for (int j = range.Position1.j; j <= range.Position2.j; j++)
                                         {
                                             PosPoint pos = new PosPoint(i, j);
                                             if (this.matrix[i, j].value == 0 && !poss_num.Contains(pos))
@@ -302,60 +302,15 @@ namespace SudokuSolver.SudokuSolverCore
         }
         #endregion
 
-        #region SearchAlgorithmsSolutionPublic
-        public SolutionMethod GetLockedPairInHorizontalLine(int index)
-        => this.GetLockedPairInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1));
-        public SolutionMethod GetLockedPairInVerticalLine(int index)
-        => this.GetLockedPairInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index));
-        public SolutionMethod GetLockedPairInSquare(PosSquare pos_s)
-        => this.GetLockedPairInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
-        // Locked Triple
-        public SolutionMethod GetLockedTripleInHorizontalLine(int index)
-        => this.GetLockedTripleInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1));
-        public SolutionMethod GetLockedTripleInVerticalLine(int index)
-        => this.GetLockedTripleInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index));
-        public SolutionMethod GetLockedTripleInSquare(PosSquare pos_s)
-        => this.GetLockedTripleInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
-        // Hiden pair
-        public SolutionMethod GetHiddenPairInHorizontalLine(int index)
-        => this.GetHiddenPairInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1));
-        public SolutionMethod GetHiddenPairInVerticalLine(int index)
-        => this.GetHiddenPairInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index));
-        public SolutionMethod GetHiddenPairInSquare(PosSquare pos_s)
-        => this.GetHiddenPairInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
-        // Hiden Truple
-        public SolutionMethod GetHiddenTripleInHorizontalLine(int index)
-        => this.GetHiddenTripleInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1));
-        public SolutionMethod GetHiddenTripleInVerticalLine(int index)
-        => this.GetHiddenTripleInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index));
-        public SolutionMethod GetHiddenTripleInSquare(PosSquare pos_s)
-        => this.GetHiddenTripleInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
-        // Naked Quadruple
-        public SolutionMethod GetNakedQuadrupleInHorizontalLine(int index)
-        => this.GetNakedQuadrupleInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1));
-        public SolutionMethod GetNakedQuadrupleInVerticalLine(int index)
-        => this.GetNakedQuadrupleInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index));
-        public SolutionMethod GetNakedQuadrupleInSquare(PosSquare pos_s)
-        => this.GetNakedQuadrupleInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
-        // Hiden Quadruple
-        public SolutionMethod GetHiddenQuadrupleInHorizontalLine(int index)
-        => this.GetHiddenQuadrupleInRange(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1));
-        public SolutionMethod GetHiddenQuadrupleInVerticalLine(int index)
-        => this.GetHiddenQuadrupleInRange(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index));
-        public SolutionMethod GetHiddenQuadrupleInSquare(PosSquare pos_s)
-        => this.GetHiddenQuadrupleInRange(new PosPoint(pos_s.i * 3, pos_s.j * 3), new PosPoint(pos_s.i * 3 + 2, pos_s.j * 3 + 2));
-        #endregion
-
-
-
+        #region Singles
         private SolutionMethod Full_House()
         {
             // Horizontal Line
             for (int i = 0; i < 9; i++)
             {
-                if (this.matrix.IsOneNullInHorizontalLine(i))
+                if (this.matrix.IsOneNullInRange(RangeMatrix.FormHorizontalLine(i)))
                 {
-                    PosPoint pos_p = this.matrix.GetPosPointNullHorizontalLine(i);
+                    PosPoint pos_p = this.matrix.GetOneNullPosPointInRange(RangeMatrix.FormHorizontalLine(i));
                     byte NewValue_ = this.matrix.GetFirstValueSetInPosPoint(pos_p);
                     if (NewValue_ == 0) continue;
                     return new SolutionMethod()
@@ -370,9 +325,9 @@ namespace SudokuSolver.SudokuSolverCore
             // Verticall Line
             for (int i = 0; i < 9; i++)
             {
-                if (this.matrix.IsOneNullInVerticallLine(i))
+                if (this.matrix.IsOneNullInRange(RangeMatrix.FormVerticalLine(i)))
                 {
-                    PosPoint pos_p = this.matrix.GetPosPointNullVerticalLine(i);
+                    PosPoint pos_p = this.matrix.GetOneNullPosPointInRange(RangeMatrix.FormVerticalLine(i));
                     byte NewValue_ = this.matrix.GetFirstValueSetInPosPoint(pos_p);
                     if (NewValue_ == 0) continue;
                     return new SolutionMethod()
@@ -390,9 +345,9 @@ namespace SudokuSolver.SudokuSolverCore
                 for (int j = 0; j < 3; j++)
                 {
                     PosSquare pos_s = new PosSquare(i, j);
-                    if (this.matrix.IsOneNullInSquare(pos_s))
+                    if (this.matrix.IsOneNullInRange(RangeMatrix.FormSquare(i, j)))
                     {
-                        PosPoint pos_p = this.matrix.GetPosPointNullSquare(pos_s);
+                        PosPoint pos_p = this.matrix.GetOneNullPosPointInRange(RangeMatrix.FormSquare(i, j));
                         byte NewValue_ = this.matrix.GetFirstValueSetInPosPoint(pos_p);
                         if (NewValue_ == 0) continue;
                         return new SolutionMethod()
@@ -436,27 +391,27 @@ namespace SudokuSolver.SudokuSolverCore
             {
                 for (int i = 0; i < 9; i++)
                 {
-                    if (this.matrix.GetCountPossiblePosPointInHorizontalLine(i, value) == 1)
+                    if (this.matrix.GetCountPossiblePosPointInRange(RangeMatrix.FormHorizontalLine(i), value) == 1)
                     {
                         return new SolutionMethod()
                         {
                             Algorithm = AlgorithmSolutionMethod.Hidden_Single,
                             IsSingleValue = true,
                             NewValue = value,
-                            PosPointNewValue = this.matrix.GetFirstPossiblePosPointInHorizontalLine(i, value)
+                            PosPointNewValue = this.matrix.GetFirstPossiblePosPointInRange(RangeMatrix.FormHorizontalLine(i), value)
                         };
                     }
                 }
                 for (int i = 0; i < 9; i++)
                 {
-                    if (this.matrix.GetCountPossiblePosPointInVerticalLine(i, value) == 1)
+                    if (this.matrix.GetCountPossiblePosPointInRange(RangeMatrix.FormVerticalLine(i), value) == 1)
                     {
                         return new SolutionMethod()
                         {
                             Algorithm = AlgorithmSolutionMethod.Hidden_Single,
                             IsSingleValue = true,
                             NewValue = value,
-                            PosPointNewValue = this.matrix.GetFirstPossiblePosPointInVerticalLine(i, value)
+                            PosPointNewValue = this.matrix.GetFirstPossiblePosPointInRange(RangeMatrix.FormVerticalLine(i), value)
                         };
                     }
                 }
@@ -464,14 +419,14 @@ namespace SudokuSolver.SudokuSolverCore
                 {
                     for (int j = 0; j < 3; j++)
                     {
-                        if (this.matrix.GetCountPossiblePosPointInSquare(new PosSquare(i, j), value) == 1)
+                        if (this.matrix.GetCountPossiblePosPointInRange(RangeMatrix.FormSquare(i, j), value) == 1)
                         {
                             return new SolutionMethod()
                             {
                                 Algorithm = AlgorithmSolutionMethod.Hidden_Single,
                                 IsSingleValue = true,
                                 NewValue = value,
-                                PosPointNewValue = this.matrix.GetFirstPossiblePosPointInSquare(new PosSquare(i, j), value)
+                                PosPointNewValue = this.matrix.GetFirstPossiblePosPointInRange(RangeMatrix.FormSquare(i, j), value)
                             };
                         }
                     }
@@ -479,6 +434,9 @@ namespace SudokuSolver.SudokuSolverCore
             }
             return null;
         }
+        #endregion
+
+        #region Intersections
         private SolutionMethod Locked_Pair()
         {
             for (int si = 0; si < 3; si++)
@@ -486,7 +444,7 @@ namespace SudokuSolver.SudokuSolverCore
                 for (int sj = 0; sj < 3; sj++)
                 {
                     PosSquare pos_s = new PosSquare(si, sj);
-                    SolutionMethod pair = this.GetLockedPairInSquare(pos_s);
+                    SolutionMethod pair = this.GetLockedPairInRange(RangeMatrix.FormSquare(pos_s));
                     if (!(pair is null))
                     {
                         return pair;
@@ -501,8 +459,7 @@ namespace SudokuSolver.SudokuSolverCore
             {
                 for (int sj = 0; sj < 3; sj++)
                 {
-                    PosSquare pos_s = new PosSquare(si, sj);
-                    SolutionMethod tripl = this.GetLockedTripleInSquare(pos_s);
+                    SolutionMethod tripl = this.GetLockedPairInRange(RangeMatrix.FormSquare(si, sj));
                     if (!(tripl is null)) { return tripl; };
                 }
             }
@@ -514,17 +471,16 @@ namespace SudokuSolver.SudokuSolverCore
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    PosSquare pos_s = new PosSquare(i, j);
                     for (byte value = 1; value < 10; value++)
                     {
-                        int size_ = this.matrix.GetCountPossiblePosPointInSquare(pos_s, value);
+                        int size_ = this.matrix.GetCountPossiblePosPointInRange(RangeMatrix.FormSquare(i, j), value);
                         if (size_ == 3 || size_ == 2)
                         {
                             SolutionMethod Solution_method = new SolutionMethod()
                             {
                                 Algorithm = AlgorithmSolutionMethod.Locked_Candidates_Type_Pointing,
                                 IsSingleValue = false,
-                                PosPoints = this.matrix.GetPossPosPointsInSquare(pos_s, value),
+                                PosPoints = this.matrix.GetPossPosPointsInRange(RangeMatrix.FormSquare(i, j), value),
                                 Values = new Set<byte>(value),
                                 IS = (false, false, true, true)
                             };
@@ -544,14 +500,14 @@ namespace SudokuSolver.SudokuSolverCore
             {
                 for (int i = 0; i < 9; i++)
                 {
-                    int count_h = this.matrix.GetCountPossiblePosPointInHorizontalLine(i, value);
+                    int count_h = this.matrix.GetCountPossiblePosPointInRange(RangeMatrix.FormHorizontalLine(i), value);
                     if (count_h <= 3 && count_h >= 2)
                     {
                         SolutionMethod Solution_method = new SolutionMethod()
                         {
                             Algorithm = AlgorithmSolutionMethod.Locked_Candidates_Type_Claiming,
                             IsSingleValue = false,
-                            PosPoints = this.matrix.GetPossPosPointsInHorizontalLine(i, value),
+                            PosPoints = this.matrix.GetPossPosPointsInRange(RangeMatrix.FormHorizontalLine(i), value),
                             Values = new Set<byte>(value),
                             IS = (false, true, false, false)
                         };
@@ -561,13 +517,13 @@ namespace SudokuSolver.SudokuSolverCore
                         }
                     }
 
-                    int count_v = this.matrix.GetCountPossiblePosPointInVerticalLine(i, value);
+                    int count_v = this.matrix.GetCountPossiblePosPointInRange(RangeMatrix.FormVerticalLine(i), value);
                     if (count_v <= 3 && count_v >= 2)
                     {
                         SolutionMethod Solution_method = new SolutionMethod()
                         {
                             IsSingleValue = false,
-                            PosPoints = this.matrix.GetPossPosPointsInVerticalLine(i, value),
+                            PosPoints = this.matrix.GetPossPosPointsInRange(RangeMatrix.FormVerticalLine(i), value),
                             Values = new Set<byte>(value),
                             IS = (false, true, false, false)
                         };
@@ -580,13 +536,16 @@ namespace SudokuSolver.SudokuSolverCore
             }
             return null;
         }
+        #endregion
+
+        #region Subsets
         private SolutionMethod Naked_Pair()
         {
             for (int i = 0; i < 9; i++)
             {
-                SolutionMethod pair_h = this.GetLockedPairInHorizontalLine(i);
+                SolutionMethod pair_h = this.GetLockedPairInRange(RangeMatrix.FormHorizontalLine(i));
                 if (!(pair_h is null)) { return pair_h; }
-                SolutionMethod pair_v = this.GetLockedPairInVerticalLine(i);
+                SolutionMethod pair_v = this.GetLockedPairInRange(RangeMatrix.FormVerticalLine(i));
                 if (!(pair_v is null)) { return pair_v; }
             }
             return null;
@@ -595,9 +554,9 @@ namespace SudokuSolver.SudokuSolverCore
         {
             for (int i = 0; i < 9; i++)
             {
-                SolutionMethod triple_h = this.GetLockedTripleInHorizontalLine(i);
+                SolutionMethod triple_h = this.GetLockedTripleInRange(RangeMatrix.FormHorizontalLine(i));
                 if (!(triple_h is null)) { return triple_h; }
-                SolutionMethod triple_v = this.GetLockedTripleInVerticalLine(i);
+                SolutionMethod triple_v = this.GetLockedTripleInRange(RangeMatrix.FormVerticalLine(i));
                 if (!(triple_v is null)) { return triple_v; }
             }
             return null;
@@ -606,16 +565,16 @@ namespace SudokuSolver.SudokuSolverCore
         {
             for (int i = 0; i < 9; i++)
             {
-                SolutionMethod quadruple_h = this.GetNakedQuadrupleInHorizontalLine(i);
+                SolutionMethod quadruple_h = this.GetNakedQuadrupleInRange(RangeMatrix.FormHorizontalLine(i));
                 if (!(quadruple_h is null)) { return quadruple_h; }
-                SolutionMethod quadruple_v = this.GetNakedQuadrupleInVerticalLine(i);
+                SolutionMethod quadruple_v = this.GetNakedQuadrupleInRange(RangeMatrix.FormVerticalLine(i));
                 if (!(quadruple_v is null)) { return quadruple_v; }
             }
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    SolutionMethod quadruple_s = this.GetNakedQuadrupleInSquare(new PosSquare(i, j));
+                    SolutionMethod quadruple_s = this.GetNakedQuadrupleInRange(RangeMatrix.FormSquare(i, j));
                     if (!(quadruple_s is null)) { return quadruple_s; }
                 }
             }
@@ -625,17 +584,16 @@ namespace SudokuSolver.SudokuSolverCore
         {
             for (int i = 0; i < 9; i++)
             {
-
-                SolutionMethod pair_h = this.GetHiddenPairInHorizontalLine(i);
+                SolutionMethod pair_h = this.GetHiddenPairInRange(RangeMatrix.FormHorizontalLine(i));
                 if (!(pair_h is null)) { return pair_h; }
-                SolutionMethod pair_v = this.GetHiddenPairInVerticalLine(i);
+                SolutionMethod pair_v = this.GetHiddenPairInRange(RangeMatrix.FormVerticalLine(i));
                 if (!(pair_v is null)) { return pair_v; }
             }
             for (int si = 0; si < 3; si++)
             {
                 for (int sj = 0; sj < 3; sj++)
                 {
-                    SolutionMethod pair = this.GetHiddenPairInSquare(new PosSquare(si, sj));
+                    SolutionMethod pair = this.GetHiddenPairInRange(RangeMatrix.FormSquare(si, sj));
                     if (!(pair is null)) { return pair; }
                 }
             }
@@ -645,16 +603,16 @@ namespace SudokuSolver.SudokuSolverCore
         {
             for (int i = 0; i < 9; i++)
             {
-                SolutionMethod triple_h = this.GetHiddenTripleInHorizontalLine(i);
+                SolutionMethod triple_h = this.GetHiddenTripleInRange(RangeMatrix.FormHorizontalLine(i));
                 if (!(triple_h is null)) { return triple_h; };
-                SolutionMethod triple_v = this.GetHiddenTripleInVerticalLine(i);
+                SolutionMethod triple_v = this.GetHiddenTripleInRange(RangeMatrix.FormVerticalLine(i));
                 if (!(triple_v is null)) { return triple_v; };
             }
             for (int si = 0; si < 3; si++)
             {
                 for (int sj = 0; sj < 3; sj++)
                 {
-                    SolutionMethod triple = this.GetHiddenTripleInSquare(new PosSquare(si, sj));
+                    SolutionMethod triple = this.GetNakedQuadrupleInRange(RangeMatrix.FormSquare(si, sj));
                     if (!(triple is null)) { return triple; };
                 }
             }
@@ -664,21 +622,22 @@ namespace SudokuSolver.SudokuSolverCore
         {
             for (int i = 0; i < 9; i++)
             {
-                SolutionMethod quadruple_h = this.GetHiddenQuadrupleInHorizontalLine(i);
+                SolutionMethod quadruple_h = this.GetHiddenQuadrupleInRange(RangeMatrix.FormHorizontalLine(i));
                 if (!(quadruple_h is null)) { return quadruple_h; };
-                SolutionMethod quadruple_v = this.GetHiddenQuadrupleInVerticalLine(i);
+                SolutionMethod quadruple_v = this.GetHiddenQuadrupleInRange(RangeMatrix.FormVerticalLine(i));
                 if (!(quadruple_v is null)) { return quadruple_v; };
             }
             for (int si = 0; si < 3; si++)
             {
                 for (int sj = 0; sj < 3; sj++)
                 {
-                    SolutionMethod quadruple_s = this.GetHiddenQuadrupleInSquare(new PosSquare(si, sj));
+                    SolutionMethod quadruple_s = this.GetNakedQuadrupleInRange(RangeMatrix.FormSquare(si, sj));
                     if(!(quadruple_s is null)) { return quadruple_s; };
                 }
             }
             return null;
         }
+        #endregion
 
         public SolutionMethod NextSlover()
         {

@@ -61,13 +61,13 @@ namespace SudokuSolver.SudokuSolverCore.Solution
                 }
 
                 total = (inter.IS.sq) ? (IsOneSquareInArrPospoint(inter.PosPoints)) ?
-                    matrix.ClearValuesInSetInSquare(new PosSquare(inter.PosPoints[0]), inter.Values, inter.PosPoints) || total : total : total;
+                    matrix.ClearValuesInSetInRange(RangeMatrix.FormSquare(new PosSquare(inter.PosPoints[0])), inter.Values, inter.PosPoints) || total : total : total;
 
                 total = (inter.IS.hl) ? (IsPosPointsInHorizontalLine(inter.PosPoints)) ?
-                    matrix.ClearValuesInSetInHorizontalLine(inter.PosPoints[0].i, inter.Values, inter.PosPoints) || total : total : total;
+                    matrix.ClearValuesInSetInRange(RangeMatrix.FormHorizontalLine(inter.PosPoints[0].i), inter.Values, inter.PosPoints) || total : total : total;
 
                 total = (inter.IS.vl) ? (IsPosPointsInVerticalLine(inter.PosPoints)) ?
-                    matrix.ClearValuesInSetInVerticalLine(inter.PosPoints[0].j, inter.Values, inter.PosPoints) || total : total : total;
+                    matrix.ClearValuesInSetInRange(RangeMatrix.FormVerticalLine(inter.PosPoints[0].j), inter.Values, inter.PosPoints) || total : total : total;
 
                 return total;
             }
@@ -84,15 +84,15 @@ namespace SudokuSolver.SudokuSolverCore.Solution
                     sq = SolutionMethodHandler.IsOneSquareInArrPospoint(solution.PosPoints);
                 foreach (byte item in solution.Values)
                 {
-                    if (hl && matrix.GetCountPossiblePosPointInHorizontalLine(solution.PosPoints[0].i, item) > count && solution.IS.hl)
+                    if (hl && matrix.GetCountPossiblePosPointInRange(RangeMatrix.FormHorizontalLine(solution.PosPoints[0].i), item) > count && solution.IS.hl)
                     {
                         return true;
                     }
-                    else if (vl && matrix.GetCountPossiblePosPointInVerticalLine(solution.PosPoints[0].j, item) > count && solution.IS.vl)
+                    else if (vl && matrix.GetCountPossiblePosPointInRange(RangeMatrix.FormVerticalLine(solution.PosPoints[0].j), item) > count && solution.IS.vl)
                     {
                         return true;
                     }
-                    else if (sq && matrix.GetCountPossiblePosPointInSquare(new PosSquare(solution.PosPoints[0]), item) > count && solution.IS.sq)
+                    else if (sq && matrix.GetCountPossiblePosPointInRange(RangeMatrix.FormSquare(new PosSquare(solution.PosPoints[0])), item) > count && solution.IS.sq)
                     {
                         return true;
                     }

@@ -87,17 +87,18 @@ namespace SudokuSolver.WPF_Client
             {
                 if (hl)
                 {
-                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInHorizontalLine(Solution_method.PosPoints[0].i, value)) - pospoint;
+                    //GetPossPosPointsInRange
+                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInRange(RangeMatrix.FormHorizontalLine(Solution_method.PosPoints[0].i), value)) - pospoint;
                     func?.Invoke(value, RedPoints);
                 }
                 if (vl)
                 {
-                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInVerticalLine(Solution_method.PosPoints[0].j, value)) - pospoint;
+                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInRange(RangeMatrix.FormVerticalLine(Solution_method.PosPoints[0].j), value)) - pospoint;
                     func?.Invoke(value, RedPoints);
                 }
                 if (sq)
                 {
-                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInSquare(new PosSquare(Solution_method.PosPoints[0]), value)) - pospoint;
+                    Set<PosPoint> RedPoints = new Set<PosPoint>(matrix.GetPossPosPointsInRange(RangeMatrix.FormSquare(new PosSquare(Solution_method.PosPoints[0])), value)) - pospoint;
                     func?.Invoke(value, RedPoints);
                 }
             }

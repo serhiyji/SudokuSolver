@@ -27,17 +27,18 @@ namespace SudokuSolver.SudokuSolverCore.Coordinates
             this.Position2 = new PosPoint(pos2_i, pos2_j);
         }
 
-        public static RangeMatrix GetRangeFormHorizontalLine(int index)
+        public static RangeMatrix FormHorizontalLine(int index)
             => new RangeMatrix(new PosPoint(index, 0), new PosPoint(index, SizeGridSudoku.SizeMatrixHorizontal - 1));
-        public static RangeMatrix GetRangeFormVerticalLine(int index)
+        public static RangeMatrix FormVerticalLine(int index)
             => new RangeMatrix(new PosPoint(0, index), new PosPoint(SizeGridSudoku.SizeMatrixVertical - 1, index));
-        public static RangeMatrix GetRangeFormSquare(PosSquare pos_s)
+        public static RangeMatrix FormSquare(int i, int j)
             => new RangeMatrix(
-                new PosPoint(pos_s.i * SizeGridSudoku.CountSqareVertical, pos_s.j * SizeGridSudoku.CountSqareHorizontal), 
-                new PosPoint(pos_s.i * SizeGridSudoku.CountSqareVertical + SizeGridSudoku.SizeSquareVertical - 1, pos_s.j * SizeGridSudoku.CountSqareHorizontal + SizeGridSudoku.SizeSquareHorizontal - 1)
+                new PosPoint(i * SizeGridSudoku.CountSqareVertical, j * SizeGridSudoku.CountSqareHorizontal),
+                new PosPoint(i * SizeGridSudoku.CountSqareVertical + SizeGridSudoku.SizeSquareVertical - 1, j * SizeGridSudoku.CountSqareHorizontal + SizeGridSudoku.SizeSquareHorizontal - 1)
             );
+        public static RangeMatrix FormSquare(PosSquare pos_s)
+            => RangeMatrix.FormSquare(pos_s.i, pos_s.j);
         public static RangeMatrix GetRangeFullMatrix() 
             => new RangeMatrix(new PosPoint(0, 0), new PosPoint(SizeGridSudoku.SizeMatrixVertical, SizeGridSudoku.SizeMatrixHorizontal));
-
     }
 }
