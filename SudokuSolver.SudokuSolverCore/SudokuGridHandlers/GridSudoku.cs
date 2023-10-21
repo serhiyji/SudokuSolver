@@ -46,7 +46,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
                         this.matrix[pos_p.i, pos_p.j].value = value;
                         this.matrix[pos_p.i, pos_p.j].set -= new Set<byte>(1, 2, 3, 4, 5, 6, 7, 8, 9);
                         this.ClearValueInSetInRange(RangeMatrix.FormHorizontalLine(pos_p.i), value);
-                        this.ClearValueInSetInRange(RangeMatrix.FormHorizontalLine(pos_p.j), value);
+                        this.ClearValueInSetInRange(RangeMatrix.FormVerticalLine(pos_p.j), value);
                         this.ClearValueInSetInRange(RangeMatrix.FormSquare(new PosSquare(pos_p)), value);
                     }
                 }
@@ -218,9 +218,9 @@ namespace SudokuSolver.SudokuSolverCore.SudokuGridHandlers
 
         public void SettingPosibleValue(PosPoint pos_p, byte value)
         {
-            this.ClearValueInSetInRange(RangeMatrix.FormHorizontalLine(pos_p.i), value);
-            this.ClearValueInSetInRange(RangeMatrix.FormVerticalLine(pos_p.j), value);
-            this.ClearValueInSetInRange(RangeMatrix.FormSquare(new PosSquare(pos_p)), value);
+            this.SettingPosibleValue(RangeMatrix.FormHorizontalLine(pos_p.i), value);
+            this.SettingPosibleValue(RangeMatrix.FormVerticalLine(pos_p.j), value);
+            this.SettingPosibleValue(RangeMatrix.FormSquare(new PosSquare(pos_p)), value);
             this.matrix[pos_p.i, pos_p.j].set = GetPossibleValuesInPosPoint(pos_p);
         }
         public void SettingPosibleValue(RangeMatrix range, byte value)

@@ -4,10 +4,8 @@ namespace SudokuSolver.SudokuSolverCore.Coordinates
 {
     public class PosSquare
     {
-        private int From(int v) { return v >= 0 && v <= 2 ? 0 : v >= 3 && v <= 5 ? 1 : 2; }
         public int i { get; set; }
         public int j { get; set; }
-
         // Ctor
         #region Ctor
         public PosSquare(int i_ = 0, int j_ = 0)
@@ -17,8 +15,8 @@ namespace SudokuSolver.SudokuSolverCore.Coordinates
         }
         public PosSquare(PosPoint pos)
         {
-            i = From(pos.i);
-            j = From(pos.j);
+            i = pos.i / SizeGridSudoku.SizeSquareHorizontal;
+            j = pos.j / SizeGridSudoku.SizeSquareVertical;
         }
         #endregion
 
