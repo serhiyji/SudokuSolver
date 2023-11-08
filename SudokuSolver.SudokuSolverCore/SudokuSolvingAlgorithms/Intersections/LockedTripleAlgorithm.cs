@@ -13,6 +13,10 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Intersections
 {
     public class LockedTripleAlgorithm : SudokuSolvingAlgorithm
     {
+        public LockedTripleAlgorithm()
+        {
+            this.TypeAlgorithm = TypeAlgorithmSolution.LockedTripleAlgorithm;
+        }
         public SolutionMethod GetLockedTripleInRange<TPointMatrix>(GridSudoku<TPointMatrix> sudoku, RangeMatrix range) where TPointMatrix : IPointMatrix, new()
         {
             Arrange<PosPoint> pos = sudoku.GetPosPointsInRange(range);
@@ -32,7 +36,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Intersections
                             {
                                 SolutionMethod Solution_method = new SolutionMethod()
                                 {
-                                    Algorithm = AlgorithmSolutionMethod.Locked_Triple,
+                                    Algorithm = this.TypeAlgorithm,
                                     IsSingleValue = false,
                                     PosPoints = new Arrange<PosPoint>(pos[i1], pos[i2], pos[i3]),
                                     Values = all

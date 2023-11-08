@@ -13,6 +13,10 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Subsets
 {
     public class NakedQuadrupleAlgorithm : SudokuSolvingAlgorithm
     {
+        public NakedQuadrupleAlgorithm()
+        {
+            this.TypeAlgorithm = TypeAlgorithmSolution.NakedQuadrupleAlgorithm;
+        }
         private SolutionMethod GetNakedQuadrupleInRange<TPointMatrix>(GridSudoku<TPointMatrix> sudoku, RangeMatrix range) where TPointMatrix : IPointMatrix, new()
         {
             Arrange<PosPoint> pos = sudoku.GetPosPointsInRange(range);
@@ -37,7 +41,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Subsets
                                 {
                                     SolutionMethod Solution_method = new SolutionMethod()
                                     {
-                                        Algorithm = AlgorithmSolutionMethod.Naked_Quadruple,
+                                        Algorithm = this.TypeAlgorithm,
                                         IsSingleValue = false,
                                         PosPoints = new Arrange<PosPoint>(pos[i1], pos[i2], pos[i3], pos[i4]),
                                         Values = all

@@ -13,6 +13,10 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Subsets
 {
     public class HiddenPairAlgorithm : SudokuSolvingAlgorithm
     {
+        public HiddenPairAlgorithm()
+        {
+            this.TypeAlgorithm = TypeAlgorithmSolution.HiddenPairAlgorithm;
+        }
         private SolutionMethod GetHiddenPairInRange<TPointMatrix>(GridSudoku<TPointMatrix> sudoku, RangeMatrix range) where TPointMatrix : IPointMatrix, new()
         {
             for (byte num1 = 0; num1 < 10; num1++)
@@ -29,7 +33,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Subsets
                             {
                                 SolutionMethod Solution_method = new SolutionMethod()
                                 {
-                                    Algorithm = AlgorithmSolutionMethod.Hidden_Pair,
+                                    Algorithm = this.TypeAlgorithm,
                                     IsSingleValue = false,
                                     PosPoints = new Arrange<PosPoint>(arr1[0], arr1[1]),
                                     Values = new Set<byte>(num1, num2)

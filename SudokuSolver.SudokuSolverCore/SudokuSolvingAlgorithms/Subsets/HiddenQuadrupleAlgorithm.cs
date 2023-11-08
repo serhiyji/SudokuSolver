@@ -13,6 +13,10 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Subsets
 {
     public class HiddenQuadrupleAlgorithm : SudokuSolvingAlgorithm
     {
+        public HiddenQuadrupleAlgorithm()
+        {
+            this.TypeAlgorithm = TypeAlgorithmSolution.HiddenQuadrupleAlgorithm;
+        }
         private SolutionMethod GetHiddenQuadrupleInRange<TPointMatrix>(GridSudoku<TPointMatrix> sudoku, RangeMatrix range) where TPointMatrix : IPointMatrix, new()
         {
             for (byte num1 = 1; num1 < 10; num1++)
@@ -59,7 +63,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Subsets
                                     {
                                         SolutionMethod Solution_method = new SolutionMethod()
                                         {
-                                            Algorithm = AlgorithmSolutionMethod.Hidden_Quadruple,
+                                            Algorithm = this.TypeAlgorithm,
                                             IsSingleValue = false,
                                             PosPoints = poss_num,
                                             Values = values

@@ -11,6 +11,10 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Singles
 {
     public class NakedSingleAlgorithm : SudokuSolvingAlgorithm
     {
+        public NakedSingleAlgorithm() 
+        {
+            this.TypeAlgorithm = TypeAlgorithmSolution.NakedSingleAlgorithm;    
+        }
         public override SolutionMethod? Solve<TPointMatrix>(GridSudoku<TPointMatrix> sudoku)
         {
             for (int i = 0; i < 9; i++)
@@ -24,7 +28,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Singles
                         if (NewValue_ == 0) continue;
                         return new SolutionMethod()
                         {
-                            Algorithm = AlgorithmSolutionMethod.Naked_Single,
+                            Algorithm = this.TypeAlgorithm,
                             IsSingleValue = true,
                             NewValue = NewValue_,
                             PosPointNewValue = pos_p

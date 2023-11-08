@@ -12,6 +12,10 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Intersections
 {
     public class LockedCandidatesTypePointingAlgorithm : SudokuSolvingAlgorithm
     {
+        public LockedCandidatesTypePointingAlgorithm()
+        {
+            this.TypeAlgorithm = TypeAlgorithmSolution.LockedCandidatesTypePointingAlgorithm;
+        }
         public override SolutionMethod? Solve<TPointMatrix>(GridSudoku<TPointMatrix> sudoku)
         {
             for (int i = 0; i < 3; i++)
@@ -25,7 +29,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Intersections
                         {
                             SolutionMethod Solution_method = new SolutionMethod()
                             {
-                                Algorithm = AlgorithmSolutionMethod.Locked_Candidates_Type_Pointing,
+                                Algorithm = this.TypeAlgorithm,
                                 IsSingleValue = false,
                                 PosPoints = sudoku.GetPossPosPointsInRange(RangeMatrix.FormSquare(i, j), value),
                                 Values = new Set<byte>(value),

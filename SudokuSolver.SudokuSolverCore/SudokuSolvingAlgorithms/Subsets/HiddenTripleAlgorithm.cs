@@ -13,6 +13,10 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Subsets
 {
     public class HiddenTripleAlgorithm : SudokuSolvingAlgorithm
     {
+        public HiddenTripleAlgorithm()
+        {
+            this.TypeAlgorithm = TypeAlgorithmSolution.HiddenTripleAlgorithm;
+        }
         private SolutionMethod GetHiddenTripleInRange<TPointMatrix>(GridSudoku<TPointMatrix> sudoku, RangeMatrix range) where TPointMatrix : IPointMatrix, new()
         {
             for (byte num1 = 0; num1 < 10; num1++)
@@ -51,7 +55,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Subsets
                                 {
                                     SolutionMethod Solution_method = new SolutionMethod()
                                     {
-                                        Algorithm = AlgorithmSolutionMethod.Hidden_Triple,
+                                        Algorithm = this.TypeAlgorithm,
                                         IsSingleValue = false,
                                         PosPoints = poss_num,
                                         Values = values

@@ -12,6 +12,8 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms
 {
     public abstract class SudokuSolvingAlgorithm
     {
+        public TypeAlgorithmSolution TypeAlgorithm { get; protected set; } = TypeAlgorithmSolution.None;
+        public bool IsExecute { get; set; } = true;
         public virtual SolutionMethod? Solve<TPointMatrix>(GridSudoku<TPointMatrix> sudoku) where TPointMatrix : IPointMatrix, new()
         {
             throw new NotImplementedException();

@@ -11,6 +11,10 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Singles
 {
     public class HiddenSingleAlgorithm : SudokuSolvingAlgorithm
     {
+        public HiddenSingleAlgorithm()
+        {
+            this.TypeAlgorithm = TypeAlgorithmSolution.HiddenSingleAlgorithm;
+        }
         public override SolutionMethod? Solve<TPointMatrix>(GridSudoku<TPointMatrix> sudoku)
         {
             for (byte value = 1; value < 10; value++)
@@ -21,7 +25,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Singles
                     {
                         return new SolutionMethod()
                         {
-                            Algorithm = AlgorithmSolutionMethod.Hidden_Single,
+                            Algorithm = this.TypeAlgorithm,
                             IsSingleValue = true,
                             NewValue = value,
                             PosPointNewValue = sudoku.GetFirstPossiblePosPointInRange(RangeMatrix.FormHorizontalLine(i), value)
@@ -34,7 +38,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Singles
                     {
                         return new SolutionMethod()
                         {
-                            Algorithm = AlgorithmSolutionMethod.Hidden_Single,
+                            Algorithm = this.TypeAlgorithm,
                             IsSingleValue = true,
                             NewValue = value,
                             PosPointNewValue = sudoku.GetFirstPossiblePosPointInRange(RangeMatrix.FormVerticalLine(i), value)
@@ -49,7 +53,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Singles
                         {
                             return new SolutionMethod()
                             {
-                                Algorithm = AlgorithmSolutionMethod.Hidden_Single,
+                                Algorithm = this.TypeAlgorithm,
                                 IsSingleValue = true,
                                 NewValue = value,
                                 PosPointNewValue = sudoku.GetFirstPossiblePosPointInRange(RangeMatrix.FormSquare(i, j), value)

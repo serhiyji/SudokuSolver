@@ -11,6 +11,10 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Subsets
 {
     public class NakedPairAlgorithm : SudokuSolvingAlgorithm
     {
+        public NakedPairAlgorithm()
+        {
+            this.TypeAlgorithm = TypeAlgorithmSolution.NakedPairAlgorithm;
+        }
         public override SolutionMethod? Solve<TPointMatrix>(GridSudoku<TPointMatrix> sudoku)
         {
             for (int i = 0; i < 9; i++)

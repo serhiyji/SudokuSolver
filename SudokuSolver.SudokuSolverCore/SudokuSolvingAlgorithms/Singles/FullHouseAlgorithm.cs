@@ -11,6 +11,10 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Singles
 {
     public class FullHouseAlgorithm : SudokuSolvingAlgorithm
     {
+        public FullHouseAlgorithm()
+        {
+            this.TypeAlgorithm = TypeAlgorithmSolution.FullHouseAlgorithm;
+        }
         public override SolutionMethod? Solve<TPointMatrix>(GridSudoku<TPointMatrix> sudoku)
         {
             // Horizontal Line
@@ -23,7 +27,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Singles
                     if (NewValue_ == 0) continue;
                     return new SolutionMethod()
                     {
-                        Algorithm = AlgorithmSolutionMethod.Full_House,
+                        Algorithm = this.TypeAlgorithm,
                         IsSingleValue = true,
                         NewValue = NewValue_,
                         PosPointNewValue = pos_p
@@ -40,7 +44,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Singles
                     if (NewValue_ == 0) continue;
                     return new SolutionMethod()
                     {
-                        Algorithm = AlgorithmSolutionMethod.Full_House,
+                        Algorithm = this.TypeAlgorithm,
                         IsSingleValue = true,
                         NewValue = NewValue_,
                         PosPointNewValue = pos_p
@@ -59,7 +63,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Singles
                         if (NewValue_ == 0) continue;
                         return new SolutionMethod()
                         {
-                            Algorithm = AlgorithmSolutionMethod.Full_House,
+                            Algorithm = this.TypeAlgorithm,
                             IsSingleValue = true,
                             NewValue = NewValue_,
                             PosPointNewValue = pos_p

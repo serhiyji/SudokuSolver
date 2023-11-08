@@ -5,21 +5,14 @@ using SudokuSolver.SudokuSolverCore.Points;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms;
 
 namespace SudokuSolver.SudokuSolverCore.Solution
 {
-    public enum AlgorithmSolutionMethod
-    {
-        None,
-        Full_House, Naked_Single, Hidden_Single,
-        Locked_Pair, Locked_Triple,
-        Locked_Candidates_Type_Pointing, Locked_Candidates_Type_Claiming,
-        Naked_Pair, Naked_Triple, Naked_Quadruple,
-        Hidden_Pair, Hidden_Triple, Hidden_Quadruple
-    }
+    
     public partial class SolutionMethod
     {
-        public AlgorithmSolutionMethod Algorithm { get; set; }
+        public TypeAlgorithmSolution Algorithm { get; set; }
         public bool IsSingleValue { get; set; }
         // 
         public byte NewValue { get; set; }
@@ -50,7 +43,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             PosPointNewValue = posPointNewValue;
             PosPoints = posPoints;
             this.Values = values;
-            Algorithm = AlgorithmSolutionMethod.None;
+            Algorithm = TypeAlgorithmSolution.None;
             IS = (true, true, true, true);
         }
 
@@ -62,7 +55,7 @@ namespace SudokuSolver.SudokuSolverCore.Solution
             PosPoints = new Arrange<PosPoint>();
             Values = new Set<byte>();
             IS = (true, true, true, true);
-            Algorithm = AlgorithmSolutionMethod.None;
+            Algorithm = TypeAlgorithmSolution.None;
         }
         public void SetValues(SolutionMethod Solution_method)
         {

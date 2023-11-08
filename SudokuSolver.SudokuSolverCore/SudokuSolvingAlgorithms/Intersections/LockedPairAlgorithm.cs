@@ -13,6 +13,10 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Intersections
 {
     public class LockedPairAlgorithm : SudokuSolvingAlgorithm
     {
+        public LockedPairAlgorithm()
+        {
+            this.TypeAlgorithm = TypeAlgorithmSolution.LockedPairAlgorithm;
+        }
         public SolutionMethod GetLockedPairInRange<TPointMatrix>(GridSudoku<TPointMatrix> sudoku, RangeMatrix range) where TPointMatrix : IPointMatrix, new()
         {
             Arrange<PosPoint> pos = sudoku.GetPosPointsInRange(range);
@@ -25,7 +29,7 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Intersections
                     {
                         SolutionMethod Solution_method = new SolutionMethod()
                         {
-                            Algorithm = AlgorithmSolutionMethod.Locked_Pair,
+                            Algorithm = this.TypeAlgorithm,
                             IsSingleValue = false,
                             PosPoints = new Arrange<PosPoint>(pos[i], pos[j]),
                             Values = sudoku.GetPossValueInPosPoint(pos[i])

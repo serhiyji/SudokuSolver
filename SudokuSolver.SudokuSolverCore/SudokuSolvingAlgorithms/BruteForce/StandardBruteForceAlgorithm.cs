@@ -13,6 +13,11 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.BruteForce
 {
     public class StandardBruteForceAlgorithm : SudokuSolvingAlgorithm
     {
+        public StandardBruteForceAlgorithm()
+        {
+            this.TypeAlgorithm = TypeAlgorithmSolution.StandardBruteForceAlgorithm;
+        }
+
         public override SolutionMethod? Solve<TPointMatrix>(GridSudoku<TPointMatrix> sudoku)
         {
             this.BruteForceWithSet(sudoku);
