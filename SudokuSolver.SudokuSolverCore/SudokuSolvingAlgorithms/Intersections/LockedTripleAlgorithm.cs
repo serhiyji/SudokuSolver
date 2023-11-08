@@ -34,10 +34,8 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Intersections
                             Set<byte> all = set1 + set2 + set3;
                             if ((set1.Count() >= 2 && set1.Count() <= 3) && (set2.Count() >= 2 && set2.Count() <= 3) && (set3.Count() >= 2 && set3.Count() <= 3) && all.Count() == 3)
                             {
-                                SolutionMethod Solution_method = new SolutionMethod()
+                                SolutionMethod Solution_method = new SolutionMethod(this.TypeAlgorithm, false)
                                 {
-                                    Algorithm = this.TypeAlgorithm,
-                                    IsSingleValue = false,
                                     PosPoints = new Arrange<PosPoint>(pos[i1], pos[i2], pos[i3]),
                                     Values = all
                                 };

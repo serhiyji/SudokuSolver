@@ -25,10 +25,8 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Singles
                     PosPoint pos_p = sudoku.GetOneNullPosPointInRange(RangeMatrix.FormHorizontalLine(i));
                     byte NewValue_ = sudoku.GetFirstValueSetInPosPoint(pos_p);
                     if (NewValue_ == 0) continue;
-                    return new SolutionMethod()
+                    return new SolutionMethod(this.TypeAlgorithm, true)
                     {
-                        Algorithm = this.TypeAlgorithm,
-                        IsSingleValue = true,
                         NewValue = NewValue_,
                         PosPointNewValue = pos_p
                     };
@@ -42,10 +40,8 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Singles
                     PosPoint pos_p = sudoku.GetOneNullPosPointInRange(RangeMatrix.FormVerticalLine(i));
                     byte NewValue_ = sudoku.GetFirstValueSetInPosPoint(pos_p);
                     if (NewValue_ == 0) continue;
-                    return new SolutionMethod()
+                    return new SolutionMethod(this.TypeAlgorithm, true)
                     {
-                        Algorithm = this.TypeAlgorithm,
-                        IsSingleValue = true,
                         NewValue = NewValue_,
                         PosPointNewValue = pos_p
                     };
@@ -61,10 +57,8 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Singles
                         PosPoint pos_p = sudoku.GetOneNullPosPointInRange(RangeMatrix.FormSquare(i, j));
                         byte NewValue_ = sudoku.GetFirstValueSetInPosPoint(pos_p);
                         if (NewValue_ == 0) continue;
-                        return new SolutionMethod()
+                        return new SolutionMethod(this.TypeAlgorithm, true)
                         {
-                            Algorithm = this.TypeAlgorithm,
-                            IsSingleValue = true,
                             NewValue = NewValue_,
                             PosPointNewValue = pos_p
                         };

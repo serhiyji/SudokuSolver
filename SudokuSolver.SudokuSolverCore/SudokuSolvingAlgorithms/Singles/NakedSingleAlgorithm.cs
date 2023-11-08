@@ -26,10 +26,8 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Singles
                     {
                         byte NewValue_ = sudoku.GetFirstValueSetInPosPoint(pos_p);
                         if (NewValue_ == 0) continue;
-                        return new SolutionMethod()
+                        return new SolutionMethod(this.TypeAlgorithm, true)
                         {
-                            Algorithm = this.TypeAlgorithm,
-                            IsSingleValue = true,
                             NewValue = NewValue_,
                             PosPointNewValue = pos_p
                         };

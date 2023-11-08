@@ -6,6 +6,7 @@ using SudokuSolver.SudokuSolverCore.SudokuGridHandlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,10 +32,8 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Subsets
                             Arrange<PosPoint> arr1 = sudoku.GetPossPosPointsInRange(range, num1), arr2 = sudoku.GetPossPosPointsInRange(range, num2);
                             if (arr1 == arr2)
                             {
-                                SolutionMethod Solution_method = new SolutionMethod()
+                                SolutionMethod Solution_method = new SolutionMethod(this.TypeAlgorithm, false)
                                 {
-                                    Algorithm = this.TypeAlgorithm,
-                                    IsSingleValue = false,
                                     PosPoints = new Arrange<PosPoint>(arr1[0], arr1[1]),
                                     Values = new Set<byte>(num1, num2)
                                 };

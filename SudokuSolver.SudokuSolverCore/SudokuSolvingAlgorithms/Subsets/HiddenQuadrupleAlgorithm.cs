@@ -61,10 +61,8 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Subsets
                                     values = values - set_other;
                                     if (values.Count() == 4)
                                     {
-                                        SolutionMethod Solution_method = new SolutionMethod()
+                                        SolutionMethod Solution_method = new SolutionMethod(this.TypeAlgorithm, false)
                                         {
-                                            Algorithm = this.TypeAlgorithm,
-                                            IsSingleValue = false,
                                             PosPoints = poss_num,
                                             Values = values
                                         };

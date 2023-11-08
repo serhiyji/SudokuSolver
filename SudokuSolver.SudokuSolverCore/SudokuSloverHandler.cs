@@ -44,7 +44,7 @@ namespace SudokuSolver.SudokuSolverCore
                 new SudokuSolvingAlgorithms.Subsets.HiddenQuadrupleAlgorithm(),
 
                 // BruteForse
-                new SudokuSolvingAlgorithms.BruteForce.StandardBruteForceAlgorithm(),
+                //new SudokuSolvingAlgorithms.BruteForce.StandardBruteForceAlgorithm(),
             };
         }
 

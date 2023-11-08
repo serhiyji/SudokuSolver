@@ -27,10 +27,8 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Intersections
                         int size_ = sudoku.GetCountPossiblePosPointInRange(RangeMatrix.FormSquare(i, j), value);
                         if (size_ == 3 || size_ == 2)
                         {
-                            SolutionMethod Solution_method = new SolutionMethod()
+                            SolutionMethod Solution_method = new SolutionMethod(this.TypeAlgorithm, false)
                             {
-                                Algorithm = this.TypeAlgorithm,
-                                IsSingleValue = false,
                                 PosPoints = sudoku.GetPossPosPointsInRange(RangeMatrix.FormSquare(i, j), value),
                                 Values = new Set<byte>(value),
                                 IS = (false, false, true, true)

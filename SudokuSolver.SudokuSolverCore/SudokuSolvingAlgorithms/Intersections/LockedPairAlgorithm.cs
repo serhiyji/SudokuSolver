@@ -27,10 +27,8 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Intersections
                     if ((pos[i] != pos[j]) && (sudoku[pos[i].i, pos[i].j].set == sudoku[pos[j].i, pos[j].j].set)
                         && (sudoku[pos[i].i, pos[i].j].set.Count() == 2))
                     {
-                        SolutionMethod Solution_method = new SolutionMethod()
+                        SolutionMethod Solution_method = new SolutionMethod(this.TypeAlgorithm, false)
                         {
-                            Algorithm = this.TypeAlgorithm,
-                            IsSingleValue = false,
                             PosPoints = new Arrange<PosPoint>(pos[i], pos[j]),
                             Values = sudoku.GetPossValueInPosPoint(pos[i])
                         };

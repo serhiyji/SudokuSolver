@@ -25,10 +25,8 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Intersections
                     int count_h = sudoku.GetCountPossiblePosPointInRange(RangeMatrix.FormHorizontalLine(i), value);
                     if (count_h <= 3 && count_h >= 2)
                     {
-                        SolutionMethod Solution_method = new SolutionMethod()
+                        SolutionMethod Solution_method = new SolutionMethod(this.TypeAlgorithm, false)
                         {
-                            Algorithm = this.TypeAlgorithm,
-                            IsSingleValue = false,
                             PosPoints = sudoku.GetPossPosPointsInRange(RangeMatrix.FormHorizontalLine(i), value),
                             Values = new Set<byte>(value),
                             IS = (false, true, false, false)
@@ -42,9 +40,8 @@ namespace SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms.Intersections
                     int count_v = sudoku.GetCountPossiblePosPointInRange(RangeMatrix.FormVerticalLine(i), value);
                     if (count_v <= 3 && count_v >= 2)
                     {
-                        SolutionMethod Solution_method = new SolutionMethod()
+                        SolutionMethod Solution_method = new SolutionMethod(this.TypeAlgorithm, false)
                         {
-                            IsSingleValue = false,
                             PosPoints = sudoku.GetPossPosPointsInRange(RangeMatrix.FormVerticalLine(i), value),
                             Values = new Set<byte>(value),
                             IS = (false, true, false, false)

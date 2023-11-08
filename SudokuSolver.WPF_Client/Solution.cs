@@ -9,6 +9,8 @@ using SudokuSolver.SudokuSolverCore.Solution;
 using SudokuSolver.SudokuSolverCore.Coordinates;
 using SudokuSolver.SudokuSolverCore.Collections;
 using SudokuSolver.SudokuSolverCore.SudokuGridHandlers;
+using SudokuSolver.SudokuSolverCore.SudokuSolvingAlgorithms;
+using System.Security.Cryptography;
 
 namespace SudokuSolver.WPF_Client
 {
